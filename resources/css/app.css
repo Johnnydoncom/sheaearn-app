@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+[x-cloak] {
+    display: none;
+}
+.container {
+    @apply max-w-[86.23rem] mx-auto px-2 md:px-4 lg:px-6;
+}
+
+.container-no-padding {
+    @apply max-w-7xl mx-auto;
+}
+
+.btn {
+    @apply normal-case min-h-0;
+}

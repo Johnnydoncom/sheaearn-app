@@ -1,0 +1,20 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/swiper-bundle.js": "/js/swiper-bundle.js",
+    "/css/swiper-bundle.min.css": "/css/swiper-bundle.min.css",
+    "/css/app.css": "/css/app.css",
+    "/vendor/tinymce/.npmignore": "/vendor/tinymce/.npmignore",
+    "/vendor/tinymce/bower.json": "/vendor/tinymce/bower.json",
+    "/vendor/tinymce/CHANGELOG.md": "/vendor/tinymce/CHANGELOG.md",
+    "/vendor/tinymce/composer.json": "/vendor/tinymce/composer.json",
+    "/vendor/tinymce/license.txt": "/vendor/tinymce/license.txt",
+    "/vendor/tinymce/package.json": "/vendor/tinymce/package.json",
+    "/vendor/tinymce/README.md": "/vendor/tinymce/README.md",
+    "/vendor/tinymce/tinymce.d.ts": "/vendor/tinymce/tinymce.d.ts",
+    "/vendor/tinymce/tinymce.js": "/vendor/tinymce/tinymce.js",
+    "/vendor/tinymce/tinymce.min.js": "/vendor/tinymce/tinymce.min.js",
+    "/vendor/sweetalert2/LICENSE": "/vendor/sweetalert2/LICENSE",
+    "/vendor/sweetalert2/package.json": "/vendor/sweetalert2/package.json",
+    "/vendor/sweetalert2/README.md": "/vendor/sweetalert2/README.md",
+    "/vendor/sweetalert2/sweetalert2.d.ts": "/vendor/sweetalert2/sweetalert2.d.ts"
+}
