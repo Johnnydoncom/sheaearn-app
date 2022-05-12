@@ -103,4 +103,9 @@ class Entry extends Model implements HasMedia
     {
         return $this->morphMany(Like::class, 'bookmarkable');
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }

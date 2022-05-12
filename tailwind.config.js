@@ -17,7 +17,6 @@ module.exports = {
         './resources/views/**/*.blade.php',
         './node_modules/tw-elements/dist/js/**/*.js'
     ],
-
     theme: {
         extend: {
             fontFamily: {
@@ -26,7 +25,7 @@ module.exports = {
             }
         },
     },
-
+    darkMode: 'class',
     plugins: [
         require('@tailwindcss/forms'),
         require('tw-elements/dist/plugin'),
@@ -60,6 +59,8 @@ module.exports = {
                     "error": "#F87272",
                 },
             },
+            "dark",
         ],
+        darkTheme: "dark",
     },
 };
