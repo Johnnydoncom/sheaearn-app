@@ -214,8 +214,6 @@
                       <a class="nav-link text-gray-900 hover:text-primary focus:text-primary text-2xl font-medium " href="#">{{ __('Community') }}</a>
                     </li>
                 </ul>
-
-
                     <!-- Hamburger -->
                      <div class="flex items-center sm:hidden">
                     <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md hover:text-primary hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
