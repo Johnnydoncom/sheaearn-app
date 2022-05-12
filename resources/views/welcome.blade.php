@@ -70,13 +70,13 @@
             </div>
 
             <div class="relative container hidden sm:block">
-                <img src="{{ Storage::url('arrow-3.svg') }}" alt="Arrow Down" class="absolute -bottom-[15em] left-0 h-[17rem] ">
+                <img src="{{ Storage::url('arrow-3.svg') }}" alt="Arrow Down" class="absolute -bottom-[15em] left-4 2xl:left-0 h-[17rem] ">
             </div>
         </section>
 
         <section class="relative text-center py-10">
             <div class="flex items-center w-full py-0 sm:py-6 mt-6 relative ">
-                <div class="absolute right-0 top-0 w-10/12 sm:w-full max-w-7xl flex-grow border-t-4 border-gray-200"></div>
+                <div class="absolute right-0 top-0 w-10/12 max-w-7xl flex-grow border-t-4 border-gray-200"></div>
             </div>
 
             <div class="relative py-10">
@@ -137,7 +137,7 @@
                 <div class="container mx-auto relative hidden sm:block">
                     <img src="{{ Storage::url('arrow-down.svg') }}" alt="Arrow Down" class="absolute -bottom-[15em] md:-right-14 h-[17rem]">
                 </div>
-                <div class="absolute left-0 top-20 w-10/12 sm:w-full max-w-7xl flex-grow border-t-4 border-gray-200"></div>
+                <div class="absolute left-0 top-20 w-10/12 container flex-grow border-t-4 border-gray-200"></div>
             </div>
         </section>
         <section class="container mt-20 sm:mt-12">

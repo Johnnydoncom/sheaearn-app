@@ -6421,6 +6421,9 @@ body[dir="rtl"] .checkbox:checked,
 .-bottom-\[15em\] {
   bottom: -15em;
 }
+.left-4 {
+  left: 1rem;
+}
 .right-0 {
   right: 0px;
 }
@@ -8114,7 +8117,7 @@ body[dir="rtl"] .checkbox:checked,
     padding-right: 1.5rem;
   }
 }
-@media (min-width: 1280px) {
+@media (min-width: 1536px) {
 
   .container {
     max-width: 86.23rem;
@@ -9137,6 +9140,10 @@ body {
   }
 }
 @media (min-width: 1536px) {
+
+  .\32xl\:left-0 {
+    left: 0px;
+  }
 
   .\32xl\:mx-20 {
     margin-left: 5rem;
