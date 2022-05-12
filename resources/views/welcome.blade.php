@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="py-12">
-        <section class="max-w-7xl mx-auto hero px-1 sm:px-12 mb-20">
+        <section class="max-w-6xl md:max-w-7xl mx-auto hero px-1 sm:px-12 mb-20">
 
             <div class="flex flex-wrap gap-x-2 items-center text-center justify-center sm:justify-start leading-none sm:text-left text-3xl sm:text-[5.288rem] font-bold px-4 font-poppins">
                 Create a <img src="{{Storage::url('secure.jpg')}}" class="h-[0.8em] rounded-full sm:mx-2 w-20 sm:w-auto"> <span class="text-primary">store,</span> mint, <span class="text-primary">and get</span> <img src="{{Storage::url('secure2.jpg')}}" class="h-[0.8em] rounded-full sm:mx-2 w-10 sm:w-auto"> <img src="{{Storage::url('secure3.jpg')}}" class="h-[0.8em] rounded-full sm:mx-1 w-14 sm:w-auto"> <span class="flex-none">collectors for your</span> <span class="text-primary mx-2"> NFTs.</span>
@@ -134,8 +134,8 @@
             </div>
 
             <div class="flex-col items-center w-full pb-6 sm:py-6 sm:mt-6 relative flex">
-                <div class="container relative hidden sm:block">
-                    <img src="{{ Storage::url('arrow-down.svg') }}" alt="Arrow Down" class="absolute -bottom-[15em] -right-14 h-[17rem]">
+                <div class="container mx-auto relative hidden sm:block">
+                    <img src="{{ Storage::url('arrow-down.svg') }}" alt="Arrow Down" class="absolute -bottom-[15em] md:-right-14 h-[17rem]">
                 </div>
                 <div class="absolute left-0 top-20 w-10/12 sm:w-full max-w-7xl flex-grow border-t-4 border-gray-200"></div>
             </div>
@@ -145,7 +145,7 @@
                 <div class="text-center">
                     <h2 class="text-white text-3xl sm:text-6xl font-extrabold mb-4 text-white">Join the  waiting  list</h2>
                     <p class="text-md sm:text-4xl mb-6 leading-normal text-white">
-                        Mintyplex empowers independent Creators to start and grow their NFT business effortlessly.
+                        Sheaearn empowers independent Creators to start and grow their NFT business effortlessly.
                     </p>
                     <p class="text-md sm:text-4xl mb-10 leading-normal text-white">
                         We are currently accepting only 2000 Creators on a first come, first served basis to join our waitlist and early Creators will be considered for our airdrop.
