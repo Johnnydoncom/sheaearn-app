@@ -28,7 +28,6 @@
 
 <!-- Scripts -->
 @livewireScripts
-<script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 
 <script>
@@ -37,10 +36,10 @@
 
     // Change the icons inside the button based on previous settings
     if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        themeToggleBtn.checked = false;
+        themeToggleBtn.classList.remove('swap-active');
         document.documentElement.classList.add('dark');
     } else {
-        themeToggleBtn.checked = true;
+        themeToggleBtn.classList.add('swap-active');
         document.documentElement.classList.remove('dark');
     }
 
@@ -52,9 +51,12 @@
             if (localStorage.getItem('color-theme') === 'light') {
                 document.documentElement.classList.add('dark');
                 localStorage.setItem('color-theme', 'dark');
+
+                themeToggleBtn.classList.remove('swap-active');
             } else {
                 document.documentElement.classList.remove('dark');
                 localStorage.setItem('color-theme', 'light');
+                themeToggleBtn.classList.add('swap-active');
             }
 
             // if NOT set via local storage previously
@@ -62,17 +64,12 @@
             if (document.documentElement.classList.contains('dark')) {
                 document.documentElement.classList.remove('dark');
                 localStorage.setItem('color-theme', 'light');
+                themeToggleBtn.classList.remove('swap-active');
             } else {
                 document.documentElement.classList.add('dark');
                 localStorage.setItem('color-theme', 'dark');
+                themeToggleBtn.classList.add('swap-active');
             }
-        }
-
-        // toggle icons inside button
-        if(this.checked == true){
-            this.checked = false;
-        }else{
-            this.checked = true;
         }
 
     });

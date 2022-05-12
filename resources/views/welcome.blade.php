@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="py-12">
-        <section class="max-w-7xl mx-auto hero px-1 sm:px-12 mb-4">
+        <section class="max-w-7xl mx-auto hero px-1 sm:px-12 mb-20">
 
             <div class="flex flex-wrap gap-x-2 items-center text-center justify-center sm:justify-start leading-none sm:text-left text-3xl sm:text-[5.288rem] font-bold px-4 font-poppins">
                 Create a <img src="{{Storage::url('secure.jpg')}}" class="h-[0.8em] rounded-full sm:mx-2 w-20 sm:w-auto"> <span class="text-primary">store,</span> mint, <span class="text-primary">and get</span> <img src="{{Storage::url('secure2.jpg')}}" class="h-[0.8em] rounded-full sm:mx-2 w-10 sm:w-auto"> <img src="{{Storage::url('secure3.jpg')}}" class="h-[0.8em] rounded-full sm:mx-1 w-14 sm:w-auto"> <span class="flex-none">collectors for your</span> <span class="text-primary mx-2"> NFTs.</span>
@@ -14,7 +14,7 @@
                 <div class="avatar sm:absolute -top-8 -right-8 rounded-full bg-white w-20 h0-20 sm:w-40 sm:h-40">
                     <img src="{{ Storage::url('avatar.png') }}" alt="Avatar">
                 </div>
-                <h2 class="text-lg sm:text-4xl mb-4">Let Mintyplex help you start and manage your NFT business for FREE!</h2>
+                <h2 class="text-lg sm:text-4xl mb-4">Let Sheaearn help you start and manage your NFT business for FREE!</h2>
                 <a href="#" class="inline-block px-12 py-6 bg-primary text-white font-medium text-xl leading-snug shadow-md hover:bg-white hover:text-black hover:border-primary hover:shadow-lg focus:bg-primary focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary active:shadow-lg transition duration-150 ease-in-out sm:rounded-full rounded-3xl">Join the waitlist</a>
             </div>
 
@@ -200,7 +200,7 @@
                        </div>
                    </div>
                </div>
-               <div class="absolute sm:relative -left-10 top-1/4">
+               <div class="absolute sm:relative -left-10 top-1/4 sm:top-auto">
                    <div class="flex justify-center p-2 sm:p-4">
                        <div class="rounded-full shadow-lg bg-sky-100 max-w-sm p-4">
                            <img src="{{ Storage::url('avatar-1.png') }}" alt="Facebook" class="object-contain h-14 sm:h-24 w-full">
