@@ -31,7 +31,7 @@ Route::get('/dashboard', function () {
 // Shop
 Route::get('catalog', [ProductController::class, 'index'])->name('product.index');
 Route::get('category/{slug}', [ProductController::class, 'category'])->name('category.index');
-Route::get('product/{slug}', [ProductController::class, 'show'])->name('product.show');
+Route::get('product/{slug}', \App\Http\Livewire\Product\ShowProduct::class)->name('product.show');
 Route::get('product/{slug}/details', [ProductController::class, 'details'])->name('product.details');
 Route::get('product/{slug}/reviews', [ProductController::class, 'reviews'])->name('product.reviews');
 
