@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entry;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 //use Jorenvh\Share\Share;
@@ -38,9 +39,12 @@ class EntryController extends Controller
             ->telegram()
             ->getRawLinks();
 
+            $products = Product::inRandomOrder()->limit(6)->get();
+
         return view('blog.show', [
             'entry' => $entry,
-            'shareUrls' => $shareUrls
+            'shareUrls' => $shareUrls,
+            'products' => $products
         ]);
     }
 }

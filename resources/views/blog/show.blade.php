@@ -3,6 +3,17 @@
 
     @livewire('show-entry', ['entry'=>$entry, 'shareUrls'=>$shareUrls])
 
+
+    <div class="container mt-10 mb-10">
+        <h2 class="font-semibold text-3xl mb-4">Related Products</h2>
+        <div class="divider"></div>
+        <div class='grid gap-2 lg:gap-4 grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 mb-3'>
+            @foreach ($products as $product)
+            @livewire('product.product-layout-one', ['product'=>$product])
+            @endforeach
+        </div>
+    </div>
+
     @if(1>3)
         <div class="max-w-6xl mx-auto">
             <img class="w-full" src="{{ $entry->getFirstMediaUrl('featured_image', 'standard') }}" alt="{{$entry->title}}"/>
