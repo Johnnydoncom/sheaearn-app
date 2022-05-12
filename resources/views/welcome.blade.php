@@ -92,12 +92,12 @@
                 <div class="flex justify-center px-10 sm:p-0">
                     <div class="rounded-3xl sm:shadow-lg bg-white max-w-xs sm:max-w-sm">
                         <div class="rounded-3xl bg-primary">
-                            <img src="{{ Storage::url('Creators.png') }}" alt="Creators" class="object-contain h-64 sm:h-96 w-full">
+                            <img src="{{ Storage::url('Creators.png') }}" alt="Creators" class="object-contain h-54 sm:h-54 lg:h-96 w-full">
                         </div>
 
                        <div class="py-6 text-center">
-                           <h2 class="text-2xl sm:text-4xl font-bold mb-3">Creators</h2>
-                           <div class="text-md sm:text-3xl">Creators can now launch their stores, mint and sell NFTs in minutes.</div>
+                           <h2 class="text-2xl lg:text-4xl font-bold mb-3">Creators</h2>
+                           <div class="text-md lg:text-3xl">Creators can now launch their stores, mint and sell NFTs in minutes.</div>
 
                            <img src="{{Storage::url('line-1.svg')}}" alt="Line" class="mx-auto mt-6 w-32 sm:w-auto">
                        </div>
@@ -106,12 +106,12 @@
                 <div class="flex justify-center px-10 sm:p-0">
                     <div class="rounded-3xl sm:shadow-lg bg-white max-w-xs sm:max-w-sm">
                         <div class="rounded-3xl bg-primary">
-                            <img src="{{ Storage::url('Collectors.png') }}" alt="Collectors" class="object-contain h-64 sm:h-96 w-full">
+                            <img src="{{ Storage::url('Collectors.png') }}" alt="Collectors" class="object-contain h-54 sm:h-54 lg:h-96 w-full">
                         </div>
 
                         <div class="py-6 text-center">
-                            <h2 class="text-2xl sm:text-4xl font-bold mb-3">Collectors</h2>
-                            <div class="text-md sm:text-3xl">Collectors now have more freedom to connect with their favorite Creators, get whitelisted and buy NFTs.</div>
+                            <h2 class="text-2xl lg:text-4xl font-bold mb-3">Collectors</h2>
+                            <div class="text-md lgtext-3xl">Collectors now have more freedom to connect with their favorite Creators, get whitelisted and buy NFTs.</div>
 
                             <img src="{{Storage::url('line-1.svg')}}" alt="Line" class="mx-auto mt-6 w-32 sm:w-auto">
                         </div>
@@ -120,12 +120,12 @@
                 <div class="flex justify-center px-10 sm:p-0">
                     <div class="rounded-3xl sm:shadow-lg bg-white max-w-xs sm:max-w-sm">
                         <div class="rounded-3xl bg-primary">
-                            <img src="{{ Storage::url('Affiliates.png') }}" alt="Affiliates" class="object-contain h-64 sm:h-96 w-full">
+                            <img src="{{ Storage::url('Affiliates.png') }}" alt="Affiliates" class="object-contain h-54 sm:h-54 lg:h-96 w-full">
                         </div>
 
                         <div class="py-6 text-center">
-                            <h2 class="text-2xl sm:text-4xl font-bold mb-3">Affiliates</h2>
-                            <div class="text-md sm:text-3xl">Affiliates can also earn from referring Creators and Collectors to use Mintyplex.</div>
+                            <h2 class="text-2xl lg:text-4xl font-bold mb-3">Affiliates</h2>
+                            <div class="text-md lg:text-3xl">Affiliates can also earn from referring Creators and Collectors to use Mintyplex.</div>
 
                             <img src="{{Storage::url('line-1.svg')}}" alt="Line" class="mx-auto mt-6 w-32 sm:w-auto">
                         </div>
