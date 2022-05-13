@@ -43,6 +43,7 @@ class SettingSeeder extends Seeder
         $settingArray['order_commission'] = 0.5;
         $settingArray['intra_state_shipping_fee'] = 1000;
         $settingArray['inter_state_shipping_fee'] = 2000;
+        $settingArray['order_method'] = 'cart';
 
         SettingInsert::set($settingArray);
         SettingInsert::save();

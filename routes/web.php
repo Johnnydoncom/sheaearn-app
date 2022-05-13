@@ -38,6 +38,38 @@ Route::get('product/{slug}/reviews', [ProductController::class, 'reviews'])->nam
 Route::post('product/{slug}/wishlist', [ProductController::class, 'storeWishlist'])->middleware('auth')->name('product.wishlist.store');
 
 
+// shop cart Controller
+Route::get('cart', 'CartController@index')->name('cart.index');
+Route::post('cart', 'CartController@store')->name('cart.store');
+Route::patch('cart', 'CartController@update')->middleware('has_cart')->name('cart.update');
+Route::delete('cart/{id}', 'CartController@destroy')->middleware('has_cart')->name('cart.destroy');
+
+Route::middleware(['auth', 'verified', 'has_cart'])->group(function () {
+//        Route::get('cart', 'CartController@index')->name('cart.index');
+//        Route::post('cart', 'CartController@store')->name('cart.store');
+//        Route::patch('cart', 'CartController@update')->name('cart.update');
+//        Route::delete('cart/{id}', 'CartController@destroy')->name('cart.destroy');
+
+    Route::get('checkout', 'CheckoutController@index')->name('checkout.index');
+    Route::post('checkout', 'CheckoutController@store')->name('checkout.store');
+    Route::get('checkout/shipping', 'CheckoutController@shipping')->name('checkout.shipping');
+    Route::get('checkout/shipping/add', 'CheckoutController@addShippingView')->name('checkout.shipping.add');
+    Route::post('checkout/shipping/add', 'CheckoutController@addShipping')->name('checkout.shipping.store');
+    Route::get('checkout/shipping/{address}/edit', 'CheckoutController@updateShippingView')->name('checkout.shipping.edit');
+    Route::patch('checkout/shipping/{address}/edit', 'CheckoutController@updateShippingAddress')->name('checkout.shipping.update');
+
+    Route::patch('checkout/shipping/{id}', 'CheckoutController@selectShipping')->name('checkout.shipping.select');
+
+    Route::get('checkout/payment-method', 'CheckoutController@paymentMethod')->name('checkout.payment-method.index');
+    Route::post('checkout/payment-method', 'CheckoutController@storePaymentMethod')->name('checkout.payment-method.store');
+
+    Route::get('checkout/finish', 'CheckoutController@finish')->name('checkout.finish');
+    Route::post('checkout/finish', 'CheckoutController@finalize')->name('checkout.submit');
+});
+
+Route::get('checkout/success/{order}', 'CheckoutController@success')->middleware(['signed','verified', 'auth'])->name('checkout.success');
+
+
 
 Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('index');

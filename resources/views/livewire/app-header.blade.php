@@ -140,6 +140,12 @@
                         <span class="badge badge-xs badge-primary indicator-item"></span>
                       </div>
                     </button>
+                     <a href="{{route('cart.index')}}" class="btn btn-ghost btn-circle h-14 w-14">
+                      <div class="indicator">
+                          <x-cui-cil-cart class="h-8 w-8"/>
+                          <span class="badge badge-xs badge-primary indicator-item">2</span>
+                      </div>
+                    </a>
                 </div>
 
             </div>

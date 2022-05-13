@@ -1,23 +1,28 @@
+<x-slot name="title">{{$product->title}}</x-slot>
 <div class="py-1 relative mx-0 product bg-gray-100 lg:bg-white" id="single-product">
 
-    <div class="p-4 container z-0 relative product-summary px-0 pl-0" style="">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 ">
+    <div class="lg:p-4 container z-0 relative product-summary px-0 pl-0" style="">
+        <div class="grid grid-cols-1 lg:grid-cols-4 lg:gap-8 ">
             <div class="lg:col-span-2 " wire:ignore>
                 <div class="swiper gallery-slider">
                     <div class="swiper-wrapper">
                         <!-- Slides -->
                         @foreach($gallery as $key => $slide)
-                            <div class="swiper-slide">
-                                <img src="{{ $slide }}" class="rounded-none">
+                            <div class="swiper-slide bg-white">
+                                <img src="{{ $slide }}" class="rounded-none w-full">
                             </div>
                         @endforeach
                     </div>
+
                     <!-- If we need pagination -->
-                    <div class="swiper-pagination"></div>
+                    <div class="swiper-scrollbar"></div>
+
+                    <!-- If we need pagination -->
+{{--                    <div class="swiper-pagination"></div>--}}
 
                     <!-- If we need navigation buttons -->
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+{{--                    <div class="swiper-button-prev"></div>--}}
+{{--                    <div class="swiper-button-next"></div>--}}
                 </div>
             </div>
 
@@ -35,14 +40,16 @@
                     </div>
                 </div>
 
-                <div class="promotion mt-3">
+                <div class="promotion">
                     <div class="card rounded-none">
-                        <h3 class="uppercase  px-4">Promotions</h3>
+                        <h3 class="uppercase px-4 py-2 text-sm">Promotions</h3>
                         <div class="card-body p-4 bg-white">
-                            Get ₦ 500.00 commission when you refer this product to a friend. NB. T&C apply How it works
+                            <p class="text-xs lg:text-base font-normal text-red-600">Get ₦ 500.00 commission when you refer this product to a friend. NB. T&C apply <a href="#" class="text-xs text-blue-600 py-2 font-normal underline hover:text-primary">How it works</a></p>
                         </div>
                     </div>
                 </div>
+
+
 
 
                 <div id="sticky-cart" class="card sticky bottom-0 bg-white rounded-none z-20 mt-5">
@@ -57,17 +64,17 @@
 
                             @if($cart && count($cart) > 0)
                                 <div class="flex items-center justify-between w-full">
-                                    <a wire:click="decrease" class="btn btn-primary rounded-lg border-none shadow-md rounded-md"><x-cui-cil-minus class="w-6 h-6"/></a>
+                                    <a wire:click="decrease" wire:loading.class="loading" class="btn btn-primary rounded-lg border-none shadow-md rounded-md"><x-cui-cil-minus class="w-6 h-6"/></a>
 
-                                    <span>50</span>
+                                    <span>{{$getTotalCartItem}}</span>
 
-                                    <button wire:click="increase" @if($product->manage_stock && $getTotalCartItem >= $product->stock_quantity) disabled="disabled" @endif class="btn btn-primary rounded-lg border-none shadow-md rounded-md"><x-cui-cil-plus class="w-6 h-6"/></button>
+                                    <button wire:click="increase" wire:loading.class="loading" @if($product->manage_stock && $getTotalCartItem >= $product->stock_quantity) disabled="disabled" @endif class="btn btn-primary rounded-lg border-none shadow-md rounded-md"><x-cui-cil-plus class="w-6 h-6"/></button>
                                 </div>
                             @else
                             <div class="flex flex-grow">
 
 
-                                    <button @if($product->manage_stock && $product->stock_quantity < 1) disabled="" @endif class='btn flex justify-between btn-primary btn-block' wire:click="$emit('addToCart', {{$product->id}})">
+                                    <button @if($product->manage_stock && $product->stock_quantity < 1) disabled="" @endif class='btn flex justify-between btn-primary btn-block' wire:click="$emit('addToCart', {{$product->id}})" wire:loading.class="loading">
                                         <x-cui-cil-cart class="w-6 h-6 flex-none"/>
                                         <span class='flex-1 uppercase flex items-center justify-center'>
                                             @if($product->manage_stock && $product->stock_quantity < 1)
@@ -100,24 +107,51 @@
             </div>
         </div>
 
-        <div class="description mt-14">
+        <div class="description sm:mt-10">
             <div class="card rounded-none">
-                <h3 class="uppercase  px-4">Description</h3>
-                <div class="card-body p-4 bg-white">
+                <h3 class="uppercase px-4 sm:px-0 py-2 text-sm sm:text-xl sm:font-semibold">Description</h3>
+                <div class="card-body p-4 sm:px-0 bg-white description break-all text-sm">
                     {!! $product->description !!}
                 </div>
             </div>
         </div>
 
+        <div class="description lg:mt-4">
+            <div class="card rounded-none">
+                <h3 class="uppercase px-4 sm:px-0 py-2 sm:text-xl lg:text-xl 2xl:text-xl text-sm 2xl:font-semibold">Verified Customer Feedback</h3>
+                <a href="{{ route('product.reviews', $product->slug) }}" class="flex justify-between items-center w-full text-sm bg-secondary bg-opacity-20 px-4 py-2">
+                        <span>
+                            <span>Product Ratings & Reviews</span>
+                            <p><span class="text-primary mr-1">{{ $product->average_rating }}/5</span> {{ $product->reviews->count() }} ratings</p>
+                            </span>
+                    <span>
+                            <x-fas-chevron-right class="w-4 h-4"/>
+                        </span>
+                </a>
+
+                <div class="card-body p-4 bg-white text-blue-600">
+                                @if($product->reviews->count())
+                                @foreach($product->reviews as $review)
+                                    <x-product.review :review="$review" />
+                                @endforeach
+{{--                                <Review v-if="reviews.length" v-for="(review,index) in reviews.slice(0, 4)" :key="review.id" :review="review" />--}}
+                                @else
+                                <p class="pb-3-safe">No review</p>
+                                @endif
+                            </div>
+
+            </div>
+        </div>
 
 
     </div>
 
 
+    <livewire:cart-action />
 </div>
 
 @push('styles')
-<style rel="stylesheet" href="{{ mix('css/swiper-bundle.min.css')}}"></style>
+<link rel="stylesheet" href="{{ mix('css/swiper-bundle.min.css')}}">
 @endpush
 @push('scripts')
     <script src="{{ mix('js/swiper-bundle.js')}}"></script>
@@ -134,7 +168,12 @@
                     scrollbar: {
                         el: '.swiper-scrollbar',
                         hide: true
-                    }
+                    },
+                    autoplay:{
+                        delay: 5000,
+                        disableOnInteraction: false
+                    },
+                    navigation:false
                 })
             }
 

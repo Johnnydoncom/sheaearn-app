@@ -14,7 +14,7 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         @livewireStyles
-
+        @stack('styles')
     </head>
     <body class="font-sans antialiased" >
         <div class="min-h-screen bg-white" x-data="{isLoggedIn: {{ Auth::check() ? 1 : 0 }}, showLoginModal:false }">

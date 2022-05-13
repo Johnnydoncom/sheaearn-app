@@ -8,17 +8,13 @@ use Livewire\Component;
 
 class CartAction extends Component
 {
-    protected $listeners = ['addToCart'];
+    protected $listeners = ['addToCart', 'updateCart'];
 
-    protected $rules = [
-        'id' => 'required|exists:products,id'
-    ];
 
     public function addToCart($id, $qty=1)
     {
-       $this->validate();
 
-        $product = Product::with('stock')->findOrFail($id);
+        $product = Product::findOrFail($id);
         $suffix = '';
 
         $options = array(
@@ -58,10 +54,58 @@ class CartAction extends Component
             auth()->user()->wishlist()->where('product_id', $id)->delete();
         }
 
+        $this->emit('refreshProduct');
+
         // Set Flash Message
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=> $product->title.' added to cart'
         ]);
+    }
+
+
+    public function updateCart($id, $qty){
+//        \Cart::clear();
+        if($id && $qty) {
+
+            $cart = \Cart::get($id);
+            $product = Product::find($cart->associatedModel->id);
+
+            // Check stock quantity
+            if($product->manage_stock && (!$product->stock_quantity || $qty > $product->stock_quantity)){
+                throw ValidationException::withMessages([
+                    'quantity' => __('Out of stock'),
+                ]);
+            }
+
+            \Cart::update($id, array(
+                'quantity' => array(
+                    'relative' => false,
+                    'value' => $qty
+                ),
+            ));
+
+            $this->emit('refreshProduct');
+
+            // Set Flash Message
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=> 'Cart updated'
+            ]);
+        }
+
+    }
+
+    public function destroy($id)
+    {
+        if($id) {
+            \Cart::remove($id);
+
+            // Set Flash Message
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=> 'Product removed successfully'
+            ]);
+        }
     }
 }
