@@ -1,12 +1,16 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 const plugin = require('tailwindcss/plugin');
 
-// const generateColorClass = (variable) => {
-//     return ({ opacityValue }) =>
-//         opacityValue
-//             ? `rgba(var(--${variable}), ${opacityValue})`
-//             : `rgb(var(--${variable}))`
-// }
+const THEME_COLORS = {
+    primary: "#b80000", // Can always use CSS variables too e.g. "var(--color-primary)",
+    secondary: "#0D0D0D",
+    brand: "#243c5a",
+    neutral: "#0D0D0D",
+    info: "#3ABFF8",
+    success: "#198754",
+    warning: "#FBBD23",
+    error: "#F87272"
+};
 
 
 
@@ -18,18 +22,29 @@ module.exports = {
         './node_modules/tw-elements/dist/js/**/*.js'
     ],
     theme: {
+        colors: THEME_COLORS,
         extend: {
             fontFamily: {
                 sans: ['DM Sans', ...defaultTheme.fontFamily.sans],
                 poppins: ['Poppins', 'sans-serif']
-            }
+            },
+            // color: {
+            //     primary: "#b80000", // Can always use CSS variables too e.g. "var(--color-primary)",
+            //     secondary: "#0D0D0D",
+            //     brand: "#243c5a",
+            //     neutral: "#0D0D0D",
+            //     info: "#3ABFF8",
+            //     success: "#198754",
+            //     warning: "#FBBD23",
+            //     error: "#F87272",
+            // },
         },
     },
     darkMode: 'class',
     plugins: [
         require('@tailwindcss/forms'),
         require('tw-elements/dist/plugin'),
-        require("daisyui"),
+        // require("daisyui"),
         plugin(function({ addUtilities, theme }) {
             const newUtilities = {
                 '.custom-scrollbar': {
@@ -42,26 +57,9 @@ module.exports = {
 
             addUtilities(newUtilities, ['responsive', 'hover'])
         }),
-        require('@tailwindcss/line-clamp')
-    ],
-
-    daisyui: {
-        themes: [
-            {
-                mytheme: {
-                    "primary": "#b80000",
-                    "secondary": "#0D0D0D",
-                    "accent": "#37CDBE",
-                    "neutral": "#0D0D0D",
-                    "base-100": "#FFFFFF",
-                    "info": "#3ABFF8",
-                    "success": "#198754",
-                    "warning": "#FBBD23",
-                    "error": "#F87272",
-                },
-            },
-            "dark",
-        ],
-        darkTheme: "dark",
-    },
+        require('@tailwindcss/line-clamp'),
+        require('tailwindcss-css-variables-palette-plugin')({
+            colors: THEME_COLORS,
+        }),
+    ]
 };

@@ -31,16 +31,22 @@
 <script src="{{ asset('js/app.js') }}"></script>
 
 <script>
-    // var themeToggleDarkIcon = document.getElementById('dark-mode-toggle');
+    var themeToggleDarkIcon = document.getElementById('dark-mode-toggle');
+    var themeToggleLightIcon = document.getElementById('light-mode-toggle');
+
     var themeToggleBtn = document.getElementById('theme-toggle');
 
     // Change the icons inside the button based on previous settings
     if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         themeToggleBtn.classList.remove('swap-active');
         document.documentElement.classList.add('dark');
+        themeToggleLightIcon.classList.remove('hidden');
+        themeToggleDarkIcon.classList.add('hidden');
     } else {
         themeToggleBtn.classList.add('swap-active');
         document.documentElement.classList.remove('dark');
+        themeToggleLightIcon.classList.add('hidden');
+        themeToggleDarkIcon.classList.remove('hidden');
     }
 
 
