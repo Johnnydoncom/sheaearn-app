@@ -23,7 +23,7 @@
     <div class="py-0 my-0 mt-0 relative">
         <h2 class="uppercase text-xs mt-0">
             <div class="flex justify-between items-center w-full">
-                <h2 class="uppercase px-4 sm:px-0 py-2 text-sm sm:text-xl sm:font-semibold">Your address</h2>
+                <h2 class="uppercase px-2 sm:px-0 py-2 text-sm sm:text-xl sm:font-semibold">Your address</h2>
                 <a href="{{route('checkout.shipping')}}" class="text-primary">
                     Change Address
                 </a>
@@ -40,8 +40,8 @@
                 </div>
                 @else
                 <div>
-                    <a href="{{route('checkout.shipping')}}">
-                        <a class="text-primary px-2 py-2">Add Address</a>
+                    <a class="text-primary px-2 py-2" href="{{route('checkout.shipping')}}">
+                        Add Address
                     </a>
                 </div>
                 @endif
@@ -49,7 +49,7 @@
         </div>
 
 
-        <h3 class="uppercase px-4 py-4 text-sm sm:text-xl sm:font-semibold sm:py-5">My Cart ({{ Cart::getContent()->count() }} Items)</h3>
+        <h3 class="uppercase px-2 py-4 text-sm sm:text-xl sm:font-semibold sm:py-5">My Cart ({{ Cart::getContent()->count() }} Items)</h3>
 
         @if(count($cart) > 0)
         <div>

@@ -46,7 +46,7 @@ Route::get('cart', ShowCart::class)->name('cart.index');
 Route::middleware(['auth', 'verified', 'has_cart'])->group(function () {
     Route::get('checkout', ShowCheckout::class)->name('checkout.index');
     Route::post('checkout', 'CheckoutController@store')->name('checkout.store');
-    Route::get('checkout/shipping', 'CheckoutController@shipping')->name('checkout.shipping');
+    Route::get('checkout/shipping', \App\Http\Livewire\ShippingAddress::class)->name('checkout.shipping');
     Route::get('checkout/shipping/add', 'CheckoutController@addShippingView')->name('checkout.shipping.add');
     Route::post('checkout/shipping/add', 'CheckoutController@addShipping')->name('checkout.shipping.store');
     Route::get('checkout/shipping/{address}/edit', 'CheckoutController@updateShippingView')->name('checkout.shipping.edit');

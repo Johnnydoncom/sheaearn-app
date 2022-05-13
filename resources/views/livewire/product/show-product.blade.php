@@ -116,7 +116,7 @@
             </div>
         </div>
 
-        <div class="description lg:mt-4">
+        <div class="reviews lg:mt-4">
             <div class="card rounded-none">
                 <h3 class="uppercase px-4 sm:px-0 py-2 sm:text-xl lg:text-xl 2xl:text-xl text-sm 2xl:font-semibold">Verified Customer Feedback</h3>
                 <a href="{{ route('product.reviews', $product->slug) }}" class="flex justify-between items-center w-full text-sm bg-secondary bg-opacity-20 px-4 py-2">
@@ -143,6 +143,16 @@
             </div>
         </div>
 
+        @if($related->count())
+        <div class="mb-0 mt-4">
+            <h2 class="font-semibold mb-4 text-md">You may also like</h2>
+            <div class="grid grid-cols-2 gap-2">
+                @foreach($related as $rp)
+                <x-product.related :product="$rp" />
+                @endforeach
+            </div>
+        </div>
+       @endif
 
     </div>
 
