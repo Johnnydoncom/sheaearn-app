@@ -117,7 +117,7 @@
 </div>
 
 @push('styles')
-<style rel="stylesheet" href="{{ mix('css/swiper-bundle.css')}}"></style>
+<style rel="stylesheet" href="{{ mix('css/swiper-bundle.min.css')}}"></style>
 @endpush
 @push('scripts')
     <script src="{{ mix('js/swiper-bundle.js')}}"></script>
