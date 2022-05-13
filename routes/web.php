@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Livewire\ShowCart;
+use App\Http\Livewire\ShowCheckout;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,18 +41,10 @@ Route::post('product/{slug}/wishlist', [ProductController::class, 'storeWishlist
 
 
 // shop cart Controller
-Route::get('cart', 'CartController@index')->name('cart.index');
-Route::post('cart', 'CartController@store')->name('cart.store');
-Route::patch('cart', 'CartController@update')->middleware('has_cart')->name('cart.update');
-Route::delete('cart/{id}', 'CartController@destroy')->middleware('has_cart')->name('cart.destroy');
+Route::get('cart', ShowCart::class)->name('cart.index');
 
 Route::middleware(['auth', 'verified', 'has_cart'])->group(function () {
-//        Route::get('cart', 'CartController@index')->name('cart.index');
-//        Route::post('cart', 'CartController@store')->name('cart.store');
-//        Route::patch('cart', 'CartController@update')->name('cart.update');
-//        Route::delete('cart/{id}', 'CartController@destroy')->name('cart.destroy');
-
-    Route::get('checkout', 'CheckoutController@index')->name('checkout.index');
+    Route::get('checkout', ShowCheckout::class)->name('checkout.index');
     Route::post('checkout', 'CheckoutController@store')->name('checkout.store');
     Route::get('checkout/shipping', 'CheckoutController@shipping')->name('checkout.shipping');
     Route::get('checkout/shipping/add', 'CheckoutController@addShippingView')->name('checkout.shipping.add');
@@ -70,6 +64,9 @@ Route::middleware(['auth', 'verified', 'has_cart'])->group(function () {
 Route::get('checkout/success/{order}', 'CheckoutController@success')->middleware(['signed','verified', 'auth'])->name('checkout.success');
 
 
+
+Route::get('dashboard/login', [\App\Http\Controllers\Admin\DashboardController::class, 'showLogin'])->middleware('guest')->name( 'admin.login.show');
+Route::post('dashboard/login', [\App\Http\Controllers\Admin\DashboardController::class, 'login'])->middleware('guest')->name( 'admin.login');
 
 Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('index');

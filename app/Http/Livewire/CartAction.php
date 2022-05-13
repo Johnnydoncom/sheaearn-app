@@ -96,7 +96,7 @@ class CartAction extends Component
 
     }
 
-    public function destroy($id)
+    public function removeCart($id)
     {
         if($id) {
             \Cart::remove($id);

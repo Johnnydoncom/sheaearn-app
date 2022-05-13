@@ -12,14 +12,10 @@ class EntryController extends Controller
 {
     public function index(){
         // Store all entries in cache for 1 hour (3600 seconds)
-        $entries = Cache::remember('entries', 3600, function() {
-            return Entry::latest()->whereSticky(false)->get();
-        });
+        $entries = Entry::latest()->whereSticky(false)->get();
 
         // Store all entries in cache for 1 hour (3600 seconds)
-        $sticky_entries = Cache::remember('sticky_entries', 3600, function() {
-            return Entry::latest()->whereSticky(true)->latest()->limit(3)->get();
-        });
+        $sticky_entries = Entry::latest()->whereSticky(true)->latest()->limit(3)->get();
 
         return view('blog.home', [
             'entries' => $entries,
