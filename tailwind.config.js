@@ -22,12 +22,12 @@ module.exports = {
         './node_modules/tw-elements/dist/js/**/*.js'
     ],
     theme: {
-        colors: THEME_COLORS,
         extend: {
             fontFamily: {
                 sans: ['DM Sans', ...defaultTheme.fontFamily.sans],
                 poppins: ['Poppins', 'sans-serif']
             },
+            colors: THEME_COLORS,
             // color: {
             //     primary: "#b80000", // Can always use CSS variables too e.g. "var(--color-primary)",
             //     secondary: "#0D0D0D",

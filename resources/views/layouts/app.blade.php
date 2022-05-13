@@ -17,7 +17,7 @@
         @stack('styles')
     </head>
     <body class="font-sans antialiased" >
-        <div class="min-h-screen bg-white" x-data="{isLoggedIn: {{ Auth::check() ? 1 : 0 }}, showLoginModal:false }">
+        <div class="min-h-screen bg-white dark:bg-black" x-data="{isLoggedIn: {{ Auth::check() ? 1 : 0 }}, showLoginModal:false }">
 {{--            @include('partials.header')--}}
             @livewire('app-header', ['pageTitle' => isset($title) ? (string)$title : '', 'searchIcon' => isset($searchIcon) ? true : false ])
 
@@ -73,6 +73,66 @@
                     title:message
                 })
             })
+        </script>
+
+
+        <script>
+            var themeToggleDarkIcon = document.getElementById('dark-mode-toggle');
+            var themeToggleLightIcon = document.getElementById('light-mode-toggle');
+
+            var themeToggleBtn = document.getElementById('theme-toggle');
+
+            // Change the icons inside the button based on previous settings
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                themeToggleBtn.classList.remove('swap-active');
+                document.documentElement.classList.add('dark');
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+            } else {
+                themeToggleBtn.classList.add('swap-active');
+                document.documentElement.classList.remove('dark');
+                themeToggleLightIcon.classList.add('hidden');
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+
+
+            themeToggleBtn.addEventListener('click', function() {
+
+                // if set via local storage previously
+                if (localStorage.getItem('color-theme')) {
+                    if (localStorage.getItem('color-theme') === 'light') {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('color-theme', 'dark');
+
+                        themeToggleBtn.classList.remove('swap-active');
+                        themeToggleLightIcon.classList.remove('hidden');
+                        themeToggleDarkIcon.classList.add('hidden');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('color-theme', 'light');
+                        themeToggleBtn.classList.add('swap-active');
+                        themeToggleLightIcon.classList.add('hidden');
+                        themeToggleDarkIcon.classList.remove('hidden');
+                    }
+
+                    // if NOT set via local storage previously
+                } else {
+                    if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('color-theme', 'light');
+                        themeToggleBtn.classList.remove('swap-active');
+                        themeToggleLightIcon.classList.add('hidden');
+                        themeToggleDarkIcon.classList.remove('hidden');
+                    } else {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('color-theme', 'dark');
+                        themeToggleBtn.classList.add('swap-active');
+                        themeToggleLightIcon.classList.remove('hidden');
+                        themeToggleDarkIcon.classList.add('hidden');
+                    }
+                }
+
+            });
         </script>
 
             @stack('scripts')

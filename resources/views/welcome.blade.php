@@ -2,7 +2,7 @@
     <div class="py-12">
         <section class="max-w-6xl md:max-w-7xl mx-auto hero px-1 sm:px-12 mb-20">
 
-            <div class="flex flex-wrap gap-x-2 items-center text-center justify-center sm:justify-start leading-none sm:text-left text-3xl sm:text-[5.288rem] font-bold px-4 font-poppins">
+            <div class="flex flex-wrap gap-x-2 items-center text-center justify-center sm:justify-start leading-none sm:text-left text-3xl sm:text-[5.288rem] font-bold px-4 font-poppins dark:text-gray-200">
                 Create a <img src="{{Storage::url('secure.jpg')}}" class="h-[0.8em] rounded-full sm:mx-2 w-20 sm:w-auto"> <span class="text-primary">store,</span> mint, <span class="text-primary">and get</span> <img src="{{Storage::url('secure2.jpg')}}" class="h-[0.8em] rounded-full sm:mx-2 w-10 sm:w-auto"> <img src="{{Storage::url('secure3.jpg')}}" class="h-[0.8em] rounded-full sm:mx-1 w-14 sm:w-auto"> <span class="flex-none">collectors for your</span> <span class="text-primary mx-2"> NFTs.</span>
             </div>
         </section>
@@ -39,7 +39,7 @@
                     <div class="bg-white rounded-3xl mx-auto shadow-md flex items-center justify-center w-24 h-24 sm:w-36 sm:h-36">
                         <img src="{{ Storage::url('homeIcon1.svg') }}" alt="Arrow Down" class="w-24 h-24 sm:w-36 sm:h-36 object-contain object">
                     </div>
-                    <div class="text-lg sm:text-4xl mt-6">
+                    <div class="text-lg sm:text-4xl mt-6 dark:text-gray-200">
                         Easy-to-use platform to launch and manage your NFT business.
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     <div class="bg-white rounded-3xl mx-auto shadow-md flex items-center justify-center w-24 h-24 sm:w-36 sm:h-36">
                         <img src="{{ Storage::url('homeIcon1.svg') }}" alt="Arrow Down" class="w-24 h-24 sm:w-36 sm:h-36 object-contain object">
                     </div>
-                    <div class="text-lg sm:text-4xl mt-6">
+                    <div class="text-lg sm:text-4xl mt-6 dark:text-gray-200">
                         Easy-to-use platform to launch and manage your NFT business.
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                     <div class="bg-white rounded-3xl mx-auto shadow-md flex items-center justify-center w-24 h-24 sm:w-36 sm:h-36">
                         <img src="{{ Storage::url('Profile.svg') }}" alt="Profile" class="w-24 h-24 sm:w-36 sm:h-36 object-contain object">
                     </div>
-                    <div class="text-lg sm:text-4xl mt-6">
+                    <div class="text-lg sm:text-4xl mt-6 dark:text-gray-200">
                         Inclusive Community for you to connect with collectors and other NFT enthusiasts.
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                     <div class="bg-white rounded-3xl mx-auto shadow-md flex items-center justify-center w-24 h-24 sm:w-36 sm:h-36">
                         <img src="{{ Storage::url('Security.svg') }}" alt="Security" class="w-24 h-24 sm:w-36 sm:h-36 object-contain object">
                     </div>
-                    <div class="text-lg sm:text-4xl mt-6">
+                    <div class="text-lg sm:text-4xl mt-6 dark:text-gray-200">
                         Certificate of Authenticity for every NFT minted and sold on your store.
                     </div>
                 </div>
@@ -141,7 +141,7 @@
             </div>
         </section>
         <section class="container mt-20 sm:mt-12">
-            <div class="flex justify-center bg-secondary rounded-3xl py-10 px-4 sm:px-20 sm:py-20 shadow-lg">
+            <div class="flex justify-center bg-secondary dark:bg-brand rounded-3xl py-10 px-4 sm:px-20 sm:py-20 shadow-lg">
                 <div class="text-center">
                     <h2 class="text-white text-3xl sm:text-6xl font-extrabold mb-4 text-white">Join the  waiting  list</h2>
                     <p class="text-md sm:text-4xl mb-6 leading-normal text-white">
@@ -213,7 +213,7 @@
             <img src="{{ Storage::url('arrow-4.svg') }}" alt="Arrow Down" class="absolute inset-y-1/2 -right-14 h-24 hidden sm:block">
         </section>
     </div>
-    <footer class="text-center">
+    <footer class="text-center dark:text-gray-400">
         <p class="text-center text-2xl py-10">{{ date('Y') }}. All Rights Reserved</p>
     </footer>
 </x-guest-layout>

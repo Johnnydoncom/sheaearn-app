@@ -33,6 +33,9 @@
     @apply normal-case min-h-0;
 }
 
+.theme-active{
+    @apply bg-white text-primary rounded-full;
+}
 
 
 
