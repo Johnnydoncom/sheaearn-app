@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class ShowCart extends Component
 {
-    protected $listeners = ['refreshProduct' => '$refresh'];
+    protected $listeners = ['refreshCart' => '$refresh'];
 
 
     public function render()
@@ -36,4 +36,16 @@ class ShowCart extends Component
         $this->emitTo('cart-action', 'updateCart', $cartId, $qty);
     }
 
+    public function removeCart($cartId){
+        $this->emitTo('cart-action', 'removeCart', $cartId);
+    }
+
+    public function increase($cartId,$qty){
+        $this->emitTo('cart-action', 'updateCart', $cartId, $qty);
+    }
+
+    public function decrease($cartId,$qty){
+        if($qty > 1)
+            $this->emitTo('cart-action', 'updateCart', $cartId, $qty);
+    }
 }

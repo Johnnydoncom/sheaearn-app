@@ -18,7 +18,7 @@ class ShowProduct extends Component
     public $cart;
     public $getTotalCartItem=null;
 
-    protected $listeners = ['refreshProduct'];
+    protected $listeners = ['refreshProduct'=>'$refresh'];
 
     public function mount($slug)
     {
@@ -76,6 +76,10 @@ class ShowProduct extends Component
         return view('livewire.product.show-product');
     }
 
+    public function add(){
+        $this->emitTo('cart-action', 'addToCart', $this->product->id);
+    }
+
     public function increase(){
         $this->emitTo('cart-action', 'updateCart', array_key_first($this->cart->toArray()), $this->getTotalCartItem+1);
     }
@@ -83,22 +87,6 @@ class ShowProduct extends Component
     public function decrease(){
         if($this->getTotalCartItem > 0)
         $this->emitTo('cart-action', 'updateCart', array_key_first($this->cart->toArray()), $this->getTotalCartItem-1);
-    }
-
-    public function refreshProduct(){
-        $c = collect(\Cart::getContent())->filter(function($item){
-            return $item->associatedModel->id == $this->product->id;
-        });
-
-        if(count($c)>0){
-            $this->cart = $c;
-        }else{
-            $this->cart = null;
-        }
-
-        if(count($c)>0) {
-            $this->getTotalCartItem = $this->cart->sum('quantity');
-        }
     }
 
 }

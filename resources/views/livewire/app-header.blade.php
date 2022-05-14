@@ -1,4 +1,4 @@
-@if((new \Jenssegers\Agent\Agent())->isMobile())
+@if((new \Jenssegers\Agent\Agent())->isMobile() && 1>3)
     <span class="sticky top-0 z-50">
     <nav x-data="{ open: false }" aria-label="Mobile Menu" class="lg:hidden bg-white relative">
         <!-- Primary Navigation Menu -->
@@ -126,32 +126,32 @@
             <div class="flex items-center sm:justify-between">
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('index') }}">
-                        <x-application-logo class="block h-16 w-auto fill-current text-gray-600" type="light" />
+                        <x-application-logo class="block h-12 sm:h-16 w-auto fill-current text-gray-600" type="light" />
                     </a>
                 </div>
 
-                <div class="navbar-end ml-auto text-right flex gap-4">
+                <div class="navbar-end ml-auto text-right flex gap-2 sm:gap-4">
                     <button class="rounded-full p-2 hover:bg-gray-900/10" id="theme-toggle">
                         <!-- sun icon -->
-                        <x-cui-cil-sun class="h-6 w-6" id="dark-mode-toggle"/>
+                        <x-cui-cil-sun class="h-5 w-5 sm:h-6 sm:w-6" id="dark-mode-toggle"/>
 
                         <!-- moon icon -->
-                        <x-cui-cil-moon class="h-6 w-6" id="light-mode-toggle"/>
+                        <x-cui-cil-moon class="h-5 w-5 sm:h-6 sm:w-6" id="light-mode-toggle"/>
 {{--                          <svg id="light-mode-toggle" class="swap-off fill-current h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/></svg>--}}
 
                     </button>
 
                     <button class="rounded-full p-2 hover:bg-gray-900/10">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </button>
                     <button class="rounded-full p-2 hover:bg-gray-900/10">
                       <div class="indicator">
-                        <x-far-user  class="h-6 w-6" />
+                        <x-far-user  class="h-5 w-5 sm:h-6 sm:w-6" />
                       </div>
                     </button>
                      <a href="{{route('cart.index')}}" class="rounded-full p-2 hover:bg-gray-900/10 relative">
                       <div class="indicator">
-                          <x-cui-cil-cart class="h-6 w-6"/>
+                          <x-cui-cil-cart class="h-5 w-5 sm:h-6 sm:w-6"/>
                           <span class="badge badge-xs badge-primary indicator-item absolute -right-1 -top-1">{{ Cart::getContent()->count()}}</span>
                       </div>
                     </a>
@@ -220,9 +220,9 @@
 
                 <div class="social-icons flex gap-2 items-center">
                     <ul class="flex items-center gap-4">
-                        <li><a href="#"> <x-cui-cib-facebook class="w-5 h-5"/></a></li>
-                         <li><a href="#"> <x-cui-cib-twitter class="w-5 h-5"/></a></li>
-                        <li><a href="#"> <x-cui-cib-whatsapp class="w-5 h-5"/></a></li>
+                        <li><a href="#"> <x-cui-cib-facebook class="w-4 h-4 sm:w-5 sm:h-5"/></a></li>
+                         <li><a href="#"> <x-cui-cib-twitter class="w-4 h-4 sm:w-5 sm:h-5"/></a></li>
+                        <li><a href="#"> <x-cui-cib-whatsapp class="w-4 h-4 sm:w-5 sm:h-5"/></a></li>
                     </ul>
                 </div>
 

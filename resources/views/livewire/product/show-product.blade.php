@@ -68,13 +68,18 @@
 
                                     <span>{{$getTotalCartItem}}</span>
 
-                                    <button wire:click="increase" wire:loading.class="loading" @if($product->manage_stock && $getTotalCartItem >= $product->stock_quantity) disabled="disabled" @endif class="btn btn-primary rounded-lg border-none shadow-md rounded-md"><x-cui-cil-plus class="w-6 h-6"/></button>
+                                    <button wire:click="increase" wire:loading.class="loading" @if($product->manage_stock && $getTotalCartItem >= $product->stock_quantity) disabled="disabled" @endif class="btn btn-primary rounded-lg border-none shadow-md rounded-md">
+{{--                                        <div wire:loading class="spinner-border animate-spin inline-block w-4 h-4 border-1 rounded-full flex-none" role="status">--}}
+{{--                                            <span class="visually-hidden">Loading...</span>--}}
+{{--                                        </div>--}}
+                                        <x-cui-cil-plus class="w-6 h-6"/>
+                                    </button>
                                 </div>
                             @else
                             <div class="flex flex-grow">
 
 
-                                    <button @if($product->manage_stock && $product->stock_quantity < 1) disabled="" @endif class='btn flex justify-between btn-primary btn-block' wire:click="$emit('addToCart', {{$product->id}})" wire:loading.class="loading">
+                                    <button @if($product->manage_stock && $product->stock_quantity < 1) disabled="disabled" @endif class='btn btn-primary justify-between btn-primary btn-block' wire:click="add" wire:loading.class="loading">
                                         <x-cui-cil-cart class="w-6 h-6 flex-none"/>
                                         <span class='flex-1 uppercase flex items-center justify-center'>
                                             @if($product->manage_stock && $product->stock_quantity < 1)

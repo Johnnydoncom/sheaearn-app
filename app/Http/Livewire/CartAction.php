@@ -55,6 +55,7 @@ class CartAction extends Component
         }
 
         $this->emit('refreshProduct');
+        $this->emit('refreshCart');
 
         // Set Flash Message
         $this->dispatchBrowserEvent('alert',[
@@ -86,6 +87,7 @@ class CartAction extends Component
             ));
 
             $this->emit('refreshProduct');
+            $this->emit('refreshCart');
 
             // Set Flash Message
             $this->dispatchBrowserEvent('alert',[
@@ -101,6 +103,8 @@ class CartAction extends Component
         if($id) {
             \Cart::remove($id);
 
+            $this->emit('refreshProduct');
+            $this->emit('refreshCart');
             // Set Flash Message
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',

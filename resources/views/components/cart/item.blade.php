@@ -26,19 +26,19 @@
         {{-- cart action --}}
         <div class="grid grid-cols-2 sm:grid-cols-4">
             <div class="flex sm:col-span-3">
-                <button type="button" class="text-primary font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center uppercase" @click="alertOpen=true">
-                    <x-cui-cil-trash class="h-6 w-6"/> Remove
+                <button type="button" class="text-primary font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center uppercase" @click="alertOpen=true" data-bs-toggle="modal" data-bs-target="#deleteModal{{$cart->id}}">
+                    <x-cui-cil-trash class="w-4 h-4 sm:w-6 sm:h-6"/> Remove
                 </button>
             </div>
             <div class="flex justify-end">
 
 
                 <div class="flex items-center justify-between w-full">
-                    <button wire:click="$emitTo('cart-action', 'updateCart', '{{$cart->id}}', {{$cart->quantity-1}})" class="btn btn-primary btn-sm rounded-lg border-none shadow-md @if($cart->quantity < 1) opacity-50 @endif" wire:loading.class="loading" @if($cart->quantity < 2) disabled="disabled" @endif><x-cui-cil-minus class="w-6 h-6"/></button>
+                    <button wire:click="$emitTo('cart-action', 'updateCart', '{{$cart->id}}', {{$cart->quantity-1}})" class="btn btn-primary btn-sm rounded-lg border-none shadow-md @if($cart->quantity < 1) opacity-50 @endif" wire:loading.class="loading" @if($cart->quantity < 2) disabled="disabled" @endif><x-cui-cil-minus class="w-4 h-4 sm:w-6 sm:h-6"/></button>
 
                     <span>{{$cart->quantity}}</span>
 
-                    <button wire:click.prevent="$emitTo('cart-action', 'updateCart', '{{$cart->id}}', {{$cart->quantity+1}})" @if($cart->manage_stock && $cart->quantity >= $cart->available_quantity) disabled="disabled" @endif class="btn btn-primary btn-sm rounded-lg border-none shadow-md" wire:loading.class="loading"><x-cui-cil-plus class="w-6 h-6"/></button>
+                    <button wire:click.prevent="$emitTo('cart-action', 'updateCart', '{{$cart->id}}', {{$cart->quantity+1}})" @if($cart->manage_stock && $cart->quantity >= $cart->available_quantity) disabled="disabled" @endif class="btn btn-primary btn-sm rounded-lg border-none shadow-md" wire:loading.class="loading"><x-cui-cil-plus class="w-4 h-4 sm:w-6 sm:h-6"/></button>
                 </div>
 
             </div>
@@ -46,24 +46,24 @@
 
 
 
-        <template x-if="alertOpen">
-            <div class="modal modal-open">
-                <div class="modal-box relative max-w-xl text-center">
-                    <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2" @click="alertOpen=false">✕</label>
-                    <div class="py-10">
-                        <h3 class="text-xl font-bold mb-10">Do you really want to remove this item from cart?</h3>
+        <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="deleteModal{{$cart->id}}" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-modal="true" role="dialog">
+            <div class="modal-dialog modal-dialog-centered relative w-auto">
+                <div class="modal-content border-none shadow-lg relative flex flex-col w-full bg-white bg-clip-padding rounded-md outline-none text-current">
+                    <div class="modal-body relative p-4 text-center">
+                        <h3 class="text-xl font-bold py-5">Do you really want to remove this item from cart?</h3>
                     </div>
-                    <div class="px-4 py-3 sm:px-6 sm:flex justify-between w-full">
-                        <button type="button" class="btn btn-ghost shadow-md mb-2" @click="alertOpen=false" ref="cancelButtonRef">
+
+                    <div class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-between p-4 border-t border-gray-200 rounded-b-md">
+                        <button type="button" class="btn btn-outline btn-primary shadow-md" data-bs-dismiss="modal">
                             Cancel
                         </button>
-                        <button type="button" class="btn btn-primary mb-2" @click="$emitTo('cart-action', 'removeCart', '{{$cart->id}}')">
+                        <button type="button" class="btn btn-primary" wire:click="$emitTo('cart-action', 'removeCart', '{{$cart->id}}')">
                             Remove Item
                         </button>
                     </div>
                 </div>
             </div>
-        </template>
+        </div>
 
         {{-- end cart action --}}
 
