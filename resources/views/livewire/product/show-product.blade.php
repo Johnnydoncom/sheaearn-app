@@ -65,11 +65,11 @@
                             @if($cart && count($cart) > 0)
                                 {{-- {{ dd($cart['627fc2ce2b39e'])}} --}}
                                 <div class="flex items-center justify-between w-full">
-                                    <button wire:click="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem-1}})" wire:loading.class="loading" wire:target="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem-1}})" class="btn btn-primary rounded-lg border-none shadow-md rounded-md" @if($getTotalCartItem < 2) disabled="disabled" @endif><x-cui-cil-minus class="w-6 h-6"/></button>
+                                    <button wire:click="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem-1}})" wire:loading.class="loading" class="btn btn-primary rounded-lg border-none shadow-md rounded-md" @if($getTotalCartItem < 2) disabled="disabled" @endif><x-cui-cil-minus class="w-6 h-6"/></button>
 
                                     <span>{{$getTotalCartItem}}</span>
 
-                                    <button wire:click="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem+1}})" wire:loading.class="loading" wire:target="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem+1}})" @if($product->manage_stock && $getTotalCartItem >= $product->stock_quantity) disabled="disabled" @endif class="btn btn-primary rounded-lg border-none shadow-md rounded-md">
+                                    <button wire:click="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem+1}})" wire:loading.class="loading" @if($product->manage_stock && $getTotalCartItem >= $product->stock_quantity) disabled="disabled" @endif class="btn btn-primary rounded-lg border-none shadow-md rounded-md">
 {{--                                        <div wire:loading class="spinner-border animate-spin inline-block w-4 h-4 border-1 rounded-full flex-none" role="status">--}}
 {{--                                            <span class="visually-hidden">Loading...</span>--}}
 {{--                                        </div>--}}

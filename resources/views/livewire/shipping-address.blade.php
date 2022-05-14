@@ -1,26 +1,31 @@
 <x-slot name="title">Shipping Address</x-slot>
-<div>
+<div x-data="{addForm:false}">
     @if($showAddForm)
-    <div>
-        <form wire:submit.prevent="addAddress" class="space-y-6">
 
-                <x-floating-input id="firstName" label="First Name" type="text" placeholder="First Name" class="w-full" v-model="form.first_name" required autofocus autocomplete="first_name" />
-
-
-                <x-floating-input id="lastName" label="Last Name" type="text" placeholder="Last Name" class="w-full" v-model="form.last_name" required autofocus autocomplete="last_name" />
+    <div class="container">
+        <form wire:submit.prevent="addAddress">
+            <div class="grid grid-cols-1 sm:grid-cols-2 w-full gap-4">
+                <x-floating-input id="firstName" wrapperClass="col-span-2 sm:col-span-1" label="First Name" type="text" placeholder="First Name" wire:model.defer="first_name" required autofocus autocomplete="first_name" />
 
 
-{{--            <div class="form-control mt-4">--}}
-{{--                <x-input id="phone" label="Phone Number" type="tel" placeholder="+2348031478943" class="mt-1 block w-full" v-model="form.phone" autofocus autocomplete="phone" />--}}
-{{--            </div>--}}
+                <x-floating-input id="lastName" wrapperClass="col-span-2 sm:col-span-1" label="Last Name" type="text" placeholder="Last Name" wire:model.defer="last_name" required autofocus autocomplete="last_name" />
 
-{{--            <div class="form-control mt-4">--}}
-{{--                <BreezeInput id="address" label="Address" type="text" placeholder="Address" class="mt-1 block w-full" v-model="form.address" required autofocus />--}}
-{{--            </div>--}}
+                <x-floating-input id="phone" wrapperClass="col-span-2" label="Phone Number" type="tel" placeholder="+2348031478943" class="w-full" wire:model.defer="phone" autofocus autocomplete="phone" />
 
-{{--            <div class="form-control mt-4">--}}
-{{--                <BreezeSelect id="region" label="Region" :options="statesData" placeholder="Region" class="mt-1 block w-full" v-model="form.region" @change="getCities" required autofocus />--}}
-{{--            </div>--}}
+                <x-floating-input id="address" wrapperClass="col-span-2" label="Address" type="text" placeholder="Address" class="w-full" wire:model.defer="address" autofocus autocomplete="address" />
+
+                <x-floating-select id="region" wrapperClass="col-span-2" label="Region" type="text" placeholder="Region" class="w-full" wire:model.defer="region" autofocus autocomplete="region">
+                    @foreach($statesData as $state)
+                        <option value="{{$state->id}}">{{$state->name}}</option>
+                    @endforeach
+                </x-floating-select>
+
+                <x-floating-select id="city" wrapperClass="col-span-2" label="City" type="text" placeholder="City" class="w-full" wire:model.defer="city" autofocus autocomplete="city">
+                    @foreach($citiesData as $city)
+                        <option value="{{$city->id}}">{{$city->name}}</option>
+                    @endforeach
+                </x-floating-select>
+
 
 {{--            <div class="form-control mt-4">--}}
 {{--                <BreezeSelect id="city" label="City" :options="citiesData" placeholder="City" class="mt-1 block w-full" v-model="form.city" required autofocus />--}}
@@ -31,7 +36,7 @@
 {{--                    <mdicon name="map-marker" class='w-5 flex-none' /> <span class='flex-1'>Save</span>--}}
 {{--                </BreezeButton>--}}
 {{--            </div>--}}
-
+            </div>
         </form>
     </div>
     @else

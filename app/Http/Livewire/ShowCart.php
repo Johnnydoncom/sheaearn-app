@@ -86,11 +86,13 @@ class ShowCart extends Component
         if($id) {
             \Cart::remove($id);
 
-            $this->emit('refreshCart',
-            [
-                'cart'=> \Cart::getContent(),
-                'itemCount' => \Cart::getContent()->count()
-            ]);
+//            $this->emit('refreshCart',
+//            [
+//                'cart'=> \Cart::getContent(),
+//                'itemCount' => \Cart::getContent()->count()
+//            ]);
+
+            return redirect()->route('cart.index');
 
             // Set Flash Message
             $this->dispatchBrowserEvent('alert',[

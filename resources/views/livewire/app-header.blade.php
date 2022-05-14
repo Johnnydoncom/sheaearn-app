@@ -131,7 +131,7 @@
                 </div>
 
                 <div class="navbar-end ml-auto text-right flex gap-2 sm:gap-4">
-                    <button class="rounded-full p-2 hover:bg-gray-900/10" id="theme-toggle">
+                    <button class="btn btn-ghost btn-circle h-14 w-14" id="theme-toggle">
                         <!-- sun icon -->
                         <x-cui-cil-sun :class="{'hidden': $theme=='dark'}" class="h-5 w-5 sm:h-6 sm:w-6" id="dark-mode-toggle"/>
 
@@ -139,18 +139,22 @@
                         <x-cui-cil-moon :class="{'hidden': $theme=='light'}" class="h-5 w-5 sm:h-6 sm:w-6" id="light-mode-toggle"/>
                     </button>
 
-                    <button class="rounded-full p-2 hover:bg-gray-900/10">
+
+
+                    <button class="btn btn-ghost btn-circle h-14 w-14">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </button>
-                    <button class="rounded-full p-2 hover:bg-gray-900/10">
+                    <button class="btn btn-ghost btn-circle h-14 w-14">
                       <div class="indicator">
                         <x-far-user  class="h-5 w-5 sm:h-6 sm:w-6" />
                       </div>
                     </button>
-                     <a href="{{route('cart.index')}}" class="rounded-full p-2 hover:bg-gray-900/10 relative">
+
+
+                    <a href="{{route('cart.index')}}" class="btn btn-ghost btn-circle h-14 w-14">
                       <div class="indicator">
                           <x-cui-cil-cart class="h-5 w-5 sm:h-6 sm:w-6"/>
-                          <span class="badge badge-xs badge-primary indicator-item absolute -right-1 -top-1" id="cart-count">{{ Cart::getContent()->count()}}</span>
+                          <span class="badge badge-xs badge-primary indicator-item" id="cart-count">{{ Cart::getContent()->count()}}</span>
                       </div>
                     </a>
                 </div>
