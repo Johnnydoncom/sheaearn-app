@@ -84,12 +84,12 @@
 
             // Change the icons inside the button based on previous settings
             if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                themeToggleBtn.classList.remove('swap-active');
+                // themeToggleBtn.classList.remove('swap-active');
                 document.documentElement.classList.add('dark');
                 themeToggleLightIcon.classList.remove('hidden');
                 themeToggleDarkIcon.classList.add('hidden');
             } else {
-                themeToggleBtn.classList.add('swap-active');
+                // themeToggleBtn.classList.add('swap-active');
                 document.documentElement.classList.remove('dark');
                 themeToggleLightIcon.classList.add('hidden');
                 themeToggleDarkIcon.classList.remove('hidden');
@@ -104,13 +104,13 @@
                         document.documentElement.classList.add('dark');
                         localStorage.setItem('color-theme', 'dark');
 
-                        themeToggleBtn.classList.remove('swap-active');
+                        // themeToggleBtn.classList.remove('swap-active');
                         themeToggleLightIcon.classList.remove('hidden');
                         themeToggleDarkIcon.classList.add('hidden');
                     } else {
                         document.documentElement.classList.remove('dark');
                         localStorage.setItem('color-theme', 'light');
-                        themeToggleBtn.classList.add('swap-active');
+                        // themeToggleBtn.classList.add('swap-active');
                         themeToggleLightIcon.classList.add('hidden');
                         themeToggleDarkIcon.classList.remove('hidden');
                     }
@@ -120,13 +120,13 @@
                     if (document.documentElement.classList.contains('dark')) {
                         document.documentElement.classList.remove('dark');
                         localStorage.setItem('color-theme', 'light');
-                        themeToggleBtn.classList.remove('swap-active');
+                        // themeToggleBtn.classList.remove('swap-active');
                         themeToggleLightIcon.classList.add('hidden');
                         themeToggleDarkIcon.classList.remove('hidden');
                     } else {
                         document.documentElement.classList.add('dark');
                         localStorage.setItem('color-theme', 'dark');
-                        themeToggleBtn.classList.add('swap-active');
+                        // themeToggleBtn.classList.add('swap-active');
                         themeToggleLightIcon.classList.remove('hidden');
                         themeToggleDarkIcon.classList.add('hidden');
                     }

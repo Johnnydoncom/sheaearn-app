@@ -30,13 +30,16 @@
 }
 
 .btn {
-    @apply normal-case min-h-0;
+    @apply flex items-center normal-case min-h-0;
 }
 
 .theme-active{
     @apply bg-white text-primary rounded-full;
 }
 
+.dropdown-menu.float-left{
+    inset: auto 0px 0px auto !important;
+}
 
 
 
