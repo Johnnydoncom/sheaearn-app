@@ -40,21 +40,6 @@ class ShowProduct extends Component
             $q->whereIn('category_id', $this->product->categories->pluck('id'))->orWhereIn('category_id', $this->product->categories->pluck('parent_id'));
         })->where('id', '!=', $this->product->id)->inRandomOrder()->limit(4)->get();
 
-
-//        $c = collect(\Cart::getContent())->filter(function($item){
-//            return $item->associatedModel->id == $this->product->id;
-//        });
-//
-//        if(count($c)>0){
-//            $this->cart = $c;
-//        }else{
-//            $this->cart = null;
-//        }
-//
-//        if(count($c)>0) {
-//            $this->getTotalCartItem = $this->cart->sum('quantity');
-//        }
-
     }
 
     public function render()
@@ -87,6 +72,101 @@ class ShowProduct extends Component
     public function decrease(){
         if($this->getTotalCartItem > 0)
         $this->emitTo('cart-action', 'updateCart', array_key_first($this->cart->toArray()), $this->getTotalCartItem-1);
+    }
+
+
+    public function addToCart($qty=1)
+    {
+
+        $product = $this->product;
+        $suffix = '';
+
+        $options = array(
+            'product_id' => $this->product->id,
+            'image' => $this->product->featured_img_thumb,
+            'sales_price' =>$this->product->sales_price,
+            'regular_price' => $this->product->regular_price,
+            'formatted_sales_price' =>$this->product->formatted_sales_price,
+            'formatted_regular_price' => $this->product->formatted_regular_price,
+            'product_url' => route('product.show', $this->product->slug),
+            'attributes' => array()
+        );
+        $price = $this->product->sales_price > 0 ? $this->product->sales_price : $this->product->regular_price;
+
+
+
+        // Check stock quantity
+        if($this->product->manage_stock && (!$this->product->stock_quantity || $qty > $this->product->stock_quantity)){
+            throw ValidationException::withMessages([
+                'quantity' => __('Out of stock'),
+            ]);
+        }
+
+
+        \Cart::add([
+            'id' => uniqid(),
+            'product_id' => $this->product->id,
+            'name' => $this->product->title . $suffix,
+            'price' => (float)$price,
+            'quantity' => $qty,
+            'attributes' => $options,
+            'associatedModel' => $this->product
+        ]);
+
+        // Check if in wishlist then delete
+        if(auth()->user() && auth()->user()->wishlist()->where('product_id', $this->product->id)->exists()) {
+            auth()->user()->wishlist()->where('product_id', $this->product->id)->delete();
+        }
+
+        $this->emit('refreshCart',
+        [
+           'cart'=> \Cart::getContent(),
+           'itemCount' => \Cart::getContent()->count()
+        ]);
+
+        // Set Flash Message
+        $this->dispatchBrowserEvent('alert',[
+            'type'=>'success',
+            'message'=> $this->product->title.' added to cart'
+        ]);
+    }
+
+
+    public function updateCart($id, $qty){
+//        \Cart::clear();
+        if($id && $qty) {
+
+            $cart = \Cart::get($id);
+            // $product = Product::find($cart->associatedModel->id);
+
+            // Check stock quantity
+            if($this->product->manage_stock && (!$this->product->stock_quantity || $qty > $this->product->stock_quantity)){
+                throw ValidationException::withMessages([
+                    'quantity' => __('Out of stock'),
+                ]);
+            }
+
+            \Cart::update($id, array(
+                'quantity' => array(
+                    'relative' => false,
+                    'value' => $qty
+                ),
+            ));
+
+            // $this->emit('refreshProduct');
+            $this->emit('refreshCart',
+            [
+               'cart'=> \Cart::getContent(),
+               'itemCount' => \Cart::getContent()->count()
+            ]);
+
+            // Set Flash Message
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=> 'Cart updated'
+            ]);
+        }
+
     }
 
 }
