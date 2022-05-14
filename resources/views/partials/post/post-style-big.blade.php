@@ -1,4 +1,4 @@
-<div class="flex justify-center">
+<div class="flex justify-center h-full">
     <div class="rounded-lg shadow-lg bg-white">
         <a href="{{$post->entry_url}}" data-mdb-ripple="true" data-mdb-ripple-color="light">
             <img class="rounded-t-lg" src="{{ isset($sticky) && $sticky ? $post->featured_img_url : $post->featured_img_thumb }}" alt="{{$post->title}}"/>

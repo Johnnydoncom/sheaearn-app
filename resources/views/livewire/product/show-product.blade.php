@@ -63,12 +63,13 @@
                             </a>
 
                             @if($cart && count($cart) > 0)
+                                {{-- {{ dd($cart['627fc2ce2b39e'])}} --}}
                                 <div class="flex items-center justify-between w-full">
-                                    <a wire:click="decrease" wire:loading.class="loading" class="btn btn-primary rounded-lg border-none shadow-md rounded-md"><x-cui-cil-minus class="w-6 h-6"/></a>
+                                    <button wire:click="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem-1}})" wire:loading.class="loading" wire:target="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem-1}})" class="btn btn-primary rounded-lg border-none shadow-md rounded-md" @if($getTotalCartItem < 2) disabled="disabled" @endif><x-cui-cil-minus class="w-6 h-6"/></button>
 
                                     <span>{{$getTotalCartItem}}</span>
 
-                                    <button wire:click="increase" wire:loading.class="loading" @if($product->manage_stock && $getTotalCartItem >= $product->stock_quantity) disabled="disabled" @endif class="btn btn-primary rounded-lg border-none shadow-md rounded-md">
+                                    <button wire:click="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem+1}})" wire:loading.class="loading" wire:target="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem+1}})" @if($product->manage_stock && $getTotalCartItem >= $product->stock_quantity) disabled="disabled" @endif class="btn btn-primary rounded-lg border-none shadow-md rounded-md">
 {{--                                        <div wire:loading class="spinner-border animate-spin inline-block w-4 h-4 border-1 rounded-full flex-none" role="status">--}}
 {{--                                            <span class="visually-hidden">Loading...</span>--}}
 {{--                                        </div>--}}
@@ -79,7 +80,7 @@
                             <div class="flex flex-grow">
 
 
-                                    <button @if($product->manage_stock && $product->stock_quantity < 1) disabled="disabled" @endif class='btn btn-primary justify-between btn-primary btn-block' wire:click="add" wire:loading.class="loading">
+                                    <button @if($product->manage_stock && $product->stock_quantity < 1) disabled="disabled" @endif class='btn btn-primary justify-between btn-primary btn-block' wire:click="addToCart" wire:loading.class="loading">
                                         <x-cui-cil-cart class="w-6 h-6 flex-none"/>
                                         <span class='flex-1 uppercase flex items-center justify-center'>
                                             @if($product->manage_stock && $product->stock_quantity < 1)

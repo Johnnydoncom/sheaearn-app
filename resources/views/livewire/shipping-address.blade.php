@@ -4,10 +4,10 @@
     <div>
         <form wire:submit.prevent="addAddress" class="space-y-6">
 
-                <x-floating-input id="firstName" label="First Name" type="text" placeholder="First Name" class="mt-1 block w-full" v-model="form.first_name" required autofocus autocomplete="first_name" />
+                <x-floating-input id="firstName" label="First Name" type="text" placeholder="First Name" class="w-full" v-model="form.first_name" required autofocus autocomplete="first_name" />
 
 
-                <x-floating-input id="lastName" label="Last Name" type="text" placeholder="Last Name" class="mt-1 block w-full" v-model="form.last_name" required autofocus autocomplete="last_name" />
+                <x-floating-input id="lastName" label="Last Name" type="text" placeholder="Last Name" class="w-full" v-model="form.last_name" required autofocus autocomplete="last_name" />
 
 
 {{--            <div class="form-control mt-4">--}}

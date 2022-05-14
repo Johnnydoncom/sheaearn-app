@@ -21,7 +21,7 @@
         </div>
 
 
-        <a href="{{route('index')}}" class="btn btn-link">Start Shopping</a>
+        <div class="mb-6"><a href="{{route('index')}}" class="btn btn-ghost underline text-lg flex-none">Start Shopping</a></div>
 
     </div>
     @endif
@@ -37,7 +37,7 @@
                     <small> Delivery fee not included yet</small>
                 </div>
 
-                <div class="w-full sm:w-1/3 sm:ml-auto max-w-full">
+                <div class="w-full sm:w-1/3 sm:ml-auto max-w-full justify-end text-right mt-6">
                     <a href="{{route('checkout.index')}}" class="btn btn-primary btn-block">
                         <span class='flex-1'>Checkout</span>
                     </a>

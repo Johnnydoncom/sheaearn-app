@@ -10,7 +10,7 @@ class AppHeader extends Component
     public $pageTitle;
     public $searchIcon;
 
-    protected $listeners = ['refreshProduct' => '$refresh'];
+    // protected $listeners = ['refreshCart' => '$refresh'];
 
     public function render()
     {

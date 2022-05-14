@@ -9,7 +9,6 @@ class ShowCart extends Component
 {
     protected $listeners = ['refreshCart' => '$refresh'];
 
-
     public function render()
     {
         return view('livewire.show-cart', [
@@ -36,10 +35,6 @@ class ShowCart extends Component
         $this->emitTo('cart-action', 'updateCart', $cartId, $qty);
     }
 
-    public function removeCart($cartId){
-        $this->emitTo('cart-action', 'removeCart', $cartId);
-    }
-
     public function increase($cartId,$qty){
         $this->emitTo('cart-action', 'updateCart', $cartId, $qty);
     }
@@ -47,5 +42,61 @@ class ShowCart extends Component
     public function decrease($cartId,$qty){
         if($qty > 1)
             $this->emitTo('cart-action', 'updateCart', $cartId, $qty);
+    }
+
+
+    public function updateCart($id, $qty){
+//        \Cart::clear();
+        if($id && $qty) {
+
+            $cart = \Cart::get($id);
+            $product = Product::find($cart->associatedModel->id);
+
+            // Check stock quantity
+            if($product->manage_stock && (!$product->stock_quantity || $qty > $product->stock_quantity)){
+                throw ValidationException::withMessages([
+                    'quantity' => __('Out of stock'),
+                ]);
+            }
+
+            \Cart::update($id, array(
+                'quantity' => array(
+                    'relative' => false,
+                    'value' => $qty
+                ),
+            ));
+
+            // $this->emit('refreshProduct');
+            $this->emit('refreshCart',
+            [
+                'cart'=> \Cart::getContent(),
+                'itemCount' => \Cart::getContent()->count()
+            ]);
+
+            // Set Flash Message
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=> 'Cart updated'
+            ]);
+        }
+    }
+
+    public function removeCart($id)
+    {
+        if($id) {
+            \Cart::remove($id);
+
+            $this->emit('refreshCart',
+            [
+                'cart'=> \Cart::getContent(),
+                'itemCount' => \Cart::getContent()->count()
+            ]);
+
+            // Set Flash Message
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=> 'Product removed successfully'
+            ]);
+        }
     }
 }
