@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('index');
 Route::get('blog', [\App\Http\Controllers\EntryController::class, 'index'])->name('blog.index');
+Route::get('topic/{slug}', [\App\Http\Controllers\EntryController::class, 'category'])->name('blog.category');
+
 
 
 Route::get('/dashboard', function () {
@@ -60,10 +62,10 @@ Route::middleware(['auth', 'verified', 'has_cart'])->group(function () {
     // Route::post('checkout/payment-method', 'CheckoutController@storePaymentMethod')->name('checkout.payment-method.store');
 
     Route::get('checkout/finish', FinalizeCheckout::class)->name('checkout.finish');
-    Route::post('checkout/finish', 'CheckoutController@finalize')->name('checkout.submit');
+//    Route::post('checkout/finish', 'CheckoutController@finalize')->name('checkout.submit');
 });
 
-Route::get('checkout/success/{order}', 'CheckoutController@success')->middleware(['signed','verified', 'auth'])->name('checkout.success');
+//Route::get('checkout/success/{order}', 'CheckoutController@success')->middleware(['signed','verified', 'auth'])->name('checkout.success');
 
 
 

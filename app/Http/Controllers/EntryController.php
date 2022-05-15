@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Entry;
 use App\Models\Product;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 //use Jorenvh\Share\Share;
@@ -20,6 +21,16 @@ class EntryController extends Controller
         return view('blog.home', [
             'entries' => $entries,
             'sticky_entries' => $sticky_entries
+        ]);
+    }
+
+    public function category($slug){
+        $category = Topic::whereSlug($slug)->firstOrFail();
+        $entries = Entry::where('topic_id', '=', $category->id)->wherePublished(true)->paginate();
+
+        return view('blog.category', [
+            'category' => $category,
+            'entries' => $entries,
         ]);
     }
 

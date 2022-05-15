@@ -10,16 +10,17 @@ class SettingSeeder extends Seeder
 {
     public function run()
     {
-        $settingArray['site_name']          = '247 Store';
-        $settingArray['site_email']         = 'info@247store.com';
+        $settingArray['site_name']          = 'Sheaearn';
+        $settingArray['site_email']         = 'info@sheaearn.com';
         $settingArray['site_phone_number']  = '+12055759342';
         $settingArray['site_currency_name'] = 'NGN';
         $settingArray['site_currency_code'] = '₦';
         $settingArray['site_timezone']      = 'Africa/Lagos';
         $settingArray['site_footer']        = '@ All Rights Reserved';
-        $settingArray['site_logo']          = 'uploads/247-Store-Logo-Default.png';
-        $settingArray['site_favicon']       = 'uploads/247-store-logo.png';
-        $settingArray['site_description']   = '247 Store is an online store platform in Nigeria.';
+        $settingArray['site_logo']          = 'logo.png';
+        $settingArray['site_logo_white']    = 'logo-white.png';
+        $settingArray['site_favicon']       = 'logo.png';
+        $settingArray['site_description']   = 'Sheaearn is an online store platform in Nigeria.';
 
         $settingArray['mail_host']         = '';
         $settingArray['mail_port']         = '';
