@@ -144,11 +144,57 @@
                     <button class="btn btn-ghost btn-circle h-14 w-14">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </button>
-                    <button class="btn btn-ghost btn-circle h-14 w-14">
+
+
+                    <div class="dropdown dropdown-end ">
+                        <label tabindex="0" class="btn btn-ghost btn-circle h-14 w-14">
+                            <div class="indicator">
+                              <x-far-user  class="h-5 w-5 sm:h-6 sm:w-6" />
+                            </div>
+                        </label>
+                        <div tabindex="0" class="dropdown-content text-gray-900 rounded-box p-2 shadow bg-base-100 w-60">
+                            @auth
+                            <h6 class="font-semibold text-lg px-4 block w-full whitespace-nowrap bg-transparent text-left text-gray-900">
+                                {{ Auth::user()->name}}
+                            </h6>
+                            <p class="font-semibold text-sm text-gray-500 px-4 block w-full whitespace-nowrap bg-transparent text-left">{{Auth::user()->email}}</p>
+                            <div class="divider my-0"></div>
+                            @endauth
+
+                            <ul  class="menu">
+                                @auth
+                                <li class="rounded-lg">
+                                    <a href="{{route('login')}}" class="flex gap-2 items-center rounded-lg">
+                                        <x-cui-cil-user class="w-4 h-4" /> My Account
+                                    </a>
+                                </li>
+                                <li class="rounded-lg">
+                                    <form method="POST" action="{{ route('logout') }}" class="rounded-lg">
+                                        @csrf
+
+                                        <a class="text-red-600 flex gap-2 items-center rounded-lg" href="{{route('logout')}}"
+                                                         onclick="event.preventDefault();
+                                                            this.closest('form').submit();">
+                                                            <x-cui-cil-account-logout class="w-4 h-4" />
+                                            {{ __('Logout') }}
+                                        </a>
+                                    </form>
+                                </li>
+                                  @else
+                                    <li><a href="{{route('login')}}">Sign in</a></li>
+                                    <li><a href="{{route('register')}}">Sign up</a></li>
+                                @endauth
+                            </ul>
+                        </div>
+
+                    </div>
+
+
+                    {{-- <button class="btn btn-ghost btn-circle h-14 w-14">
                       <div class="indicator">
                         <x-far-user  class="h-5 w-5 sm:h-6 sm:w-6" />
                       </div>
-                    </button>
+                    </button> --}}
 
 
                     <a href="{{route('cart.index')}}" class="btn btn-ghost btn-circle h-14 w-14">
@@ -186,40 +232,6 @@
                     @endforeach
                 </ul>
 
-                <!-- Settings Dropdown -->
-                <div class="hidden sm:flex sm:items-center sm:ml-auto sm:justify-start mr-4">
-                    @auth
-                        <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            <button class="flex items-center text-sm font-medium text-white hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                <div>{{ Auth::user()->name }}</div>
-
-                                <div class="ml-1">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </button>
-                        </x-slot>
-
-                        <x-slot name="content">
-                            <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-
-                                <x-dropdown-link :href="route('logout')"
-                                                 onclick="event.preventDefault();
-                                                    this.closest('form').submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-dropdown>
-                    @else
-
-                    @endauth
-                </div>
-
                 <div class="social-icons flex gap-2 items-center">
                     <ul class="flex items-center gap-4">
                         <li><a href="#"> <x-cui-cib-facebook class="w-4 h-4 sm:w-5 sm:h-5"/></a></li>
@@ -243,10 +255,11 @@
                         <button type="button" class="-m-2 p-2 rounded-md inline-flex items-center justify-center text-white" @click="open = false">
                             <span class="sr-only">Close menu</span>
                             <span class="fa fa-close h-6 w-6" aria-hidden="true"></span>
+                            <x-cui-cil-x class="h-6 w-6" aria-hidden="true" />
                         </button>
                     </div>
                     <h2 class="font-bold text-lg mb-2">Welcome to {{ setting('site_name') }}</h2>
-                   <p class="font-semibold text-sm text-gray-200 mb-2">Wholesale trading without limits</p>
+                   <p class="font-semibold text-sm text-gray-200 mb-2">Guaranteed earning without limits</p>
                 </div>
 
                  <div class="pt-2 pb-3 space-y-1">

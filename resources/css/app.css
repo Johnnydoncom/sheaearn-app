@@ -39,7 +39,7 @@
 
 
 
-:root {
+/* :root {
     --color-default: #fff;
 }
 @media (prefers-color-scheme: dark){
@@ -64,4 +64,4 @@
 }
 body {
     background-color: var(--color-default);
-}
+} */

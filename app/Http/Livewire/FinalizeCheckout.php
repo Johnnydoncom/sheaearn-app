@@ -38,4 +38,14 @@ class FinalizeCheckout extends Component
 
         return view('livewire.finalize-checkout');
     }
+
+    public function payWithPaystack()
+    {
+
+    }
+
+    public function payOnDelivery()
+    {
+
+    }
 }
