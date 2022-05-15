@@ -54,7 +54,8 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             CategoriesTableSeeder::class,
             BrandsTableSeeder::class,
-            TopicsTableSeeder::class
+            TopicsTableSeeder::class,
+            PaymentGatewayTableSeeder::class,
         ]);
 //
         Product::factory()->count(20)->create()->each(function ($product) {

@@ -21,7 +21,7 @@
 
 
     <div class="py-0 my-0 mt-0 relative">
-        <h2 class="uppercase text-xs mt-0">
+        <h2 class="uppercase text-xs mt-0 border-b">
             <div class="flex justify-between items-center w-full">
                 <h2 class="uppercase px-2 sm:px-0 py-2 text-sm sm:text-xl sm:font-semibold">Your address</h2>
                 <a href="{{route('checkout.shipping')}}" class="text-primary">
@@ -31,7 +31,7 @@
         </h2>
 
         <div class="card bg-white rounded-sm">
-            <div class="p-0">
+            <div class="card-body p-2">
                 @if($delivery_address)
                 <div>
                     <h2 class="font-semibold text-sm">{{$delivery_address->name}}</h2>
@@ -49,7 +49,7 @@
         </div>
 
 
-        <h3 class="uppercase px-2 py-4 text-sm sm:text-xl sm:font-semibold sm:py-5">My Cart ({{ Cart::getContent()->count() }} Items)</h3>
+        <h3 class="uppercase px-2 text-sm sm:text-xl sm:font-semibold border-b mt-6 mb-2">My Cart ({{ Cart::getContent()->count() }} Items)</h3>
 
         @if(count($cart) > 0)
         <div>

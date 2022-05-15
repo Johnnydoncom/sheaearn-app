@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Livewire\FinalizeCheckout;
+use App\Http\Livewire\PaymentMethod;
 use App\Http\Livewire\ShowCart;
 use App\Http\Livewire\ShowCheckout;
 use Illuminate\Support\Facades\Route;
@@ -45,19 +47,19 @@ Route::get('cart', ShowCart::class)->name('cart.index');
 
 Route::middleware(['auth', 'verified', 'has_cart'])->group(function () {
     Route::get('checkout', ShowCheckout::class)->name('checkout.index');
-    Route::post('checkout', 'CheckoutController@store')->name('checkout.store');
+    // Route::post('checkout', 'CheckoutController@store')->name('checkout.store');
     Route::get('checkout/shipping', \App\Http\Livewire\ShippingAddress::class)->name('checkout.shipping');
-    Route::get('checkout/shipping/add', 'CheckoutController@addShippingView')->name('checkout.shipping.add');
-    Route::post('checkout/shipping/add', 'CheckoutController@addShipping')->name('checkout.shipping.store');
-    Route::get('checkout/shipping/{address}/edit', 'CheckoutController@updateShippingView')->name('checkout.shipping.edit');
-    Route::patch('checkout/shipping/{address}/edit', 'CheckoutController@updateShippingAddress')->name('checkout.shipping.update');
+    // Route::get('checkout/shipping/add', 'CheckoutController@addShippingView')->name('checkout.shipping.add');
+    // Route::post('checkout/shipping/add', 'CheckoutController@addShipping')->name('checkout.shipping.store');
+    // Route::get('checkout/shipping/{address}/edit', 'CheckoutController@updateShippingView')->name('checkout.shipping.edit');
+    // Route::patch('checkout/shipping/{address}/edit', 'CheckoutController@updateShippingAddress')->name('checkout.shipping.update');
 
-    Route::patch('checkout/shipping/{id}', 'CheckoutController@selectShipping')->name('checkout.shipping.select');
+    // Route::patch('checkout/shipping/{id}', 'CheckoutController@selectShipping')->name('checkout.shipping.select');
 
-    Route::get('checkout/payment-method', 'CheckoutController@paymentMethod')->name('checkout.payment-method.index');
-    Route::post('checkout/payment-method', 'CheckoutController@storePaymentMethod')->name('checkout.payment-method.store');
+    Route::get('checkout/payment-method', PaymentMethod::class)->name('checkout.payment-method.index');
+    // Route::post('checkout/payment-method', 'CheckoutController@storePaymentMethod')->name('checkout.payment-method.store');
 
-    Route::get('checkout/finish', 'CheckoutController@finish')->name('checkout.finish');
+    Route::get('checkout/finish', FinalizeCheckout::class)->name('checkout.finish');
     Route::post('checkout/finish', 'CheckoutController@finalize')->name('checkout.submit');
 });
 

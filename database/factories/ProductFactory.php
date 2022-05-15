@@ -29,6 +29,7 @@ class ProductFactory extends Factory
             'regular_price' =>$this->faker->numberBetween(2000, 50000),
             'sales_price' => 0,
             'manage_stock' => true,
+            'stock_quantity' => $this->faker->numberBetween(5, 100),
             'type' => $this->faker->randomElement(['physical', 'digital']),
             'brand_id' => function(){
                 return Brand::all()->random()->id;
