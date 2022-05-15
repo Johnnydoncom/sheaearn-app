@@ -19,16 +19,25 @@
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
+
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <div class="max-w-7xl mx-auto bg-white my-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-4">
+                        <div class="sidebar border-r bg-secondary min-h-[70vh] h-full text-base-100">
+                            <ul class="menu">
+                                <li class="hover-bordered"><a>Home</a></li>
+                                <li class="hover-bordered"><a>Orders</a></li>
+                                <li class="hover-bordered"><a>Orders</a></li>
+                                <li><a>Item 3</a></li>
+                            </ul>
+                        </div>
+                        <div class="content col-span-3 p-4">
+                        {{ $slot }}
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
 

@@ -7,6 +7,7 @@ use Bavix\Wallet\Interfaces\Confirmable;
 use Bavix\Wallet\Interfaces\Wallet;
 use Bavix\Wallet\Traits\CanConfirm;
 use Bavix\Wallet\Traits\HasWallet;
+use Bavix\Wallet\Traits\HasWallets;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -22,7 +23,7 @@ use Zorb\Promocodes\Traits\AppliesPromocode;
 
 class User extends Authenticatable implements MustVerifyEmail, Wallet, Confirmable, HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, AppliesPromocode, HasWallet, CanConfirm, InteractsWithMedia;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, AppliesPromocode, HasWallet, HasWallets, CanConfirm, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.

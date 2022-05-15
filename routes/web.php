@@ -51,18 +51,10 @@ Route::middleware(['auth', 'verified', 'has_cart'])->group(function () {
     Route::get('checkout', ShowCheckout::class)->name('checkout.index');
     // Route::post('checkout', 'CheckoutController@store')->name('checkout.store');
     Route::get('checkout/shipping', \App\Http\Livewire\ShippingAddress::class)->name('checkout.shipping');
-    // Route::get('checkout/shipping/add', 'CheckoutController@addShippingView')->name('checkout.shipping.add');
-    // Route::post('checkout/shipping/add', 'CheckoutController@addShipping')->name('checkout.shipping.store');
-    // Route::get('checkout/shipping/{address}/edit', 'CheckoutController@updateShippingView')->name('checkout.shipping.edit');
-    // Route::patch('checkout/shipping/{address}/edit', 'CheckoutController@updateShippingAddress')->name('checkout.shipping.update');
-
-    // Route::patch('checkout/shipping/{id}', 'CheckoutController@selectShipping')->name('checkout.shipping.select');
 
     Route::get('checkout/payment-method', PaymentMethod::class)->name('checkout.payment-method.index');
-    // Route::post('checkout/payment-method', 'CheckoutController@storePaymentMethod')->name('checkout.payment-method.store');
 
     Route::get('checkout/finish', FinalizeCheckout::class)->name('checkout.finish');
-//    Route::post('checkout/finish', 'CheckoutController@finalize')->name('checkout.submit');
 });
 
 //Route::get('checkout/success/{order}', 'CheckoutController@success')->middleware(['signed','verified', 'auth'])->name('checkout.success');
@@ -71,6 +63,11 @@ Route::middleware(['auth', 'verified', 'has_cart'])->group(function () {
 
 Route::get('dashboard/login', [\App\Http\Controllers\Admin\DashboardController::class, 'showLogin'])->middleware('guest')->name( 'admin.login.show');
 Route::post('dashboard/login', [\App\Http\Controllers\Admin\DashboardController::class, 'login'])->middleware('guest')->name( 'admin.login');
+
+Route::prefix('account')->as('account.')->middleware(['auth','verified'])->group(function () {
+    Route::get('/', [\App\Http\Controllers\Account\AccountController::class, 'index'])->name( 'index');
+
+});
 
 Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('index');

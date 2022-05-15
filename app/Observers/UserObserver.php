@@ -14,7 +14,12 @@ class UserObserver
      */
     public function created(User $user)
     {
-        //
+        if(!$user->hasWallet('social-wallet-'.$user->id)) {
+            $user->createWallet([
+                'name' => 'Social Wallet '.$user->id,
+                'slug' => 'social-wallet-'.$user->id,
+            ]);
+        }
     }
 
     /**
