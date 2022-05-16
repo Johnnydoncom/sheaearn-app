@@ -166,6 +166,7 @@
     <livewire:cart-action />
 </div>
 
+
 @push('styles')
 <link rel="stylesheet" href="{{ mix('css/swiper-bundle.min.css')}}">
 @endpush
@@ -189,7 +190,14 @@
                         delay: 5000,
                         disableOnInteraction: false
                     },
-                    navigation:false
+                    navigation:false,
+                    breakpoints: {
+                        991: {
+                            slidesPerView: 1,
+                            spaceBetween: 10,
+                            height: 350
+                        }
+                    }
                 })
             }
 
