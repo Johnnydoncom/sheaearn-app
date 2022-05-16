@@ -26,7 +26,7 @@
         {{-- cart action --}}
         <div class="grid grid-cols-2 sm:grid-cols-4">
             <div class="flex sm:col-span-3">
-                <button type="button" class="text-primary font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center uppercase" @click="alertOpen=true" data-bs-toggle="modal" data-bs-target="#deleteModal{{$cart->id}}">
+                <button type="button" class="text-primary font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center uppercase" @click="alertOpen=true">
                     <x-cui-cil-trash class="w-4 h-4 sm:w-6 sm:h-6"/> Remove
                 </button>
             </div>
@@ -45,25 +45,23 @@
         </div>
 
 
+        <div id="deleteModal{{$cart->id}}" x-show="alertOpen" class="modal modal-bottom sm:modal-middle " :class="{'modal-open': alertOpen}">
+            <div class="modal-box">
+                <h3 class="text-xl font-bold py-5 text-center">Do you really want to remove this item from cart?</h3>
 
-        <div x-cloak class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="deleteModal{{$cart->id}}" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-modal="true" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
-                <div class="modal-content border-none shadow-lg relative flex flex-col w-full bg-white bg-clip-padding rounded-md outline-none text-current pointer-events-auto">
-                    <div class="modal-body relative p-4 text-center">
-                        <h3 class="text-xl font-bold py-5">Do you really want to remove this item from cart?</h3>
-                    </div>
-
-                    <div class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-between p-4 border-t border-gray-200 rounded-b-md">
-                        <button type="button" class="btn btn-outline btn-primary shadow-md" data-bs-dismiss="modal">
-                            Cancel
-                        </button>
-                        <button type="button" class="btn btn-primary" wire:loading.class="loading" wire:target="removeCart('{{$cart->id}}')" wire:click="removeCart('{{$cart->id}}')">
-                            Remove Item
-                        </button>
-                    </div>
+                <div class="modal-action">
+                    <button type="button" class="btn btn-outline btn-primary shadow-md" @click="alertOpen=false">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary" wire:loading.class="loading" wire:target="removeCart('{{$cart->id}}')" wire:click="removeCart('{{$cart->id}}')">
+                        Remove Item
+                    </button>
                 </div>
             </div>
         </div>
+
+
+
 
         {{-- end cart action --}}
 
