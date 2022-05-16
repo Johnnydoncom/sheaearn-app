@@ -60,12 +60,12 @@
 
                                         <ul class="navbar-nav grid grid-cols-2 gap-4">
                                             <li class="nav-item">
-                                                <a class="flex items-center gap-4 py-2 px-4 hover:bg-gray-600/20 rounded-xl" href="{{ $shareUrls['twitter'] }}">
+                                                <a class="social-button flex items-center gap-4 py-2 px-4 hover:bg-gray-600/20 rounded-xl" href="{{ $shareUrls['twitter'] }}">
                                                     <x-cui-cib-twitter class="w-6 h-6 text-[#1DA1F2]"/> Tweet this
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="flex items-center gap-4 py-2 px-4 hover:bg-gray-600/20 rounded-xl" href="{{ $shareUrls['facebook'] }}">
+                                                <a class="social-button flex items-center gap-4 py-2 px-4 hover:bg-gray-600/20 rounded-xl" href="{{ $shareUrls['facebook'] }}">
                                                     <x-cui-cib-facebook class="w-6 h-6 text-[#4267B2]"/> Facebook
                                                 </a>
                                             </li>
@@ -163,3 +163,6 @@
 
 
 
+@push('scripts')
+    <script src="{{ asset('js/share.js')}}"></script>
+@endpush

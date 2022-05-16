@@ -1,4 +1,6 @@
 <x-guest-layout>
+    <x-slot name="title">Home</x-slot>
+
     <div class="py-12">
         <section class="max-w-6xl md:max-w-7xl mx-auto hero px-1 sm:px-12 mb-20">
 

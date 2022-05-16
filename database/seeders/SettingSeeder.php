@@ -36,8 +36,8 @@ class SettingSeeder extends Seeder
         $settingArray['social_instagram'] = '';
 
         $settingArray['paystack_active']   = 1;
-        $settingArray['paystack_key']  = 'pk_test_f389d8248d55b4b99cf0aa200c16b588536bcfbc';
-        $settingArray['paystack_secret']   = 'sk_test_bda89d2e1dd04ac8c97046990e064266e84c20f9';
+        $settingArray['paystack_key']  = 'pk_test_505cd494933907dd3e1ec07a6eef96e1aef633f1';
+        $settingArray['paystack_secret']   = 'sk_test_c3c0ac59072eee6f6af5c6a909a2a019da7e48c0';
 
         $settingArray['referral_bonus'] = 10;
         $settingArray['affiliate_fee'] = 1000;
