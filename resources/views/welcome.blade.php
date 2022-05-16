@@ -70,7 +70,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="relative container hidden sm:block">
                 <img src="{{ Storage::url('arrow-3.svg') }}" alt="Arrow Down" class="absolute -bottom-[15em] left-4 2xl:left-0 h-[17rem] ">
             </div>
@@ -127,7 +126,7 @@
 
                         <div class="py-6 text-center">
                             <h2 class="text-2xl lg:text-4xl font-bold mb-3">Affiliates</h2>
-                            <div class="text-md lg:text-3xl px-1">Affiliates can also earn from referring Creators and Collectors to use Mintyplex.</div>
+                            <div class="text-md lg:text-3xl px-1">Affiliates can also earn from referring Creators and Collectors to use Sheaearn.</div>
 
                             <img src="{{Storage::url('line-1.svg')}}" alt="Line" class="mx-auto mt-6 w-32 sm:w-auto">
                         </div>
@@ -216,6 +215,6 @@
         </section>
     </div>
     <footer class="text-center dark:text-gray-400">
-        <p class="text-center text-2xl py-10">{{ date('Y') }}. All Rights Reserved</p>
+        <p class="text-center text-lg sm:text-2xl py-10">{{ date('Y') }}. All Rights Reserved</p>
     </footer>
 </x-landing-layout>

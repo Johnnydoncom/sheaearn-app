@@ -3,6 +3,7 @@ var popupSize = {
     height: 550
 };
 
+
 $(document).on('click', '.social-button', function (e) {
     var verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
         horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2);
