@@ -6,6 +6,9 @@
             </a>
         </x-slot>
 
+        <h2 class="font-semibold text-xl sm:text-2xl mb-6">Verify Email</h2>
+
+
         <div class="mb-4 text-sm text-gray-600">
             {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
         </div>

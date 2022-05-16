@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-landing-layout>
     <x-slot name="title">Home</x-slot>
 
     <div class="py-12">
@@ -218,4 +218,4 @@
     <footer class="text-center dark:text-gray-400">
         <p class="text-center text-2xl py-10">{{ date('Y') }}. All Rights Reserved</p>
     </footer>
-</x-guest-layout>
+</x-landing-layout>

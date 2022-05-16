@@ -204,16 +204,16 @@
                     <ul class="hidden sm:flex menu menu-horizontal">
 
                         <li class="">
-                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary focus:text-primary text-2xl font-medium" href="#">{{ __('About') }}</a>
+                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-2xl font-medium" href="#">{{ __('About') }}</a>
                         </li>
                         <li class="">
-                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary focus:text-primary text-2xl font-medium" href="{{ route('blog.index') }}">{{ __('Blog') }}</a>
+                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-2xl font-medium" href="{{ route('blog.index') }}">{{ __('Blog') }}</a>
                         </li>
                         <li class="">
-                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary focus:text-primary text-2xl font-medium" href="#">{{ __('Join') }}</a>
+                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-2xl font-medium" href="#">{{ __('Join') }}</a>
                         </li>
                         <li class="">
-                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary focus:text-primary text-2xl font-medium " href="#">{{ __('Community') }}</a>
+                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-2xl font-medium " href="#">{{ __('Community') }}</a>
                         </li>
                     </ul>
 

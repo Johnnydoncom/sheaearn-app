@@ -5,6 +5,7 @@
                 <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
             </a>
         </x-slot>
+        <h2 class="font-semibold text-xl sm:text-2xl mb-6">Forgot Password</h2>
 
         <div class="mb-4 text-sm text-gray-600">
             {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
@@ -27,7 +28,7 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <x-button>
+                <x-button class="btn btn-secondary btn-block">
                     {{ __('Email Password Reset Link') }}
                 </x-button>
             </div>
