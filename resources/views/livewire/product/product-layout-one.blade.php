@@ -1,7 +1,7 @@
 
     <div class="max-w-xs rounded-md overflow-hidden shadow-lg hover:scale-105 transition duration-500 relative bg-white">
         <div>
-            <img src="{{$product->featured_img_thumb}}" alt="{{$product->title}}" class="w-full"/>
+            <img src="{{$product->featured_img_thumb}}" alt="{{$product->title}}" />
         </div>
         <div class="py-4 px-2 bg-white h-full min-h-full">
             <h3 class="text-xs lg:text-sm font-normal text-gray-600 relative line-clamp-2">

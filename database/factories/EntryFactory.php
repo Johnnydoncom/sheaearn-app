@@ -25,8 +25,6 @@ class EntryFactory extends Factory
             'user_id' => function(){
                 return User::all()->random()->id;
             },
-            'published' => true,
-            'sticky' => $this->faker->numberBetween(0, 1)
         ];
     }
 

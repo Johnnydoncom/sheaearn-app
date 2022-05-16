@@ -13,7 +13,7 @@
 {{--            <div class="absolute top-0 right-0 bottom-0 left-0 bg-gray-900/50"></div>--}}
 
             <div class="sm:p-28 p-10 text-white flex flex-col gap-4 justify-center items-center text-center">
-                <div class="avatar relative sm:absolute sm:-top-8 sm:-right-8 rounded-full bg-white w-20 h0-20 sm:w-40 sm:h-40">
+                <div class="avatar sm:absolute -top-8 -right-8 rounded-full bg-white w-20 h0-20 sm:w-40 sm:h-40">
                     <img src="{{ Storage::url('avatar.png') }}" alt="Avatar">
                 </div>
                 <h2 class="text-lg sm:text-4xl mb-4">Let Sheaearn help you start and manage your NFT business for FREE!</h2>
@@ -90,7 +90,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 sm:gap-4 gap-4 sm:gap-0 container sm:mt-10">
+            <div class="grid grid-cols-1 sm:grid-cols-3 sm:gap-4 gap-0 container sm:mt-10">
                 <div class="flex justify-center px-10 sm:p-0">
                     <div class="rounded-3xl sm:shadow-lg bg-white max-w-xs sm:max-w-sm">
                         <div class="rounded-3xl bg-primary">
@@ -99,7 +99,7 @@
 
                        <div class="py-6 text-center">
                            <h2 class="text-2xl lg:text-4xl font-bold mb-3">Creators</h2>
-                           <div class="text-md lg:text-3xl px-1">Creators can now launch their stores, mint and sell NFTs in minutes.</div>
+                           <div class="text-md lg:text-3xl">Creators can now launch their stores, mint and sell NFTs in minutes.</div>
 
                            <img src="{{Storage::url('line-1.svg')}}" alt="Line" class="mx-auto mt-6 w-32 sm:w-auto">
                        </div>
@@ -113,7 +113,7 @@
 
                         <div class="py-6 text-center">
                             <h2 class="text-2xl lg:text-4xl font-bold mb-3">Collectors</h2>
-                            <div class="text-md lg:text-3xl px-1">Collectors now have more freedom to connect with their favorite Creators, get whitelisted and buy NFTs.</div>
+                            <div class="text-md lgtext-3xl">Collectors now have more freedom to connect with their favorite Creators, get whitelisted and buy NFTs.</div>
 
                             <img src="{{Storage::url('line-1.svg')}}" alt="Line" class="mx-auto mt-6 w-32 sm:w-auto">
                         </div>
@@ -127,7 +127,7 @@
 
                         <div class="py-6 text-center">
                             <h2 class="text-2xl lg:text-4xl font-bold mb-3">Affiliates</h2>
-                            <div class="text-md lg:text-3xl px-1">Affiliates can also earn from referring Creators and Collectors to use Mintyplex.</div>
+                            <div class="text-md lg:text-3xl">Affiliates can also earn from referring Creators and Collectors to use Mintyplex.</div>
 
                             <img src="{{Storage::url('line-1.svg')}}" alt="Line" class="mx-auto mt-6 w-32 sm:w-auto">
                         </div>

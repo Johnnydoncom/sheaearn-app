@@ -49,7 +49,7 @@
                                 <x-cui-cib-twitter class="w-6 h-6"/>
                             </a>
 
-                            @if(1>3)
+
                             <div class="flex justify-center">
                                 <div>
                                   <div class="dropstart relative">
@@ -101,14 +101,14 @@
                                   </div>
                                 </div>
                               </div>
-                            @endif
 
-                            @if(1>0)
-                            <div class="dropdown dropdown-left dropdown-end ">
+
+                            @if(1>2)
+                            <div class="dropdown dropdown-left dropdown-end">
                                 <label tabindex="0" class="btn border-none flex gap-2 items-center justify-center bg-white rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center text-gray-600 xl:min-h-0 m-1">
                                     <x-cui-cil-account-logout class="w-6 h-6 rotate-90"/>
                                 </label>
-                                <div tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-96">
+                                <div tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-96">
                                     <ul class="menu grid grid-cols-2 gap-4">
                                         <li>
                                             <a class="nav-item" href="{{ $shareUrls['twitter'] }}">

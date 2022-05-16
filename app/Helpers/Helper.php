@@ -54,14 +54,6 @@ function generateUniqueOrderNumber() {
     return $code;
 }
 
-function generateUniqueReferenceNumber() {
-    do {
-        $code = \Illuminate\Support\Str::random();
-    } while (\App\Models\PaymentHistory::where('transaction_reference', "=", $code)->exists());
-
-    return $code;
-}
-
 function generateUniqueOrderItemNumber() {
 //    $latestItem = \App\Models\OrderItem::orderBy('created_at','DESC')->first();
 //    if($latestItem) {
