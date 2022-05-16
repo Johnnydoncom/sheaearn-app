@@ -1,5 +1,17 @@
 
-    <div class="max-w-6xl mx-auto mt-4">
+    <div
+    x-data="{
+        popupSize: {
+            width: 780,
+            height: 550
+        },
+        async socialPopUp(){
+            let verticalPos = Math.floor((window.innerWidth - this.popupSize.width) / 2)
+            let horisontalPos = Math.floor((window.innerHeight - this.popupSize.height) / 2);
+        }
+    }"
+    x-init=""
+    class="max-w-6xl mx-auto mt-4">
         <img class="w-full" src="{{ $entry->getFirstMediaUrl('featured_image', 'standard') }}" alt="{{$entry->title}}"/>
         <h1 class="font-bold text-4xl sm:text-5xl py-10 text-center dark:text-gray-200">{{ $entry->title }}</h1>
 
@@ -35,10 +47,19 @@
 
 
                         <div class="floating-icons flex flex-row sm:flex-col justify-center sm:space-y-8">
+                            @auth
                             <button class="flex gap-2 items-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
                                 <x-cui-cil-happy class="w-6 h-6 flex-none"/>
                                 Like
                             </button>
+                            @else
+                            <a href="{{ route('login') }}" class="flex gap-2 items-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
+                                <x-cui-cil-happy class="w-6 h-6 flex-none"/>
+                                Like
+                            </a>
+                            @endauth
+
+
                             <button class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
                                 <x-far-comment-dots class="w-6 h-6"/>
                             </button>
@@ -164,5 +185,18 @@
 
 
 @push('scripts')
-    <script src="{{ asset('js/share.js')}}"></script>
+    {{-- <script src="{{ asset('js/share.js')}}"></script> --}}
+
+    <script>
+        var popupSize = {
+            width: 780,
+            height: 550
+        };
+
+        // function socialPopUp(){
+        //     var verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
+        //     horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2);
+        // }
+
+    </script>
 @endpush

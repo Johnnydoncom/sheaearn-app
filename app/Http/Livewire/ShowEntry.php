@@ -23,4 +23,9 @@ class ShowEntry extends Component
             $this->entry->bookmarks()->attach(['user_id' => Auth::id()]);
         }
     }
+
+    public function like()
+    {
+        $this->entry->likes()->sync(auth()->user()->id);
+    }
 }
