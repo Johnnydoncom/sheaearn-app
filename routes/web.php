@@ -57,7 +57,15 @@ Route::middleware(['auth', 'verified', 'has_cart'])->group(function () {
     Route::get('checkout/finish', FinalizeCheckout::class)->name('checkout.finish');
 });
 
-//Route::get('checkout/success/{order}', 'CheckoutController@success')->middleware(['signed','verified', 'auth'])->name('checkout.success');
+Route::get('checkout/success/{order}', function (\Illuminate\Http\Request $request, App\Models\Order $order){
+    if (! $request->hasValidSignature()) {
+        return redirect()->route('index');
+    }
+
+    return view('checkout-Success', [
+        'order' => $order
+    ]);
+})->middleware(['signed','verified', 'auth'])->name('checkout.success');
 
 
 
@@ -67,12 +75,27 @@ Route::post('dashboard/login', [\App\Http\Controllers\Admin\DashboardController:
 Route::prefix('account')->as('account.')->middleware(['auth','verified'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Account\AccountController::class, 'index'])->name( 'index');
 
+    // Order
+    Route::prefix('order')->as('order.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Account\OrderController::class, 'index'])->name('index');
+        Route::get('details/{order_number}', [\App\Http\Controllers\Account\OrderController::class, 'show'])->name('show');
+        Route::delete('details/{orderItem}/cancel', [\App\Http\Controllers\Account\OrderController::class, 'cancelItem'])->name('cancelItem');
+        Route::get('details/{order_number}/download', [\App\Http\Controllers\Account\OrderController::class, 'download'])->name('download');
+
+        Route::get('track/{order_number}', [\App\Http\Controllers\Account\OrderController::class, 'track'])->name('track');
+
+//        Route::get('wishlist', 'AccountController@wishlist')->name('account.wishlist.index');
+//        Route::delete('wishlist/{wishlist}', 'AccountController@destroyWishlist')->name('account.wishlist.destroy');
+    });
 });
 
 Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('index');
     Route::resource('entries', \App\Http\Controllers\Admin\EntryController::class);
     Route::resource('topics', \App\Http\Controllers\Admin\TopicsController::class);
+
+    Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
+
 
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     Route::get('categories', [\App\Http\Controllers\Admin\ProductController::class, 'categories'])->name('categories.index');
