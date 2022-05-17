@@ -14,14 +14,14 @@ class AccountController extends Controller
         auth()->user()->wallet->refreshBalance();
         // auth()->user()->socialWallet->refreshBalance();
 
+//        auth()->user()->socialWallet()->deposit(15);
+//        auth()->user()->deposit(20);
+
         $salesEarning = auth()->user()->wallet->balance;
         $socialEarning = auth()->user()->socialWallet()->balance;
 
         $allTimeEarning = Auth::user()->transactions()->where('type', '=', 'deposit')->get()->sum('amount');
 
-        // auth()->user()->socialWallet()->deposit(75);
-
-        // auth()->user()->deposit(50);
 
 
         return view('account.home',[

@@ -700,16 +700,17 @@
             });
 
             // Project overview stats
-            document.addEventListener('alpine:init', () => {
-                Alpine.data('productOverviewStats', () => ({
-                    project: {
-                        'completed': 149,
-                        'in_progress': 42,
-                    }
-                }));
-            });
+            // document.addEventListener('alpine:init', () => {
+            //     Alpine.data('productOverviewStats', () => ({
+            //         project: {
+            //             'completed': 149,
+            //             'in_progress': 42,
+            //         }
+            //     }));
+            // });
 
 
+            @if(1>2)
             // start::Chart 1
             const labels = [
                 'January',
@@ -818,6 +819,7 @@
                 config_2
             );
             // end::Chart 2
+            @endif
         </script>
     @endpush
 </x-admin-layout>

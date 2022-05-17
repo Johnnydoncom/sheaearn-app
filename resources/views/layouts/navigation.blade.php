@@ -49,7 +49,7 @@
             </div>
 
             <!-- Hamburger -->
-            <div class="-mr-2 flex items-center sm:hidden">
+            <div class="-mr-2 flex items-center sm:hidden" :class="{'block': ! open, 'hidden': open}">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -60,33 +60,59 @@
         </div>
     </div>
 
+
+
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('account.index')" :active="request()->routeIs('account.index')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
+    <div :class="{'block': open, 'hidden': ! open}" class="z-50 hidden sm:hidden fixed top-0 right-auto min-h-screen h-screen left-0 w-11/12 overflow-y-scroll">
 
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+        <div class="bg-black opacity-30 fixed inset-0" @click="open = false"></div>
+
+        <div class="bg-white shadow-xl w-full max-w-xs h-full z-10 absolute">
+            <div class="px-4 pt-5 pb-2 bg-primary text-white relative">
+                <div class="flex justify-end absolute top-1 right-2">
+                    <button type="button" class="-m-2 p-2 rounded-md inline-flex items-center justify-center text-white" @click="open = false">
+                        <span class="sr-only">Close menu</span>
+                        <span class="fa fa-close h-6 w-6" aria-hidden="true"></span>
+                        <x-cui-cil-x class="h-6 w-6" aria-hidden="true" />
+                    </button>
+                </div>
+                <div class="avatar">
+                    <div class="w-14 mask mask-hexagon">
+                        <img src="{{ Auth::user()->avatar_url }}" />
+                    </div>
+                </div>
+                <h2 class="font-bold text-lg mb-0">{{ Auth::user()->name }}</h2>
+                <p class="font-semibold text-sm text-gray-200 mb-2">{{ Auth::user()->email }}</p>
             </div>
 
-            <div class="mt-3 space-y-1">
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
+            <div class="pt-2 pb-3 space-y-1">
+                @auth
+                    <ul class="menu">
+                        <li class="hover-bordered"><a href="{{ route('account.index') }}" class="flex justify-between items-center @if(request()->routeIs('account.index')) active @endif">Home <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                        <li class="hover-bordered"><a href="{{ route('account.order.index') }}" class="flex justify-between items-center @if(request()->routeIs('account.order.index')) active @endif">Orders <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                        <li class="hover-bordered"><a href="{{ route('account.transactions.index') }}" class="flex justify-between items-center @if(request()->routeIs('account.transactions.index')) active @endif">Transactions <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                        <li class="hover-bordered"><a class="flex justify-between items-center">Wishlist <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                        <li class="hover-bordered"><a class="flex justify-between items-center">Settings <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                        <li class="hover-bordered">
+                            <form method="POST" action="{{ route('logout') }}" class="w-full">
+                                @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
+                                <a class="flex justify-between w-full items-center" href="{{route('logout')}}" onclick="event.preventDefault(); this.closest('form').submit();">
+                                    Logout <x-fas-chevron-right class="w-4 h-4" />
+                                </a>
+                            </form>
+{{--                            <a class="flex justify-between">Logout <x-fas-chevron-right class="w-4 h-4" /></a>--}}
+                        </li>
+                    </ul>
+
+                @else
+
+                @endauth
             </div>
+
+
         </div>
+
     </div>
+
 </nav>

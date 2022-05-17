@@ -13,7 +13,7 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         @livewireStyles
-
+        @stack('styles')
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -23,19 +23,19 @@
 
             <!-- Page Content -->
             <main>
-                <div class="max-w-7xl mx-auto bg-white my-4">
+                <div class="max-w-7xl mx-auto bg-white my-4 min-h-[90vh] sm:min-h-full">
                     <div class="grid grid-cols-1 sm:grid-cols-4">
-                        <div class="sidebar border-r bg-secondary min-h-[70vh] h-full text-base-100">
+                        <div class="hidden sm:block sidebar border-r bg-clip-padding min-h-[70vh] h-full">
                             <ul class="menu">
-                                <li class="hover-bordered"><a href="{{ route('account.index') }}">Home</a></li>
-                                <li class="hover-bordered"><a href="{{ route('account.order.index') }}">Orders</a></li>
-                                <li class="hover-bordered"><a href="{{ route('account.transactions.index') }}">Transactions</a></li>
-                                <li class="hover-bordered"><a>Wishlist</a></li>
-                                <li class="hover-bordered"><a>Settings</a></li>
-                                <li class="hover-bordered"><a>Logout</a></li>
+                                <li class="hover-bordered"><a href="{{ route('account.index') }}" class="flex justify-between @if(request()->routeIs('account.index')) active @endif">Home <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                                <li class="hover-bordered"><a href="{{ route('account.order.index') }}" class="flex justify-between @if(request()->routeIs('account.order.index')) active @endif">Orders <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                                <li class="hover-bordered"><a href="{{ route('account.transactions.index') }}" class="flex justify-between @if(request()->routeIs('account.transactions.index')) active @endif">Transactions <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                                <li class="hover-bordered"><a class="flex justify-between">Wishlist <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                                <li class="hover-bordered"><a class="flex justify-between">Settings <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                                <li class="hover-bordered"><a class="flex justify-between">Logout <x-fas-chevron-right class="w-4 h-4" /></a></li>
                             </ul>
                         </div>
-                        <div class="content col-span-3 p-4">
+                        <div class="content col-span-3 p-4 min-h-full">
                         {{ $slot }}
                         </div>
                     </div>
@@ -44,7 +44,8 @@
         </div>
 
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}"></script>
         @livewireScripts
+        <script src="{{ asset('js/app.js') }}"></script>
+        @stack('scripts')
     </body>
 </html>
