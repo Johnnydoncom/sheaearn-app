@@ -34,6 +34,7 @@ class ProductFactory extends Factory
             'brand_id' => function(){
                 return Brand::all()->random()->id;
             },
+            'commission' => $this->faker->numberBetween(10, 100)
         ];
     }
 

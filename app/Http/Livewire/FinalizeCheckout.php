@@ -56,7 +56,7 @@ class FinalizeCheckout extends Component
     {
 //        try {
             $total = \Cart::getTotal();
-            $shipping = $this->shippingCost;
+//            $shipping = $this->shippingCost;
             $cartCollection = \Cart::getContent();
 
             $grandTotal = $total + $this->shippingCost;
@@ -69,7 +69,11 @@ class FinalizeCheckout extends Component
             $order->notes = $this->notes;
             $order->item_count = $cartCollection->count();
             $order->shipping_charges = $this->shippingCost;
-            $order->status = 'processing';
+            $order->status = 'order_placed';
+            if($paystackRef) {
+                $order->payment_status = PaymentStatus::APPROVED;
+                $order->status = 'processing';
+            }
             $order->save();
 
             // Order Items
@@ -95,7 +99,7 @@ class FinalizeCheckout extends Component
                 }
 
                 // Affiliate Commission
-                if(Cookie::has('affiliate')){
+                if(Cookie::get('affiliate')){
                     $ref = User::where('account_id', Cookie::get('affiliate'))->first();
                     if($ref && $ref->hasRole(UserRole::AFFILIATE)) {
                         if ($cart->associatedModel->commission > 0)

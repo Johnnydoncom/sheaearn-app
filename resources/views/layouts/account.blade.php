@@ -27,10 +27,12 @@
                     <div class="grid grid-cols-1 sm:grid-cols-4">
                         <div class="sidebar border-r bg-secondary min-h-[70vh] h-full text-base-100">
                             <ul class="menu">
-                                <li class="hover-bordered"><a>Home</a></li>
-                                <li class="hover-bordered"><a>Orders</a></li>
-                                <li class="hover-bordered"><a>Orders</a></li>
-                                <li><a>Item 3</a></li>
+                                <li class="hover-bordered"><a href="{{ route('account.index') }}">Home</a></li>
+                                <li class="hover-bordered"><a href="{{ route('account.order.index') }}">Orders</a></li>
+                                <li class="hover-bordered"><a href="{{ route('account.transactions.index') }}">Transactions</a></li>
+                                <li class="hover-bordered"><a>Wishlist</a></li>
+                                <li class="hover-bordered"><a>Settings</a></li>
+                                <li class="hover-bordered"><a>Logout</a></li>
                             </ul>
                         </div>
                         <div class="content col-span-3 p-4">

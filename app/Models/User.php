@@ -91,6 +91,10 @@ class User extends Authenticatable implements MustVerifyEmail, Wallet, Confirmab
         return $this->getFirstMediaUrl('avatar', 'thumb');
     }
 
+    public function scopeSocialWallet(){
+        return $this->getWallet('social-wallet-'.$this->id);
+    }
+
     public function delivery_addresses(){
         return $this->hasMany(DeliveryAddress::class);
     }

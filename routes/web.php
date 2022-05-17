@@ -87,9 +87,11 @@ Route::prefix('account')->as('account.')->middleware(['auth','verified'])->group
 //        Route::get('wishlist', 'AccountController@wishlist')->name('account.wishlist.index');
 //        Route::delete('wishlist/{wishlist}', 'AccountController@destroyWishlist')->name('account.wishlist.destroy');
     });
+
+    Route::get('transactions', [\App\Http\Controllers\Account\TransactionsController::class, 'index'])->name('transactions.index');
 });
 
-Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified'])->group(function () {
+Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified', 'admin_auth'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('index');
     Route::resource('entries', \App\Http\Controllers\Admin\EntryController::class);
     Route::resource('topics', \App\Http\Controllers\Admin\TopicsController::class);

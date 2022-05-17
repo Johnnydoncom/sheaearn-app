@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers\Account;
 
+use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
     public function index(){
-        $allTimeEarning = auth()->user()->balance;
+        $orders = Order::whereUserId(auth()->user()->id)->paginate();
 
-        return view('account.home',[
-            'allTimeEarning' => $allTimeEarning
+        return view('account.order.list',[
+            'orders' => $orders
         ]);
     }
 
@@ -36,5 +39,28 @@ class OrderController extends Controller
             'order' => $order,
             'items' => $items
         ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Order  $order
+     * @return \Illuminate\Http\Response
+     */
+    public function cancelItem(OrderItem $orderItem)
+    {
+        $orderItem->update([
+            'status' => OrderStatus::CANCELED
+        ]);
+        return redirect()->back()->withSucess('Order Item Canceled!');
+    }
+
+    public function download(Request $request, $order_number){
+        $item = OrderItem::whereHas('order', function ($q){
+            $q->whereUserId(Auth::id());
+        })->whereOrderNumber($order_number)->firstOrFail();
+        $mediaItem = $item->product->getFirstMedia('digital');
+        if($mediaItem)
+            return response()->download($mediaItem->getPath(), $mediaItem->file_name);
     }
 }
