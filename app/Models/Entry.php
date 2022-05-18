@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Overtrue\LaravelLike\Traits\Likeable;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -14,7 +15,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Entry extends Model implements HasMedia
 {
-    use HasFactory, Sluggable, InteractsWithMedia;
+    use HasFactory, Sluggable, InteractsWithMedia, Likeable;
 
     protected $fillable = ['title','slug','description','topic_id','user_id', 'sticky'];
 
@@ -92,11 +93,6 @@ class Entry extends Model implements HasMedia
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'entry_tags', 'entry_id', 'tag_id');
-    }
-
-    public function likes()
-    {
-        return $this->morphMany(Like::class, 'likable');
     }
 
     public function bookmarks()

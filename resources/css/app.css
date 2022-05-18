@@ -37,7 +37,9 @@
     inset: auto 0px 0px auto !important;
 }
 
-
+.btn{
+    @apply normal-case;
+}
 
 /* :root {
     --color-default: #fff;

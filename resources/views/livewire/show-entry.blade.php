@@ -1,16 +1,5 @@
 
-    <div
-    x-data="{
-        popupSize: {
-            width: 780,
-            height: 550
-        },
-        async socialPopUp(){
-            let verticalPos = Math.floor((window.innerWidth - this.popupSize.width) / 2)
-            let horisontalPos = Math.floor((window.innerHeight - this.popupSize.height) / 2);
-        }
-    }"
-    x-init=""
+    <div x-data="{showComment:false,showMoreActions: false}"
     class="max-w-6xl mx-auto mt-4">
         <img class="w-full" src="{{ $entry->getFirstMediaUrl('featured_image', 'standard') }}" alt="{{$entry->title}}"/>
         <h1 class="font-bold text-4xl sm:text-5xl py-10 text-center dark:text-gray-200">{{ $entry->title }}</h1>
@@ -43,14 +32,16 @@
                 </div>
                 <div class="flex items-center flex-row sm:flex-col dark:text-gray-200">
 
-                    <div class="sticky top-0 p-5 text-gray-600" x-data="{showMoreActions: false}">
-
-
+                    <div class="sticky top-0 p-5 text-gray-600">
                         <div class="floating-icons flex flex-row sm:flex-col justify-center sm:space-y-8">
                             @auth
-                            <button class="flex gap-2 items-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
+                            <button wire:click="like" wire:loading.class="loading" wire:target="like" class="btn btn-ghost flex gap-2 items-center bg-transparent dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
                                 <x-cui-cil-happy class="w-6 h-6 flex-none"/>
+                                @if($isLiked)
+                                    1
+                                @else
                                 Like
+                                @endif
                             </button>
                             @else
                             <a href="{{ route('login') }}" class="flex gap-2 items-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
@@ -60,7 +51,7 @@
                             @endauth
 
 
-                            <button class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
+                            <button class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center" @click="showComment=true">
                                 <x-far-comment-dots class="w-6 h-6"/>
                             </button>
                             <button @auth wire:click="addBookmark" @else @click="showLoginModal=true" @endauth class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
@@ -178,6 +169,29 @@
                     </div>
                 </div>
             </div>
+
+            <template x-if="showComment">
+                <div id="comment" class="">
+                    <form method="post" wire:submit.prevent="comment">
+                        @csrf
+                        <div class="flex justify-center card border ">
+                            <div class="block rounded-lg shadow-lg bg-white text-center">
+                                <div class="py-3 px-6 border-b border-gray-300 text-left">
+                                    {{ Auth::user()->name }}
+                                </div>
+                                <div class="p-2">
+                                    {{--                            <h5 class="text-gray-900 text-xl font-medium mb-2">Special title treatment</h5>--}}
+                                    <textarea class="textarea rounded-none ring-0 w-full border-none focus:border-none focus:ring-0" placeholder="Bio" rows="5" name="body" required></textarea>
+                                </div>
+                                <div class="py-3 px-6 border-t border-gray-300 text-gray-600 flex justify-between items-center">
+                                    <span>Read the code of conduct before adding a comment.</span>
+                                    <x-button class="btn btn-secondary btn-outline">Post</x-button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </template>
         </div>
 
     </div>

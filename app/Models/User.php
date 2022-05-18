@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\Likable;
 use App\Observers\UserObserver;
 use Bavix\Wallet\Interfaces\Confirmable;
 use Bavix\Wallet\Interfaces\Wallet;
@@ -20,10 +21,11 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 use Zorb\Promocodes\Traits\AppliesPromocode;
+use Overtrue\LaravelLike\Traits\Liker;
 
 class User extends Authenticatable implements MustVerifyEmail, Wallet, Confirmable, HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, AppliesPromocode, HasWallet, HasWallets, CanConfirm, InteractsWithMedia;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, AppliesPromocode, HasWallet, HasWallets, CanConfirm, InteractsWithMedia, Liker;
 
     /**
      * The attributes that are mass assignable.
