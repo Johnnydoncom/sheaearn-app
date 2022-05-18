@@ -112,7 +112,7 @@ class AccountController extends Controller
 
 
     public function wishlist(Request $request){
-        return view('account.wishlist.index',[
+        return view('account.wishlist.list',[
             'products' => $request->user()->wishlist->map(function ($wish){
                 $wish->product = $wish->product;
                 return $wish;
@@ -139,21 +139,38 @@ class AccountController extends Controller
     }
 
     public function withdrawRequest(Request $request){
-        if(!$request->user()->hasRole(UserRole::AFFILIATE)){
-            return redirect()->route('account.index');
-        }
+//        if(!$request->user()->hasRole(UserRole::AFFILIATE)){
+//            return redirect()->route('account.index');
+//        }
+
+        $salesEarning = auth()->user()->wallet->balance;
+        $socialEarning = auth()->user()->socialWallet()->balance;
+
+        $total = $salesEarning + $socialEarning;
 
         $canWithdraw = false;
 
-        if($request->user()->balance > 0){
+
+
+        if($total > 0 ){
 
             if(setting('minimum_withdrawal') && $request->user()->balance <= setting('minimum_withdrawal')){
-                $canWithdraw = true;
+//                'status', \App\Enums\WithdrawStatus::PENDING
+                $lastWithdraw = $request->user()->withdraws()->latest()->first();
+                if($lastWithdraw){
+                    if($lastWithdraw->created_at->diffInMonths() > 1){
+                        $canWithdraw = true;
+                    }else{
+                        $canWithdraw = false;
+                    }
+                }else {
+                    $canWithdraw = true;
+                }
             }
         }
 
         return view('account.withdraw', [
-            'withdrawable' => $request->user()->balance,
+            'withdrawable' => $total,
             'canWithdraw' => $canWithdraw,
             'user'=>$request->user(),
             'payment_information' => $request->user()->payment_information ? $request->user()->payment_information->load('country') : null

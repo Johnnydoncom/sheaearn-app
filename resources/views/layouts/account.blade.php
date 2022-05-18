@@ -30,7 +30,8 @@
                                 <li class="hover-bordered"><a href="{{ route('account.index') }}" class="flex justify-between @if(request()->routeIs('account.index')) active @endif">Home <x-fas-chevron-right class="w-4 h-4" /></a></li>
                                 <li class="hover-bordered"><a href="{{ route('account.order.index') }}" class="flex justify-between @if(request()->routeIs('account.order.index')) active @endif">Orders <x-fas-chevron-right class="w-4 h-4" /></a></li>
                                 <li class="hover-bordered"><a href="{{ route('account.transactions.index') }}" class="flex justify-between @if(request()->routeIs('account.transactions.index')) active @endif">Transactions <x-fas-chevron-right class="w-4 h-4" /></a></li>
-                                <li class="hover-bordered"><a class="flex justify-between">Wishlist <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                                <li class="hover-bordered"><a href="{{ route('account.wishlist.index') }}" class="flex justify-between @if(request()->routeIs('account.wishlist.index')) active @endif">Wishlist <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                                <li class="hover-bordered"><a href="{{ route('account.withdraw.index') }}" class="flex justify-between @if(request()->routeIs('account.withdraw.index')) active @endif">Withdraw <x-fas-chevron-right class="w-4 h-4" /></a></li>
                                 <li class="hover-bordered"><a href="{{ route('account.settings.index') }}" class="flex justify-between @if(request()->routeIs('account.settings.index')) active @endif">Settings <x-fas-chevron-right class="w-4 h-4" /></a></li>
                                 <li class="hover-bordered"><a class="flex justify-between">Logout <x-fas-chevron-right class="w-4 h-4" /></a></li>
                             </ul>

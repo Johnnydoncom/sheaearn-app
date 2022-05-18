@@ -83,10 +83,10 @@ Route::prefix('account')->as('account.')->middleware(['auth','verified'])->group
         Route::get('details/{order_number}/download', [\App\Http\Controllers\Account\OrderController::class, 'download'])->name('download');
 
         Route::get('track/{order_number}', [\App\Http\Controllers\Account\OrderController::class, 'track'])->name('track');
-
-//        Route::get('wishlist', 'AccountController@wishlist')->name('account.wishlist.index');
-//        Route::delete('wishlist/{wishlist}', 'AccountController@destroyWishlist')->name('account.wishlist.destroy');
     });
+
+    Route::get('wishlist', [\App\Http\Controllers\Account\AccountController::class, 'wishlist'])->name('wishlist.index');
+    Route::delete('wishlist/{wishlist}', [\App\Http\Controllers\Account\AccountController::class, 'destroyWishlist'])->name('wishlist.destroy');
 
     Route::get('transactions', [\App\Http\Controllers\Account\TransactionsController::class, 'index'])->name('transactions.index');
 
@@ -94,6 +94,9 @@ Route::prefix('account')->as('account.')->middleware(['auth','verified'])->group
     Route::post('settings', [\App\Http\Controllers\Account\AccountController::class, 'update'])->name('settings.store');
     Route::post('password', [\App\Http\Controllers\Account\AccountController::class, 'updatePassword'])->name('password.store');
     Route::post('bank-info', [\App\Http\Controllers\Account\AccountController::class, 'storeBank'])->name('bank.store');
+
+    Route::get('withdraw-request', [\App\Http\Controllers\Account\AccountController::class, 'withdrawRequest'])->name('withdraw.index');
+    Route::post('withdraw-request', [\App\Http\Controllers\Account\AccountController::class, 'submitWithdrawRequest'])->name('withdraw.store');
 });
 
 Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified', 'admin_auth'])->group(function () {

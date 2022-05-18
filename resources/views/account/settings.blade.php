@@ -3,7 +3,7 @@
 
 <div>
     <!-- start::Stats -->
-    <div class="grid grid-cols-3 md:grid-cols-2 xl:grid-cols-3 gap-1 sm:gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
        <div class="col-span-2">
         <h3 class="font-bold text-lg sm:text-xl">Account Information</h3>
         <div class="divider mt-0"></div>
@@ -35,7 +35,7 @@
             </form>
        </div>
        <div>
-           <h3 class="font-bold text-lg sm:text-xl">Bank Information</h3>
+           <h3 class="font-bold text-lg sm:text-xl mt-5 sm:mt-0">Bank Information</h3>
            <div class="divider mt-0"></div>
             <form method="POST" action="{{ route('account.bank.store') }}" class="">
                 @csrf

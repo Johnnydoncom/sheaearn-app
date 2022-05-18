@@ -21,7 +21,7 @@
                         {{app_money_format($transaction->amount)}}
                     </td>
                     <td class="py-3 pl-2">
-                        {{ $transaction->meta['description'] }}
+                        {{ isset($transaction->meta['description']) ? $transaction->meta['description'] : '' }}
                     </td>
                     <td class="py-3 pl-2">
                         {{ $transaction->created_at->format('F j, Y') }}
@@ -34,9 +34,11 @@
                     </td>
                 </tr>
             @endforelse
-
             </tbody>
         </table>
     </div>
+
     <!-- end::Table -->
 </x-account-layout>
+
+
