@@ -3,7 +3,7 @@
         <a href="{{$post->entry_url}}" data-mdb-ripple="true" data-mdb-ripple-color="light">
             <img class="rounded-t-lg h-56 w-full" src="{{ $post->featured_img_thumb }}" alt="{{$post->title}}"/>
         </a>
-        <div class="p-6">
+        <div class="p-5">
             <h2 class="text-gray-900 text-xl font-bold mb-2"><a href="{{$post->entry_url}}" title="{{$post->title}}">{{$post->title}}</a></h2>
 {{--            <p class="text-gray-700 text-base mb-4">--}}
 {{--                {{$post->excerpt}}--}}

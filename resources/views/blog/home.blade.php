@@ -1,10 +1,6 @@
 <x-app-layout>
-{{--    <x-slot name="header">--}}
-{{--        <h2 class="font-semibold text-xl text-gray-800 leading-tight">--}}
-{{--            {{ __('Dashboard') }}--}}
-{{--        </h2>--}}
-{{--    </x-slot>--}}
-    <x-slot name="title">Blog</x-slot>
+
+    <x-slot name="title">@if(request()->s) Search for '{{ request()->s }}' @else Blog @endif</x-slot>
     <div class="py-12">
         <div class="container">
             <div class="grid sm:grid-cols-3 gap-4 grid-cols-1">
@@ -26,7 +22,11 @@
                 @endforeach
                     </div>
 
-
+                @foreach($entries as $entry)
+                    <div class="">
+                        @include('partials.post.post-style1', ['post'=>$entry])
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>

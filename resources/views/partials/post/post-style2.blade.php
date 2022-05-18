@@ -3,13 +3,10 @@
 <div class="flex justify-center h-full">
     <div class="rounded-lg shadow-lg bg-white">
         <a href="{{$post->entry_url}}" data-mdb-ripple="true" data-mdb-ripple-color="light">
-            <img class="rounded-t-lg h-56 w-full" src="{{ $post->featured_img_thumb }}" alt="{{$post->title}}"/>
+            <img class="rounded-t-lg h-56 min-h-full w-full" src="{{ $post->featured_img_thumb }}" alt="{{$post->title}}"/>
         </a>
         <div class="p-6">
             <h2 class="text-gray-900 text-xl font-bold mb-2"><a href="{{$post->entry_url}}" title="{{$post->title}}">{{$post->title}}</a></h2>
-{{--            <p class="text-gray-700 text-base mb-4">--}}
-{{--                {{$post->excerpt}}--}}
-{{--            </p>--}}
             <div class="flex items-center justify-start gap-2">
                 <img
                     src="{{ $post->author->avatar_url }}"
@@ -33,7 +30,7 @@
 
 <div class="flex justify-center">
     <div class="flex flex-col md:flex-row bg-white shadow-lg">
-        <img class="w-full h-60 md:h-60 object-cover md:w-80 rounded-none" src="{{ $post->featured_img_thumb }}" alt="{{$post->title}}" />
+        <img class="w-full h-60 min-h-max sm:min-h-max sm:h-60 object-cover sm:w-80 rounded-none" src="{{ $post->featured_img_thumb }}" alt="{{$post->title}}" />
 
         <div class="p-6 flex flex-col justify-start">
             <h5 class="text-gray-900 text-xl font-medium mb-2 line-clamp-2"><a href="{{$post->entry_url}}">{{$post->title}}</a></h5>

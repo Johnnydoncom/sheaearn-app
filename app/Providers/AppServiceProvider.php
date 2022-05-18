@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use ConsoleTVs\Charts\Registrar as Charts;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Charts $charts)
     {
         Str::macro('readDuration', function(...$text) {
             $totalWords = str_word_count(implode(" ", $text));
@@ -30,5 +31,9 @@ class AppServiceProvider extends ServiceProvider
 
             return (int)max(1, $minutesToRead);
         });
+
+        $charts->register([
+            \App\Charts\UserTransactionChart::class
+        ]);
     }
 }

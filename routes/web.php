@@ -89,6 +89,11 @@ Route::prefix('account')->as('account.')->middleware(['auth','verified'])->group
     });
 
     Route::get('transactions', [\App\Http\Controllers\Account\TransactionsController::class, 'index'])->name('transactions.index');
+
+    Route::get('settings', [\App\Http\Controllers\Account\AccountController::class, 'edit'])->name('settings.index');
+    Route::post('settings', [\App\Http\Controllers\Account\AccountController::class, 'update'])->name('settings.store');
+    Route::post('password', [\App\Http\Controllers\Account\AccountController::class, 'updatePassword'])->name('password.store');
+    Route::post('bank-info', [\App\Http\Controllers\Account\AccountController::class, 'storeBank'])->name('bank.store');
 });
 
 Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified', 'admin_auth'])->group(function () {

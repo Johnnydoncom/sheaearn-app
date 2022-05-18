@@ -225,6 +225,9 @@
                 </div>
 
                 <ul class="navbar-nav hidden sm:flex flex-col pl-0 list-style-none mr-auto">
+                    <li class="nav-item p-1.5">
+                        <a class="nav-link text-white hover:text-gray-100 focus:text-gray-100 p-2 pt-2 pb-2 hover:border-b-4 hover:border-white" href="{{ route('blog.index') }}">{{ __('All') }}</a>
+                      </li>
                     @foreach($menu_topics as $mtopic)
                     <li class="nav-item p-1.5">
                       <a class="nav-link text-white hover:text-gray-100 focus:text-gray-100 p-2 pt-2 pb-2 hover:border-b-4 hover:border-white" href="{{ route('blog.category', $mtopic->slug) }}">{{ __($mtopic->name) }}</a>

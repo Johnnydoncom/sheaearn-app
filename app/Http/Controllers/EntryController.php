@@ -11,9 +11,14 @@ use Illuminate\Support\Facades\Cache;
 
 class EntryController extends Controller
 {
-    public function index(){
-        // Store all entries in cache for 1 hour (3600 seconds)
-        $entries = Entry::latest()->whereSticky(false)->get();
+    public function index(Request $request){
+
+        if($request->s){
+            $entries = Entry::where('title','like','%'.$request->get('s').'%')->orWhere('description','like','%'.$request->get('s').'%')->get();
+        }else{
+            // Store all entries in cache for 1 hour (3600 seconds)
+            $entries = Entry::latest()->whereSticky(false)->get();
+        }
 
         // Store all entries in cache for 1 hour (3600 seconds)
         $sticky_entries = Entry::latest()->whereSticky(true)->latest()->limit(3)->get();
@@ -28,9 +33,12 @@ class EntryController extends Controller
         $category = Topic::whereSlug($slug)->firstOrFail();
         $entries = Entry::where('topic_id', '=', $category->id)->wherePublished(true)->paginate();
 
+        $latestPosts = Entry::latest()->limit(4)->get();
+
         return view('blog.category', [
             'category' => $category,
             'entries' => $entries,
+            'latestPosts' => $latestPosts
         ]);
     }
 

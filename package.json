@@ -24,6 +24,7 @@
     "dependencies": {
         "@paystack/inline-js": "^2.12.2",
         "@tailwindcss/line-clamp": "^0.4.0",
+        "apexcharts": "^3.35.2",
         "daisyui": "^2.14.3",
         "sweetalert2": "^11.4.13",
         "swiper": "^8.1.4",

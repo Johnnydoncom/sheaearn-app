@@ -51,9 +51,10 @@
 
 <!-- Scripts -->
 @livewireScripts
+@stack('scripts')
 <script src="https://unpkg.com/@alpinejs/collapse@3.4.2/dist/cdn.min.js"></script>
 <script src="{{ asset('js/app.js') }}"></script>
-
+@stack('scripts')
 <script src="{{ asset('vendor/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
 <script>
     const Toast = Swal.mixin({
@@ -76,6 +77,6 @@
         })
     })
 </script>
-@stack('scripts')
+
 </body>
 </html>
