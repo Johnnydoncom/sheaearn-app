@@ -1,5 +1,7 @@
 
-    <div x-data="{showComment:false,showMoreActions: false}"
+    <div x-data="{
+    showComment:false,showMoreActions: false,
+    }"
     class="max-w-6xl mx-auto mt-4">
         <img class="w-full" src="{{ $entry->getFirstMediaUrl('featured_image', 'standard') }}" alt="{{$entry->title}}"/>
         <h1 class="font-bold text-4xl sm:text-5xl py-10 text-center dark:text-gray-200">{{ $entry->title }}</h1>
@@ -79,7 +81,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="javascript:fbShare()" class="ssocial-button">
+                                            <a @click.prevent="fbShare()" href="#" class="ssocial-button">
                                                 <x-cui-cib-facebook class="w-6 h-6 text-[#4267B2]"/> Facebook
                                             </a>
                                         </li>
@@ -157,15 +159,6 @@
 @push('scripts')
 
 <script>
-    // function fbShare(url, title, descr, image, winWidth=780, winHeight=550) {
-    //     var winTop = (screen.height / 2) - (winHeight / 2);
-    //     var winLeft = (screen.width / 2) - (winWidth / 2);
-    //     window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight).then(resp=>{
-    //         console.log('resp: ',resp)
-    //     });
-
-    // }
-
     var popupSize = {
         width: 780,
         height: 550
@@ -205,6 +198,7 @@
         description: '{{ $entry->excerpt }}'
     },
     function(response) {
+        console.log(response)
         if (response && response.post_id) {
         alert('Post was published.');
         } else {

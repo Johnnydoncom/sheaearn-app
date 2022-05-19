@@ -18,7 +18,10 @@
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-white dark:bg-black">
-    @livewire('guest-header', ['pageTitle' => isset($title) ? (string)$title : '', 'searchIcon' => isset($searchIcon) ? true : false ])
+    <div>
+        @livewire('guest-header', ['pageTitle' => isset($title) ? (string)$title : '', 'searchIcon' => isset($searchIcon) ? true : false ])
+
+    </div>
 
     <!-- Page Content -->
     <main>

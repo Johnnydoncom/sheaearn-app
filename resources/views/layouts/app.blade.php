@@ -34,8 +34,9 @@
 
         <div class="min-h-screen bg-white dark:bg-black" x-data="{isLoggedIn: {{ Auth::check() ? 1 : 0 }}, showLoginModal:false }">
 {{--            @include('partials.header')--}}
-            @livewire('app-header', ['pageTitle' => isset($title) ? (string)$title : '', 'searchIcon' => isset($searchIcon) ? true : false ])
-
+            <div>
+                @livewire('app-header', ['pageTitle' => isset($title) ? (string)$title : '', 'searchIcon' => isset($searchIcon) ? true : false ])
+            </div>
 
             <!-- Page Content -->
             <main>
@@ -60,7 +61,9 @@
                 </div>
             </template>
 
-            @include('partials.footer')
+            <div>
+                @include('partials.footer')
+            </div>
         </div>
 
         <!-- Scripts -->

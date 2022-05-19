@@ -1,5 +1,5 @@
 
-    <div class="max-w-xs rounded-md overflow-hidden shadow-lg hover:scale-105 transition duration-500 relative bg-white">
+    <div class="max-w-xs rounded-md overflow-hidden shadow-lg hover:scale-105 transition duration-500 relative bg-white h-full">
         <div>
             <img src="{{$product->featured_img_thumb}}" alt="{{$product->title}}" class="w-full"/>
         </div>
