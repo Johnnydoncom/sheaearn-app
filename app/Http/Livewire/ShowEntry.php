@@ -66,4 +66,43 @@ class ShowEntry extends Component
             'message'=>"Comment submitted."
         ]);
     }
+
+    public function shared($method)
+    {
+        if($record = $this->entry->shares()->whereUserId(auth()->user()->id)->first()){
+            if($record->created_at->isToday()){
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Post already shared"
+                ]);
+            }else{
+                $this->processShare($method);
+
+                // Set Flash Message
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'success',
+                    'message'=>"Post shared."
+                ]);
+            }
+
+        }else{
+            $this->processShare($method);
+
+            // Set Flash Message
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Post shared."
+            ]);
+        }
+    }
+
+    private function processShare($method)
+    {
+        $this->entry->shares()->create([
+            'user_id' => auth()->user()->id,
+            'social_id' => $method
+        ]);
+
+        auth()->user()->deposit(setting('share_commission'), ['type' => 'share_commission', 'description' => 'Commission for sharing post', 'entry_id' => $this->entry->id]);
+    }
 }

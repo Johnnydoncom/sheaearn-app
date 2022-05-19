@@ -17,6 +17,12 @@ return [
         'simple' => 'Simple Product',
         'variable' => 'Variable Product',
         'digital' => 'Digital Product'
-    ]
+    ],
+
+    'social_shares' => [
+        'facebook_id' => 'facebook'
+    ],
+
+    'share_commission' => 5,
 
 ];

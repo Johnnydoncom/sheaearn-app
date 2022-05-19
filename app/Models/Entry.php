@@ -104,4 +104,8 @@ class Entry extends Model implements HasMedia
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
+
+    public function shares(){
+        return $this->morphMany(Share::class, 'shareable');
+    }
 }

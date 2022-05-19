@@ -62,11 +62,7 @@
                                 @else
                                 <x-cui-cil-bookmark class="w-6 h-6"/>
                                 @endif
-
                             </button>
-                            <a href="{{ $shareUrls['twitter'] }}" target="_blank" class="social-button flex gap-2 items-center justify-center bg-white dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
-                                <x-cui-cib-twitter class="w-6 h-6"/>
-                            </a>
 
                             @if(1>0)
                             <div class="dropdown dropdown-left dropdown-end ">
@@ -76,34 +72,13 @@
                                 <div tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-96">
                                     <ul class="menu grid grid-cols-2 gap-4">
                                         <li>
-                                            <a class="nav-item social-button" href="{{ $shareUrls['twitter'] }}" >
+                                            <a class="nav-item social-buttonn" id="share-twitter" href="#" @click="app.twitter.share()">
                                                 <x-cui-cib-twitter class="w-6 h-6 text-[#1DA1F2]"/> Tweet this
                                             </a>
                                         </li>
                                         <li>
                                             <a @click.prevent="fbShare()" href="#" class="ssocial-button">
                                                 <x-cui-cib-facebook class="w-6 h-6 text-[#4267B2]"/> Facebook
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ $shareUrls['linkedin'] }}" class="social-button">
-                                                <x-cui-cib-linkedin class="w-6 h-6 text-[#4267B2]"/> LinkedIn
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ $shareUrls['reddit'] }}" class="social-button">
-                                                <x-cui-cib-reddit class="w-6 h-6 text-[#FF4500]"/>
-                                                Reddit
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ $shareUrls['telegram'] }}" class="social-button">
-                                                <x-cui-cib-telegram class="w-6 h-6 text-[#FF4500]"/>Telegram
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ $shareUrls['whatsapp'] }}" class="social-button">
-                                                <x-cui-cib-whatsapp class="w-6 h-6 text-[#25D366]"/>WhatsApp
                                             </a>
                                         </li>
                                     </ul>
@@ -152,59 +127,82 @@
             @endauth
         </div>
 
-    </div>
 
+        {{-- <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Hello world" data-show-count="false">Tweet</a> --}}
+
+    </div>
 
 
 @push('scripts')
 
 <script>
-    var popupSize = {
-        width: 780,
-        height: 550
-    };
-    const socialBtns = document.querySelectorAll('.social-button');
+    var app = app || {};
+    app.twitter = {
+        share : function() {
+            // alert('clicked');
+            twttr.ready(function (twttr) {
+                twttr.events.bind('tweet', function (event) {
+                    console.log(event);
 
-    socialBtns.forEach(sbtn => {
-        sbtn.addEventListener('click', function handleClick(event) {
-            // console.log('btn clicked', event.target.getAttribute('href'));
+                    alert('published');
+                });
+            });
 
-            var verticalPos = Math.floor((screen.width - popupSize.width) / 2),
-                horisontalPos = Math.floor((screen.heigh - popupSize.height) / 2);
+            var popup = window.open('{{$shareUrls["twitter"]}}', 'popupwindow', 'scrollbars=yes,width=800,height=400');
 
-            var popup = window.open(event.target.getAttribute('href'), 'social',
-                'width=' + popupSize.width + ',height=' + popupSize.height +
-                ',left=' + verticalPos + ',top=' + horisontalPos +
-                ',location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1');
-
-            if (popup) {
-                popup.focus();
-                event.preventDefault();
-                console.log(1)
-            }else{
-                console.log(0)
-            }
-        });
-    });
-</script>
-<script>
-   function fbShare(){
-    FB.ui({
-        method: 'share',
-        name: '{{$entry->title}}',
-        href: '{{url()->current()}}',
-        picture: '{{ $entry->getFirstMediaUrl('featured_image', 'standard') }}',
-        caption: 'Reference Documentation',
-        description: '{{ $entry->excerpt }}'
-    },
-    function(response) {
-        console.log(response)
-        if (response && response.post_id) {
-        alert('Post was published.');
-        } else {
-        alert('Post was not published.');
+            popup.focus();
         }
-    });
-   }
+    };
+</script>
+
+
+<script>
+
+
+        // function twitterShare() {
+        //     var tweetUrl = '{{ $shareUrls['twitter'] }}';
+        //     var x = screen.width/2 - 700/2;
+        //         var y = screen.height/2 - 450/2;
+        //         var child = window.open(tweetUrl, "popupWindow", "width=600, height=400,left="+x+",top="+y);
+        //         child.focus();
+        //         var timer = setInterval(checkChild, 1);
+        //         document.domain = 'shop-blog.test';     //Replace it with your domain
+        //         function checkChild() {
+        //             if(child.closed){
+        //                 clearInterval(timer);
+        //             }
+        //             if(child.window && child.window.closed){
+        //                 //Code in this condition will execute after successfull post
+        //             //Do your stuff here
+        //                 console.log('I am here after a successful tweet.');
+        //                 clearInterval(timer);
+        //             }
+        //         }
+        // }
+
+
+        function fbShare(){
+            FB.ui({
+                method: 'share',
+                name: '{{$entry->title}}',
+                href: '{{url()->current()}}',
+                picture: '{{ $entry->getFirstMediaUrl('featured_image', 'standard') }}',
+                caption: 'Reference Documentation',
+                description: '{{ $entry->excerpt }}'
+            },
+            function(response) {
+                if (response && !response.error_code) {
+                    if (typeof response != 'undefined'){
+                        //shered
+                        @this.shared('{{ config("appstore.social_shares.facebook_id")}}')
+                    }
+                }else if (response && response.post_id) {
+                    @this.shared('{{ config("appstore.social_shares.facebook_id")}}')
+                } else {
+                    // alert('Post was not published.');
+                }
+            });
+        }
+    // });
 </script>
 @endpush
