@@ -19,17 +19,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->user()->hasRole(UserRole::VENDOR)) {
-            $orders = Order::with('user')->whereHas('items.product', function ($q) use ($request) {
-                $q->where('user_id', $request->user()->id);
-            });
-        }else{
-            $orders = Order::with('user');
-        }
-
-        return Inertia::render('Admin/Orders/Index', [
-            'orders' => $orders->latest()->paginate()
-        ]);
+        return view('admin.order.home');
     }
 
     /**
@@ -72,7 +62,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return Inertia::render('Admin/Orders/Edit', [
+        return view('admin.order.edit', [
             'order' => $order,
             'orderItems' => $order->items->map(function ($item){
                 $item['total'] = app_money_format($item->amount);
@@ -82,12 +72,7 @@ class OrderController extends Controller
             'delivery_address' => $order->delivery_address,
             'payment' => $order->payment,
             'statuses' => config('appstore.orderstatus'),
-            'customers' => User::role([UserRole::CUSTOMER, UserRole::AFFILIATE])->get()->map(function ($user){
-                return [
-                    'label' => $user->name,
-                    'value' => $user->id
-                ];
-            })
+            'customers' => User::role([UserRole::CUSTOMER, UserRole::AFFILIATE])->get()
         ]);
     }
 
@@ -118,6 +103,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return redirect()->back()->withSuccess('Order Deleted');
     }
 }

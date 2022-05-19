@@ -124,7 +124,7 @@ id="aside"
                         x-data="{ linkHover: false }"
                         @mouseover = "linkHover = true"
                         @mouseleave = "linkHover = false"
-                        href="./pages/profile.html"
+                        href="{{ route('admin.users.index') }}"
                         class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition duration-200" :class=" linkHover ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -134,7 +134,7 @@ id="aside"
                             class="ml-3 transition duration-200"
                             :class="linkHover ? 'text-gray-100' : ''"
                         >
-                            Profile
+                            All Users
                         </span>
                     </a>
                     <!-- end::Menu link -->
@@ -144,7 +144,7 @@ id="aside"
                         x-data="{ linkHover: false }"
                         @mouseover = "linkHover = true"
                         @mouseleave = "linkHover = false"
-                        href="./pages/invoices.html"
+                        href="{{ route('admin.orders.index') }}"
                         class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition duration-200" :class=" linkHover ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -154,10 +154,30 @@ id="aside"
                             class="ml-3 transition duration-200"
                             :class="linkHover ? 'text-gray-100' : ''"
                         >
-                            Invoices
+                            Orders
                         </span>
                     </a>
                     <!-- end::Menu link -->
+
+                    <!-- start::Menu link -->
+                    <a
+                        x-data="{ linkHover: false }"
+                        @mouseover = "linkHover = true"
+                        @mouseleave = "linkHover = false"
+                        href="{{ route('admin.withdraw.index') }}"
+                        class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition duration-200" :class=" linkHover ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <span
+                            class="ml-3 transition duration-200"
+                            :class="linkHover ? 'text-gray-100' : ''"
+                        >
+                            Withdrawal
+                        </span>
+                    </a>
+
 
                     <p class="text-xs text-gray-600 mt-6 mb-2 px-6 uppercase">Settings</p>
                     <!-- start::Menu link -->
@@ -175,7 +195,7 @@ id="aside"
                             class="ml-3 transition duration-200"
                             :class="linkHover ? 'text-gray-100' : ''"
                         >
-                            Profile
+                            General Settings
                         </span>
                     </a>
                     <!-- end::Menu link -->
@@ -195,10 +215,27 @@ id="aside"
                             class="ml-3 transition duration-200"
                             :class="linkHover ? 'text-gray-100' : ''"
                         >
-                            Invoices
+                            Store Settings
                         </span>
                     </a>
-                    <!-- end::Menu link -->
+
+                    <a
+                        x-data="{ linkHover: false }"
+                        @mouseover = "linkHover = true"
+                        @mouseleave = "linkHover = false"
+                        href="./pages/invoices.html"
+                        class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition duration-200" :class=" linkHover ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <span
+                            class="ml-3 transition duration-200"
+                            :class="linkHover ? 'text-gray-100' : ''"
+                        >
+                            Blog Settings
+                        </span>
+                    </a>
 
                 </nav>
                 <!-- end::Navigation -->

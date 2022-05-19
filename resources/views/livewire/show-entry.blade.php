@@ -53,7 +53,15 @@
                             @endauth
 
 
-                            <a href="#comment" class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center" @click="showComment=true">
+                            <button class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center" id="share-twitter" @auth @click.prevent="fbShare()" @else @click.prevent="showLoginModal=true" @endauth>
+                                <x-cui-cib-twitter class="w-6 h-6 text-[#1DA1F2] flex-nonee"/>
+                            </button>
+
+                            <button @auth @click.prevent="fbShare()" wire:target="shared('{{ config("appstore.social_shares.facebook_id")}}')" wire:loading.class="loading" @else @click.prevent="showLoginModal=true" @endauth class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
+                                <x-cui-cib-facebook class="w-6 h-6 text-[#4267B2] flex-nonee"/>
+                            </button>
+
+                            <a href="#comment" class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center" @auth @click="showComment=true" @else @click.prevent="showLoginModal=true" @endauth>
                                 <x-far-comment-dots class="w-6 h-6"/>
                             </a>
                             <button @auth wire:click="addBookmark" wire:target="addBookmark" wire:loading.class="loading" @else @click="showLoginModal=true" @endauth class="btn btn-ghost flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
@@ -64,7 +72,7 @@
                                 @endif
                             </button>
 
-                            @if(1>0)
+                            @if(1>3)
                             <div class="dropdown dropdown-left dropdown-end ">
                                 <label tabindex="0" class="btn border-none flex gap-2 items-center justify-center bg-white rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center text-gray-600 xl:min-h-0 m-1">
                                     <x-cui-cil-account-logout class="w-6 h-6 rotate-90"/>
@@ -72,7 +80,7 @@
                                 <div tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-96">
                                     <ul class="menu grid grid-cols-2 gap-4">
                                         <li>
-                                            <a class="nav-item social-buttonn" id="share-twitter" href="#" @click="app.twitter.share()">
+                                            <a class="nav-item social-buttonn" id="share-twitter" href="#">
                                                 <x-cui-cib-twitter class="w-6 h-6 text-[#1DA1F2]"/> Tweet this
                                             </a>
                                         </li>
@@ -127,59 +135,32 @@
             @endauth
         </div>
 
-
-        {{-- <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Hello world" data-show-count="false">Tweet</a> --}}
-
     </div>
 
 
 @push('scripts')
 
 <script>
-    var app = app || {};
-    app.twitter = {
-        share : function() {
-            // alert('clicked');
-            twttr.ready(function (twttr) {
-                twttr.events.bind('tweet', function (event) {
-                    console.log(event);
+    {{--var app = app || {};--}}
+    {{--app.twitter = {--}}
+    {{--    share : function() {--}}
+    {{--        // alert('clicked');--}}
+    {{--        twttr.ready(function (twttr) {--}}
+    {{--            twttr.events.bind('tweet', function (event) {--}}
+    {{--                console.log(event);--}}
 
-                    alert('published');
-                });
-            });
+    {{--                alert('published');--}}
+    {{--            });--}}
+    {{--        });--}}
 
-            var popup = window.open('{{$shareUrls["twitter"]}}', 'popupwindow', 'scrollbars=yes,width=800,height=400');
+    {{--        var popup = window.open('{{$shareUrls["twitter"]}}', 'popupwindow', 'scrollbars=yes,width=800,height=400');--}}
 
-            popup.focus();
-        }
-    };
+    {{--        popup.focus();--}}
+    {{--    }--}}
+    {{--};--}}
 </script>
 
-
 <script>
-
-
-        // function twitterShare() {
-        //     var tweetUrl = '{{ $shareUrls['twitter'] }}';
-        //     var x = screen.width/2 - 700/2;
-        //         var y = screen.height/2 - 450/2;
-        //         var child = window.open(tweetUrl, "popupWindow", "width=600, height=400,left="+x+",top="+y);
-        //         child.focus();
-        //         var timer = setInterval(checkChild, 1);
-        //         document.domain = 'shop-blog.test';     //Replace it with your domain
-        //         function checkChild() {
-        //             if(child.closed){
-        //                 clearInterval(timer);
-        //             }
-        //             if(child.window && child.window.closed){
-        //                 //Code in this condition will execute after successfull post
-        //             //Do your stuff here
-        //                 console.log('I am here after a successful tweet.');
-        //                 clearInterval(timer);
-        //             }
-        //         }
-        // }
-
 
         function fbShare(){
             FB.ui({
@@ -194,10 +175,10 @@
                 if (response && !response.error_code) {
                     if (typeof response != 'undefined'){
                         //shered
-                        @this.shared('{{ config("appstore.social_shares.facebook_id")}}')
+                        @this.shared('{{ config("appstore.social_shares.facebook_id")}}');
                     }
                 }else if (response && response.post_id) {
-                    @this.shared('{{ config("appstore.social_shares.facebook_id")}}')
+                    @this.shared('{{ config("appstore.social_shares.facebook_id")}}');
                 } else {
                     // alert('Post was not published.');
                 }

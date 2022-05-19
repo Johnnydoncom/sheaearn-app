@@ -101,13 +101,23 @@ Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified', 'admin_
     Route::resource('topics', \App\Http\Controllers\Admin\TopicsController::class);
 
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
-
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     Route::get('categories', [\App\Http\Controllers\Admin\ProductController::class, 'categories'])->name('categories.index');
 
     Route::post('/file-upload', [\App\Http\Controllers\Admin\DashboardController::class, 'fileUpload'])->name('file-upload');
 
+    // Settings
+    Route::get('settings', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('settings.index');
+    Route::post('settings', [\App\Http\Controllers\Admin\DashboardController::class, 'update'])->name('settings.store');
+
+    // Coupons
+//    Route::resource('coupons', 'CouponController');
+
+    // Withdrawal
+    Route::get('withdraw-requests', [\App\Http\Controllers\Admin\WithdrawController::class, 'index'])->name('withdraw.index');
+    Route::patch('withdraw-requests/{withdrawRequest}', [\App\Http\Controllers\Admin\WithdrawController::class, 'update'])->name('withdraw.update');
 });
 
 require __DIR__.'/auth.php';

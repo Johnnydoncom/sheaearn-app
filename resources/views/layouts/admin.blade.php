@@ -76,6 +76,22 @@
             title:message
         })
     })
+
+    @if(session('success'))
+    Toast.fire({
+        icon:'success',
+        title:'{{session("success")}}'
+    })
+    @endif
+
+    @if($errors->any())
+    @foreach ($errors->all() as $error)
+    Toast.fire({
+        icon:'error',
+        title:'{{$error}}'
+    })
+    @endforeach
+    @endif
 </script>
 
 </body>
