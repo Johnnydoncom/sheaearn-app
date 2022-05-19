@@ -25,4 +25,9 @@ class HomeController extends Controller
             'sticky_entry' => $sticky_entry
         ]);
     }
+
+    public function privacy()
+    {
+        return 1;
+    }
 }

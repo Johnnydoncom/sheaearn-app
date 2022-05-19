@@ -7,7 +7,7 @@ use App\Models\Product;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-//use Jorenvh\Share\Share;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class EntryController extends Controller
 {
@@ -19,6 +19,10 @@ class EntryController extends Controller
             // Store all entries in cache for 1 hour (3600 seconds)
             $entries = Entry::latest()->whereSticky(false)->get();
         }
+
+        SEOTools::setTitle('Blog Posts');
+        // SEOTools::setDescription($category->description);
+        SEOTools::opengraph()->addProperty('type', 'articles');
 
         // Store all entries in cache for 1 hour (3600 seconds)
         $sticky_entries = Entry::latest()->whereSticky(true)->latest()->limit(3)->get();
@@ -32,6 +36,10 @@ class EntryController extends Controller
     public function category($slug){
         $category = Topic::whereSlug($slug)->firstOrFail();
         $entries = Entry::where('topic_id', '=', $category->id)->wherePublished(true)->paginate();
+
+        SEOTools::setTitle($category->name);
+        SEOTools::setDescription($category->description);
+        SEOTools::opengraph()->addProperty('type', 'articles');
 
         $latestPosts = Entry::latest()->limit(4)->get();
 
@@ -53,6 +61,22 @@ class EntryController extends Controller
             ->reddit()
             ->telegram()
             ->getRawLinks();
+
+
+        SEOTools::setTitle($entry->title);
+        SEOTools::setDescription($entry->excerpt);
+        // SEOTools::opengraph()->setUrl('http://current.url.com');
+        // SEOTools::setCanonical('https://codecasts.com.br/lesson');
+        SEOTools::opengraph()->addProperty('type', 'article');
+        SEOTools::twitter()->setSite('@Sheaearn');
+        SEOTools::jsonLd()->addImage($entry->getFirstMediaUrl('featured_image', 'standard'));
+
+            // SEOMeta::setTitle($entry->title);
+            // SEOMeta::setDescription($entry->excerpt);
+        SEOTools::opengraph()->addProperty('article:published_time', $entry->created_at->toW3cString(), 'property');
+            // SEOMeta::addMeta('article:section', $entry->topic->name, 'property');
+            // SEOMeta::addKeyword(['key1', 'key2', 'key3']);
+
 
             $products = Product::inRandomOrder()->limit(6)->get();
 

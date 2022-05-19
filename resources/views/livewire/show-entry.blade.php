@@ -54,7 +54,7 @@
                             <a href="#comment" class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center" @click="showComment=true">
                                 <x-far-comment-dots class="w-6 h-6"/>
                             </a>
-                            <button @auth wire:click="addBookmark" @else @click="showLoginModal=true" @endauth class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
+                            <button @auth wire:click="addBookmark" wire:target="addBookmark" wire:loading.class="loading" @else @click="showLoginModal=true" @endauth class="btn btn-ghost flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
                                 @if($isBookmarked)
                                 <x-fas-bookmark class="w-6 h-6 text-primary"/>
                                 @else
@@ -74,33 +74,33 @@
                                 <div tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-96">
                                     <ul class="menu grid grid-cols-2 gap-4">
                                         <li>
-                                            <a class="nav-item" href="{{ $shareUrls['twitter'] }}">
+                                            <a class="nav-item social-button" href="{{ $shareUrls['twitter'] }}" >
                                                 <x-cui-cib-twitter class="w-6 h-6 text-[#1DA1F2]"/> Tweet this
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ $shareUrls['facebook'] }}">
+                                            <a href="javascript:fbShare()" class="ssocial-button">
                                                 <x-cui-cib-facebook class="w-6 h-6 text-[#4267B2]"/> Facebook
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ $shareUrls['linkedin'] }}">
+                                            <a href="{{ $shareUrls['linkedin'] }}" class="social-button">
                                                 <x-cui-cib-linkedin class="w-6 h-6 text-[#4267B2]"/> LinkedIn
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ $shareUrls['reddit'] }}">
+                                            <a href="{{ $shareUrls['reddit'] }}" class="social-button">
                                                 <x-cui-cib-reddit class="w-6 h-6 text-[#FF4500]"/>
                                                 Reddit
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ $shareUrls['telegram'] }}">
+                                            <a href="{{ $shareUrls['telegram'] }}" class="social-button">
                                                 <x-cui-cib-telegram class="w-6 h-6 text-[#FF4500]"/>Telegram
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ $shareUrls['whatsapp'] }}">
+                                            <a href="{{ $shareUrls['whatsapp'] }}" class="social-button">
                                                 <x-cui-cib-whatsapp class="w-6 h-6 text-[#25D366]"/>WhatsApp
                                             </a>
                                         </li>
@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="py-3 px-6 border-t border-gray-300 text-gray-600 flex justify-between items-center">
                                     <span>Read the code of conduct before adding a comment.</span>
-                                    <x-button class="btn btn-secondary btn-outline">Post</x-button>
+                                    <x-button class="btn btn-secondary btn-outline gap-2 rounded-full"><x-far-paper-plane class="w-5 h-5 flex-none" />Post</x-button>
                                 </div>
                             </div>
                         </div>
@@ -155,18 +155,62 @@
 
 
 @push('scripts')
-    {{-- <script src="{{ asset('js/share.js')}}"></script> --}}
 
-    <script>
-        var popupSize = {
-            width: 780,
-            height: 550
-        };
+<script>
+    // function fbShare(url, title, descr, image, winWidth=780, winHeight=550) {
+    //     var winTop = (screen.height / 2) - (winHeight / 2);
+    //     var winLeft = (screen.width / 2) - (winWidth / 2);
+    //     window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[summary]=' + descr + '&p[url]=' + url + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight).then(resp=>{
+    //         console.log('resp: ',resp)
+    //     });
 
-        // function socialPopUp(){
-        //     var verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
-        //     horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2);
-        // }
+    // }
 
-    </script>
+    var popupSize = {
+        width: 780,
+        height: 550
+    };
+    const socialBtns = document.querySelectorAll('.social-button');
+
+    socialBtns.forEach(sbtn => {
+        sbtn.addEventListener('click', function handleClick(event) {
+            // console.log('btn clicked', event.target.getAttribute('href'));
+
+            var verticalPos = Math.floor((screen.width - popupSize.width) / 2),
+                horisontalPos = Math.floor((screen.heigh - popupSize.height) / 2);
+
+            var popup = window.open(event.target.getAttribute('href'), 'social',
+                'width=' + popupSize.width + ',height=' + popupSize.height +
+                ',left=' + verticalPos + ',top=' + horisontalPos +
+                ',location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1');
+
+            if (popup) {
+                popup.focus();
+                event.preventDefault();
+                console.log(1)
+            }else{
+                console.log(0)
+            }
+        });
+    });
+</script>
+<script>
+   function fbShare(){
+    FB.ui({
+        method: 'share',
+        name: '{{$entry->title}}',
+        href: '{{url()->current()}}',
+        picture: '{{ $entry->getFirstMediaUrl('featured_image', 'standard') }}',
+        caption: 'Reference Documentation',
+        description: '{{ $entry->excerpt }}'
+    },
+    function(response) {
+        if (response && response.post_id) {
+        alert('Post was published.');
+        } else {
+        alert('Post was not published.');
+        }
+    });
+   }
+</script>
 @endpush

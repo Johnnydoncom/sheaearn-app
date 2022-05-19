@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ (isset($title) ? $title : '') .' - ' .config('app.name', 'Laravel') }}</title>
+        {{-- <title>{{ (isset($title) ? $title : '') .' - ' .config('app.name', 'Laravel') }}</title> --}}
+        {!! SEO::generate() !!}
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,8 +16,22 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         @livewireStyles
         @stack('styles')
+
+        <script>
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId            : '400468275310870',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v13.0'
+              });
+            };
+          </script>
+          <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
     </head>
     <body class="font-sans antialiased" >
+
         <div class="min-h-screen bg-white dark:bg-black" x-data="{isLoggedIn: {{ Auth::check() ? 1 : 0 }}, showLoginModal:false }">
 {{--            @include('partials.header')--}}
             @livewire('app-header', ['pageTitle' => isset($title) ? (string)$title : '', 'searchIcon' => isset($searchIcon) ? true : false ])

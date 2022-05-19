@@ -19,14 +19,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('index');
 Route::get('blog', [\App\Http\Controllers\EntryController::class, 'index'])->name('blog.index');
 Route::get('topic/{slug}', [\App\Http\Controllers\EntryController::class, 'category'])->name('blog.category');
-
+Route::get('privacy-policy', [\App\Http\Controllers\HomeController::class, 'privacy'])->name('privacy-policy');
 
 
 Route::get('/dashboard', function () {
