@@ -11,8 +11,9 @@ class ShowEntry extends Component
     public $shareUrls;
     public $showLogin = false;
     public $isLiked;
+    public $isBookmarked;
 
-    public $comment;
+    public $body;
 
     public function mount(){
 
@@ -22,6 +23,7 @@ class ShowEntry extends Component
     {
         if(auth()->check()) {
             $this->isLiked = $this->entry->isLikedBy(auth()->user());
+            $this->isBookmarked = $this->entry->bookmarks()->whereUserId(Auth::id())->exists();
         }
 
         return view('livewire.show-entry');
@@ -31,7 +33,11 @@ class ShowEntry extends Component
         if(!Auth::check()) {
             $this->showLogin = true;
         }else {
-            $this->entry->bookmarks()->attach(['user_id' => Auth::id()]);
+            if($bookmark = $this->entry->bookmarks()->whereUserId(Auth::id())->first()){
+                $bookmark->delete();
+            }else{
+                $this->entry->bookmarks()->create(['user_id' => Auth::id()]);
+            }
         }
     }
 
@@ -51,6 +57,8 @@ class ShowEntry extends Component
             'name' => auth()->user()->name,
             'email' => auth()->user()->email
         ]);
+
+        $this->reset(['body']);
 
         // Set Flash Message
         $this->dispatchBrowserEvent('alert',[

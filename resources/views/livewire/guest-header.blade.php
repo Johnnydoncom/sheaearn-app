@@ -166,10 +166,10 @@
 
     <nav x-data="{ open: false }" aria-label="Primary Menu" class="bg-white dark:bg-black w-full flex flex-wrap items-center justify-between py-1 navbar navbar-expand-lg navbar-light">
         <!-- Primary Navigation Menu -->
-        <div class="container inline-block sticky top-0 px-0 w-full">
-            <div class="navbar navbar-expand-lg navbar-light relative w-full py-4">
+        <div class="max-w-7xl mx-auto inline-block sticky top-0 px-0 w-full">
+            <div class="navbar navbar-expand-lg navbar-light relative w-full py-2">
                 <div class="navbar-start">
-                    <a href="{{ route('index') }}" class="py-2 sm:py-4">
+                    <a href="{{ route('index') }}" class="py-0 sm:py-0">
                         <x-application-logo class="block h-10 sm:h-20 w-auto fill-current text-gray-600" />
                     </a>
                 </div>
@@ -204,16 +204,16 @@
                     <ul class="hidden sm:flex menu menu-horizontal">
 
                         <li class="">
-                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-2xl font-medium" href="#">{{ __('About') }}</a>
+                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-xl font-medium" href="#">{{ __('About') }}</a>
                         </li>
                         <li class="">
-                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-2xl font-medium" href="{{ route('blog.index') }}">{{ __('Blog') }}</a>
+                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-xl font-medium" href="{{ route('blog.index') }}">{{ __('Blog') }}</a>
                         </li>
                         <li class="">
-                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-2xl font-medium" href="#">{{ __('Join') }}</a>
+                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-xl font-medium" href="#">{{ __('Join') }}</a>
                         </li>
                         <li class="">
-                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-2xl font-medium " href="#">{{ __('Community') }}</a>
+                          <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-xl font-medium " href="#">{{ __('Community') }}</a>
                         </li>
                     </ul>
 

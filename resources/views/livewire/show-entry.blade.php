@@ -51,69 +51,20 @@
                             @endauth
 
 
-                            <button class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center" @click="showComment=true">
+                            <a href="#comment" class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center" @click="showComment=true">
                                 <x-far-comment-dots class="w-6 h-6"/>
-                            </button>
+                            </a>
                             <button @auth wire:click="addBookmark" @else @click="showLoginModal=true" @endauth class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
+                                @if($isBookmarked)
+                                <x-fas-bookmark class="w-6 h-6 text-primary"/>
+                                @else
                                 <x-cui-cil-bookmark class="w-6 h-6"/>
+                                @endif
+
                             </button>
                             <a href="{{ $shareUrls['twitter'] }}" target="_blank" class="social-button flex gap-2 items-center justify-center bg-white dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
                                 <x-cui-cib-twitter class="w-6 h-6"/>
                             </a>
-
-                            @if(1>3)
-                            <div class="flex justify-center">
-                                <div>
-                                  <div class="dropstart relative">
-                                    <button class="dropdown-toggle flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center" type="button" id="dropdownMenuButton1s" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <x-cui-cil-account-logout class="w-6 h-6 rotate-90"/>
-                                    </button>
-                                    <div class="dropdown-menu min-w-max absolute hidden text-base z-50 float-left p-2 text-left rounded-lg shadow-lg mt-1 m-0 bg-clip-padding border-none bg-gray-100 rounded-box w-96 top-0" aria-labelledby="dropdownMenuButton1s">
-
-                                        <ul class="navbar-nav grid grid-cols-2 gap-4">
-                                            <li class="nav-item">
-                                                <a class="social-button flex items-center gap-4 py-2 px-4 hover:bg-gray-600/20 rounded-xl" href="{{ $shareUrls['twitter'] }}">
-                                                    <x-cui-cib-twitter class="w-6 h-6 text-[#1DA1F2]"/> Tweet this
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="social-button flex items-center gap-4 py-2 px-4 hover:bg-gray-600/20 rounded-xl" href="{{ $shareUrls['facebook'] }}">
-                                                    <x-cui-cib-facebook class="w-6 h-6 text-[#4267B2]"/> Facebook
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="flex items-center gap-4 py-2 px-4 hover:bg-gray-600/20 rounded-xl" href="{{ $shareUrls['linkedin'] }}">
-                                                    <x-cui-cib-linkedin class="w-6 h-6 text-[#4267B2]"/> LinkedIn
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="flex items-center gap-4 py-2 px-4 hover:bg-gray-600/20 rounded-xl" href="{{ $shareUrls['reddit'] }}">
-                                                    <x-cui-cib-reddit class="w-6 h-6 text-[#FF4500]"/>
-                                                    Reddit
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="flex items-center gap-4 py-2 px-4 hover:bg-gray-600/20 rounded-xl" href="{{ $shareUrls['telegram'] }}">
-                                                    <x-cui-cib-telegram class="w-6 h-6 text-[#FF4500]"/>Telegram
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="flex items-center gap-4 py-2 px-4 hover:bg-gray-600/20 rounded-xl" href="{{ $shareUrls['whatsapp'] }}">
-                                                    <x-cui-cib-whatsapp class="w-6 h-6 text-[#25D366]"/>WhatsApp
-                                                </a>
-                                            </li>
-                                        </ul>
-
-                                        <div class="divider my-2"><hr></div>
-                                        <div class="form-control">
-                                            <x-label value="Permalink" class="mb-2"/>
-                                            <x-input type="text" class="input w-full bg-slate-100 rounded-xl" value="{{\Illuminate\Support\Facades\URL::current()}}" readonly />
-                                        </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            @endif
 
                             @if(1>0)
                             <div class="dropdown dropdown-left dropdown-end ">
@@ -170,18 +121,22 @@
                 </div>
             </div>
 
-            <template x-if="showComment">
-                <div id="comment" class="">
+            @auth
+            {{-- <template x-show="showComment"> --}}
+                <div id="comment" class="" x-show="showComment">
                     <form method="post" wire:submit.prevent="comment">
                         @csrf
                         <div class="flex justify-center card border ">
                             <div class="block rounded-lg shadow-lg bg-white text-center">
                                 <div class="py-3 px-6 border-b border-gray-300 text-left">
+                                   <div class="flex items-center gap-2">
+                                       <img src="{{Auth::user()->avatar_url}}" alt="{{ Auth::user()->name }}" class="w-12 h-12 rounded-full">
                                     {{ Auth::user()->name }}
+                                   </div>
                                 </div>
                                 <div class="p-2">
                                     {{--                            <h5 class="text-gray-900 text-xl font-medium mb-2">Special title treatment</h5>--}}
-                                    <textarea class="textarea rounded-none ring-0 w-full border-none focus:border-none focus:ring-0" placeholder="Bio" rows="5" name="body" required></textarea>
+                                    <textarea class="textarea textarea-ghost rounded-none ring-0 w-full border-none focus:border-none focus:ring-0 focus:outline-none" placeholder="Start typing" rows="5" wire:model="body" required></textarea>
                                 </div>
                                 <div class="py-3 px-6 border-t border-gray-300 text-gray-600 flex justify-between items-center">
                                     <span>Read the code of conduct before adding a comment.</span>
@@ -191,7 +146,8 @@
                         </div>
                     </form>
                 </div>
-            </template>
+            {{-- </template> --}}
+            @endauth
         </div>
 
     </div>
