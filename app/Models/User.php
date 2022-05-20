@@ -66,6 +66,8 @@ class User extends Authenticatable implements MustVerifyEmail, Wallet, Confirmab
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['avatar_url'];
+
     public static function boot()
     {
         parent::boot();
