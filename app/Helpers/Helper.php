@@ -25,7 +25,14 @@ if (!function_exists('pluck')) {
 if (!function_exists('site_logo')) {
     function site_logo()
     {
-        return \Illuminate\Support\Facades\Storage::url(setting('site_logo') ?? 'uploads/247-Store-Logo-Default.png');
+        return \Illuminate\Support\Facades\Storage::url(setting('site_logo') ?? 'logo.png');
+    }
+}
+
+if (!function_exists('site_logo_white')) {
+    function site_logo_white()
+    {
+        return \Illuminate\Support\Facades\Storage::url(setting('site_logo_white') ?? 'logo-white.png');
     }
 }
 

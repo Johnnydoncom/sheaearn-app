@@ -25,9 +25,9 @@ Route::get('topic/{slug}', [\App\Http\Controllers\EntryController::class, 'categ
 Route::get('privacy-policy', [\App\Http\Controllers\HomeController::class, 'privacy'])->name('privacy-policy');
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth'])->name('dashboard');
 
 
 // Shop
@@ -109,8 +109,10 @@ Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified', 'admin_
     Route::post('/file-upload', [\App\Http\Controllers\Admin\DashboardController::class, 'fileUpload'])->name('file-upload');
 
     // Settings
-    Route::get('settings', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('settings.index');
-    Route::post('settings', [\App\Http\Controllers\Admin\DashboardController::class, 'update'])->name('settings.store');
+    Route::get('settings', [\App\Http\Controllers\Admin\SettingsController::class, 'index'])->name('settings.index');
+    Route::get('settings/blog', [\App\Http\Controllers\Admin\SettingsController::class, 'blog'])->name('settings.blog');
+    Route::get('settings/product', [\App\Http\Controllers\Admin\SettingsController::class, 'product'])->name('settings.shop');
+    Route::post('settings', [\App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('settings.store');
 
     // Coupons
 //    Route::resource('coupons', 'CouponController');

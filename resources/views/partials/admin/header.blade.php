@@ -15,18 +15,6 @@
 
             <!-- start::Right side top menu -->
             <div class="flex items-center">
-                <!-- start::Search input -->
-                <form class="relative">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        class="w-48 lg:w-72 bg-gray-10 text-sm py-2 pl-4 rounded-lg focus:ring-0 focus:outline-none"
-                    >
-                    <button class="absolute right-2 top-2.5">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    </button>
-                </form>
-                <!-- end::Search input -->
 
                 <!-- start::Notifications -->
                 <div
@@ -297,7 +285,7 @@
                             <!-- start::Submenu link -->
                             <a
                                 x-data="{ linkHover: false }"
-                                href="./pages/profile.html"
+                                href="{{route('admin.users.index')}}"
                                 class="flex items-center justify-between py-2 px-3 hover:bg-gray-100 bg-opacity-20"
                                 @mouseover="linkHover = true"
                                 @mouseleave="linkHover = false"
@@ -316,29 +304,7 @@
                             <!-- start::Submenu link -->
                             <a
                                 x-data="{ linkHover: false }"
-                                href="./pages/email/inbox.html"
-                                class="flex items-center justify-between py-2 px-3 hover:bg-gray-100 bg-opacity-20"
-                                @mouseover="linkHover = true"
-                                @mouseleave="linkHover = false"
-                            >
-                                <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                    <div class="text-sm ml-3">
-                                        <p
-                                            class="text-gray-600 font-bold capitalize"
-                                            :class=" linkHover ? 'text-primary' : ''"
-                                        >
-                                            Inbox
-                                            <span class="bg-red-600 text-gray-100 text-xs px-1.5 py-0.5 ml-2 rounded">3</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                            <!-- end::Submenu link -->
-                            <!-- start::Submenu link -->
-                            <a
-                                x-data="{ linkHover: false }"
-                                href="./pages/settings.html"
+                                href="{{route('admin.settings.index')}}"
                                 class="flex items-center justify-between py-2 px-3 hover:bg-gray-100 bg-opacity-20"
                                 @mouseover="linkHover = true"
                                 @mouseleave="linkHover = false"

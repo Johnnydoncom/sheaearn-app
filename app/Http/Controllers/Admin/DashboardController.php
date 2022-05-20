@@ -2,13 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index(){
-        return view('admin.dashboard');
+        $recentOrders = Order::latest()->limit(5)->get()->map(function ($order){
+            $order['date'] = $order->created_at->format('d-m-Y');
+            $order['total'] = app_money_format($order->grand_total);
+            return $order;
+        });
+
+        $totalOrders = Order::count();
+
+        $pendingOrdersCount = Order::whereStatus('pending')->count();
+        $totalSales = app_money_format(Order::whereStatus(OrderStatus::COMPLETED)->sum('grand_total'));
+
+        return view('admin.dashboard',[
+            'recentOrders' => $recentOrders
+        ]);
     }
 
     public function fileUpload(Request $request){

@@ -43,7 +43,9 @@ class EntriesTable extends LivewireDatatable
                 return $published ? 'Published' : 'Draft';
             })->label('Status'),
 
-
+            Column::callback(['id'], function ($id) {
+                return view('admin.post.table-actions', ['id' => $id]);
+            })->unsortable()->label('Action')->excludeFromExport()
 
         ];
     }
