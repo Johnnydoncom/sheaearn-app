@@ -9,6 +9,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
@@ -55,6 +56,19 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        // Referral
+//        if(Cookie::get('referral')){
+//            $referral = Cookie::get('referral');
+//            if ($ref = User::where('account_id', $referral)->first()) {
+//                if($ref->hasRole(UserRole::AFFILIATE)) {
+//                    $user->update([
+//                        'referrer_id' => $ref->id
+//                    ]);
+//                }
+//            }
+//            Cookie::queue(Cookie::forget('referral'));
+//        }
 
         return redirect(RouteServiceProvider::HOME);
     }

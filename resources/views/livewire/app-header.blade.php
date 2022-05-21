@@ -164,7 +164,7 @@
                             <ul  class="menu">
                                 @auth
                                 <li class="rounded-lg">
-                                    <a href="{{route('login')}}" class="flex gap-2 items-center rounded-lg">
+                                    <a href="{{route('account.index')}}" class="flex gap-2 items-center rounded-lg">
                                         <x-cui-cil-user class="w-4 h-4" /> My Account
                                     </a>
                                 </li>
@@ -265,48 +265,30 @@
                    <p class="font-semibold text-sm text-gray-200 mb-2">Guaranteed earning without limits</p>
                 </div>
 
-                 <div class="pt-2 pb-3 space-y-1">
-                     @auth
-                         <x-responsive-nav-link :href="route('index')" :active="request()->routeIs('index')">
-                        {{ __('My Account') }}
-                    </x-responsive-nav-link>
-                     @else
+                 <div class="pt-2 pb-3 space-y-1 text-gray-800">
+                     <ul class="menu">
+                        <li><a href="{{ route('index') }}" class="flex justify-between items-center @if(request()->routeIs('index')) active @endif">Home <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                        <li><a href="{{ route('blog.index') }}" class="flex justify-between items-center @if(request()->routeIs('blog.index')) active @endif">Blog <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                         <li><a href="{{ route('product.index') }}" class="flex justify-between items-center @if(request()->routeIs('product.index')) active @endif">Products <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                         @auth
+                         <li><a href="{{ route('account.index') }}" class="flex justify-between items-center @if(request()->routeIs('account.index')) active @endif">My Account <x-fas-chevron-right class="w-4 h-4" /></a></li>
+                             <li>
+                            <form method="POST" action="{{ route('logout') }}" class="w-full">
+                                @csrf
 
-                     @endauth
-            </div>
+                                <a class="flex justify-between w-full items-center" href="{{route('logout')}}" onclick="event.preventDefault(); this.closest('form').submit();">
+                                    Logout <x-fas-chevron-right class="w-4 h-4" />
+                                </a>
+                            </form>
+{{--                            <a class="flex justify-between">Logout <x-fas-chevron-right class="w-4 h-4" /></a>--}}
+                        </li>
+                         @endauth
+                     </ul>
+                 </div>
 
-                <!-- Responsive Settings Options -->
-            <div class="pt-4 pb-1 border-t border-gray-200">
-                <div class="px-4">
-                    @auth
-                        <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                        <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
 
-                    @else
-
-                    @endauth
-                </div>
-
-                @auth
-                    <div class="mt-3 space-y-1">
-                    <!-- Authentication -->
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-
-                        <x-responsive-nav-link :href="route('logout')"
-                                               onclick="event.preventDefault();
-                                            this.closest('form').submit();">
-                            {{ __('Log Out') }}
-                        </x-responsive-nav-link>
-                    </form>
-                </div>
-                @endauth
-            </div>
 
             </div>
-
-
-
 
         </div>
     </nav>

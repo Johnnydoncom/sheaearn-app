@@ -1,6 +1,20 @@
 <x-account-layout>
 <div>
     <!-- start::Stats -->
+    <div class="card">
+        <div class="card-body px-0 py-2 flex-row items-center gap-4">
+            <div class="avatar online">
+                <div class="w-14 sm:w-24 rounded-full">
+                    <img src="{{ Auth::user()->avatar_url }}" />
+                </div>
+            </div>
+            <div>
+                <h2 class="font-semibold text-lg sm:text-2xl">{{Auth::user()->name}}</h2>
+                <p class="font-normal text-sm text-gray-400">{{Auth::user()->email}}</p>
+            </div>
+        </div>
+
+    </div>
     <div class="grid grid-cols-3 md:grid-cols-2 xl:grid-cols-3 gap-1 sm:gap-6">
         <div class="px-2 sm:px-6 py-2 sm:py-6 bg-white rounded-lg shadow sm:shadow-xl">
             <div class="flex items-center justify-between">

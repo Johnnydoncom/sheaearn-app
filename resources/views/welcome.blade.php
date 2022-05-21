@@ -4,20 +4,26 @@
         <div class="py-12">
             <section class="max-w-6xl md:max-w-7xl mx-auto hero px-1 sm:px-12 mb-20">
 
+                @if(1>3)
                 <div class="flex flex-wrap gap-x-2 items-center text-center justify-center sm:justify-start leading-none sm:text-left text-3xl sm:text-[5.288rem] font-bold px-4 font-poppins dark:text-gray-200">
                     Create a <img src="{{Storage::url('secure.jpg')}}" class="h-[0.8em] rounded-full sm:mx-2 w-20 sm:w-auto"> <span class="text-primary">store,</span> mint, <span class="text-primary">and get</span> <img src="{{Storage::url('secure2.jpg')}}" class="h-[0.8em] rounded-full sm:mx-2 w-10 sm:w-auto"> <img src="{{Storage::url('secure3.jpg')}}" class="h-[0.8em] rounded-full sm:mx-1 w-14 sm:w-auto"> <span class="flex-none">collectors for your</span> <span class="text-primary mx-2"> NFTs.</span>
                 </div>
+
+                @else
+                    <div class="inline-block flex-wrap gap-x-2 items-center text-center justify-center sm:justify-start leading-none sm:text-left text-3xl sm:text-[5.288rem] font-bold px-4 sm:px-0 font-poppins dark:text-gray-200">
+                        Make legitimate <span class="text-primary"> income</span> <img src="{{Storage::url('cash-dollars.jpg')}}" class="h-[0.8em] rounded-full sm:mx-2 w-20 sm:w-auto inline"> online with <span class="text-primary flex-none">share and earn</span>,  earnings upto <span class="text-primary mx-2"> N200,000 </span>monthly.
+                    </div>
+                @endif
             </section>
 
             <section class="max-w-4xl sm:mx-auto mx-2 sm:px-0 relative bg-center bg-cover rounded-3xl sm:rounded-full bg-no-repeat relative" style="background-image:  linear-gradient(180deg, rgba(41, 41, 41, 0.74), rgba(41, 41, 41, 0.74)), url('/storage/bf_banner_bg.jpg')">
     {{--            <div class="absolute top-0 right-0 bottom-0 left-0 bg-gray-900/50"></div>--}}
-
                 <div class="sm:p-28 p-10 text-white flex flex-col gap-4 justify-center items-center text-center">
                     <div class="avatar relative sm:absolute sm:-top-8 sm:-right-8 rounded-full bg-white w-20 h0-20 sm:w-40 sm:h-40">
                         <img src="{{ Storage::url('avatar.png') }}" alt="Avatar">
                     </div>
-                    <h2 class="text-lg sm:text-4xl mb-4">Let Sheaearn help you start and manage your NFT business for FREE!</h2>
-                    <a href="#" class="inline-block px-12 py-6 bg-primary text-white font-medium text-xl leading-snug shadow-md hover:bg-white hover:text-black hover:border-primary hover:shadow-lg focus:bg-primary focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary active:shadow-lg transition duration-150 ease-in-out sm:rounded-full rounded-3xl">Join the waitlist</a>
+                    <h2 class="text-lg sm:text-4xl mb-4">Earn money sharing post online, through innovative system of share and earn.</h2>
+                    <a href="{{route('register')}}" class="inline-block px-12 py-6 bg-primary text-white font-medium text-xl leading-snug shadow-md hover:bg-white hover:text-black hover:border-primary hover:shadow-lg focus:bg-primary focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary active:shadow-lg transition duration-150 ease-in-out sm:rounded-full rounded-3xl">Join us today</a>
                 </div>
 
                 <img src="{{ Storage::url('arrow-down.svg') }}" alt="Arrow Down" class="absolute -bottom-40 -right-24 h-[16rem] hidden sm:block">
@@ -42,7 +48,7 @@
                             <img src="{{ Storage::url('homeIcon1.svg') }}" alt="Arrow Down" class="w-24 h-24 sm:w-36 sm:h-36 object-contain object">
                         </div>
                         <div class="text-lg sm:text-4xl mt-6 dark:text-gray-200">
-                            Easy-to-use platform to launch and manage your NFT business.
+                            Earn money sharing pictures and post online.
                         </div>
                     </div>
                     <div class="card p-10 text-center relative">
@@ -50,7 +56,7 @@
                             <img src="{{ Storage::url('homeIcon1.svg') }}" alt="Arrow Down" class="w-24 h-24 sm:w-36 sm:h-36 object-contain object">
                         </div>
                         <div class="text-lg sm:text-4xl mt-6 dark:text-gray-200">
-                            Easy-to-use platform to launch and manage your NFT business.
+                            Earn 50% Affiliate commissions for inviting a friend to share and earn.
                         </div>
                     </div>
                     <div class="card p-10 text-center relative">
@@ -58,7 +64,7 @@
                             <img src="{{ Storage::url('Profile.svg') }}" alt="Profile" class="w-24 h-24 sm:w-36 sm:h-36 object-contain object">
                         </div>
                         <div class="text-lg sm:text-4xl mt-6 dark:text-gray-200">
-                            Inclusive Community for you to connect with collectors and other NFT enthusiasts.
+                            Earn upto 5% - 50% in commissions selling products on share and earn.
                         </div>
                     </div>
                     <div class="card p-10 text-center relative">
@@ -66,9 +72,21 @@
                             <img src="{{ Storage::url('Security.svg') }}" alt="Security" class="w-24 h-24 sm:w-36 sm:h-36 object-contain object">
                         </div>
                         <div class="text-lg sm:text-4xl mt-6 dark:text-gray-200">
-                            Certificate of Authenticity for every NFT minted and sold on your store.
+                            Converting earnings to data subscriptions.
                         </div>
                     </div>
+
+                    <div class="sm:col-span-2 ">
+                        <div class="card p-10 text-center relative w-full mx-auto max-w-4xl">
+                            <div class="bg-white rounded-3xl mx-auto shadow-md flex items-center justify-center w-24 h-24 sm:w-36 sm:h-36">
+                                <img src="{{ Storage::url('Security.svg') }}" alt="Security" class="w-24 h-24 sm:w-36 sm:h-36 object-contain object">
+                            </div>
+                            <div class="text-lg sm:text-4xl mt-6 dark:text-gray-200">
+                                Affiliates can also earn from referring Shoppers  and advertisers  to use Sheaearn.
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="relative container hidden sm:block">
                     <img src="{{ Storage::url('arrow-3.svg') }}" alt="Arrow Down" class="absolute -bottom-[15em] left-4 2xl:left-0 h-[17rem] ">
@@ -97,8 +115,9 @@
                             </div>
 
                            <div class="py-6 text-center">
-                               <h2 class="text-2xl lg:text-4xl font-bold mb-3">Creators</h2>
-                               <div class="text-md lg:text-3xl px-1">Creators can now launch their stores, mint and sell NFTs in minutes.</div>
+                               <h2 class="text-2xl lg:text-4xl font-bold mb-3">Advertisers</h2>
+                               <div class="text-md lg:text-3xl px-1">Advertisers can now promote there business and sell in minutes on our platform.
+                               </div>
 
                                <img src="{{Storage::url('line-1.svg')}}" alt="Line" class="mx-auto mt-6 w-32 sm:w-auto">
                            </div>
@@ -111,8 +130,9 @@
                             </div>
 
                             <div class="py-6 text-center">
-                                <h2 class="text-2xl lg:text-4xl font-bold mb-3">Collectors</h2>
-                                <div class="text-md lg:text-3xl px-1">Collectors now have more freedom to connect with their favorite Creators, get whitelisted and buy NFTs.</div>
+                                <h2 class="text-2xl lg:text-4xl font-bold mb-3">Shoppers</h2>
+                                <div class="text-md lg:text-3xl px-1">Shoppers can now  buy as much products they want on the platform without limitations.
+                                </div>
 
                                 <img src="{{Storage::url('line-1.svg')}}" alt="Line" class="mx-auto mt-6 w-32 sm:w-auto">
                             </div>
@@ -126,7 +146,7 @@
 
                             <div class="py-6 text-center">
                                 <h2 class="text-2xl lg:text-4xl font-bold mb-3">Affiliates</h2>
-                                <div class="text-md lg:text-3xl px-1">Affiliates can also earn from referring Creators and Collectors to use Sheaearn.</div>
+                                <div class="text-md lg:text-3xl px-1">Affiliates can also earn from referring Shoppers  and advertisers  to use Sheaearn.</div>
 
                                 <img src="{{Storage::url('line-1.svg')}}" alt="Line" class="mx-auto mt-6 w-32 sm:w-auto">
                             </div>

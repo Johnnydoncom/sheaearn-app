@@ -45,7 +45,7 @@
                                 <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-xl font-medium" href="{{ route('blog.index') }}">{{ __('Blog') }}</a>
                             </li>
                             <li class="">
-                                <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-xl font-medium" href="#">{{ __('Join') }}</a>
+                                <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-xl font-medium" href="{{ route('product.index') }}">{{ __('Products') }}</a>
                             </li>
                             <li class="">
                                 <a class="text-gray-900 dark:text-gray-200 hover:text-primary dark:hover:text-primary hover:bg-transparent focus:text-primary text-xl font-medium " href="#">{{ __('Community') }}</a>
@@ -74,7 +74,7 @@
                             <a class="" href="{{ route('blog.index') }}">{{ __('Blog') }}</a>
                         </li>
                         <li class="">
-                            <a class="" href="#">{{ __('Join') }}</a>
+                            <a class="" href="{{ route('product.index') }}">{{ __('Products') }}</a>
                         </li>
                         <li class="">
                             <a class="" href="#">{{ __('Community') }}</a>

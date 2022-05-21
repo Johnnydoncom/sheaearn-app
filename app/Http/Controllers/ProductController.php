@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\ProductStatus;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class ProductController extends Controller
 {
@@ -13,9 +14,24 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $products = Product::whereStatus(ProductStatus::PUBLISHED);
+
+        if($request->has('q')){
+            $products = $products->where('title', 'LIKE', '%' . $request->get('q') . '%');
+        }
+
+        SEOTools::setTitle('Shop All Products -  TVs, Laptops, Fashion Items');
+        SEOTools::setDescription('Shop best quality products here on 247store.org');
+        SEOTools::opengraph()->addProperty('type', 'products');
+        SEOTools::jsonLd()->addImage(site_logo());
+        SEOTools::addImages(site_logo());
+
+
+        return view('product.home',[
+            'products' => $products->paginate()
+        ]);
     }
 
     /**

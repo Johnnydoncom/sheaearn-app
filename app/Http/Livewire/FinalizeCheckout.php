@@ -107,6 +107,7 @@ class FinalizeCheckout extends Component
                     }
 
                     Cookie::forget('affiliate');
+                    Cookie::forget('referral');
                 }
             }
 
