@@ -46,12 +46,6 @@ class RolePermissionSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name'       => UserRole::VENDOR,
-                'guard_name' => 'web',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
             ]
         ]);
 
@@ -88,13 +82,6 @@ class RolePermissionSeeder extends Seeder
         $cuser = User::find(5);
         if (!blank($cuser) && !blank($crole)) {
             $cuser->assignRole($crole->name);
-        }
-
-        // Vendor
-        $vrole = Role::find(6);
-        $vuser = User::find(6);
-        if (!blank($vuser) && !blank($vrole)) {
-            $vuser->assignRole($vrole->name);
         }
     }
 }

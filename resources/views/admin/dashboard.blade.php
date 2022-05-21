@@ -4,7 +4,6 @@
         <div class="px-6 py-6 bg-white rounded-lg shadow-xl">
             <div class="flex items-center justify-between">
                 <span class="font-bold text-sm text-indigo-600">Total Revenue</span>
-                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">Today</span>
             </div>
             <div class="flex items-center justify-between mt-6">
                 <div>
@@ -12,19 +11,29 @@
                 </div>
                 <div class="flex flex-col">
                     <div class="flex items-end">
-                        <span class="text-2xl 2xl:text-4xl font-bold">$8,141</span>
-                        <div class="flex items-center ml-2 mb-1">
-                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                            <span class="font-bold text-sm text-gray-500 ml-0.5">3%</span>
-                        </div>
+                        <span class="text-xl 2xl:text-3xl font-bold">{{ app_money_format($totalRevenue) }}</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="px-6 py-6 bg-white rounded-lg shadow-xl">
             <div class="flex items-center justify-between">
-                <span class="font-bold text-sm text-green-600">New Orders</span>
-                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">7 days</span>
+                <span class="font-bold text-sm text-blue-600">Total Users</span>
+            </div>
+            <div class="flex items-center justify-between mt-6">
+                <div>
+                    <svg class="w-12 2xl:w-16 h-12 2xl:h-16 p-1 2xl:p-3 bg-blue-400 bg-opacity-20 rounded-full text-blue-600 border border-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                </div>
+                <div class="flex flex-col">
+                    <div class="flex items-start">
+                        <span class="text-2xl 2xl:text-3xl font-bold">{{ $userCount }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="px-6 py-6 bg-white rounded-lg shadow-xl">
+            <div class="flex items-center justify-between">
+                <span class="font-bold text-sm text-green-600">Total Products</span>
             </div>
             <div class="flex items-center justify-between mt-6">
                 <div>
@@ -32,39 +41,14 @@
                 </div>
                 <div class="flex flex-col">
                     <div class="flex items-end">
-                        <span class="text-2xl 2xl:text-4xl font-bold">217</span>
-                        <div class="flex items-center ml-2 mb-1">
-                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                            <span class="font-bold text-sm text-gray-500 ml-0.5">5%</span>
-                        </div>
+                        <span class="text-2xl 2xl:text-4xl font-bold">{{ \App\Models\Product::count() }}</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="px-6 py-6 bg-white rounded-lg shadow-xl">
             <div class="flex items-center justify-between">
-                <span class="font-bold text-sm text-blue-600">New Users</span>
-                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">7 days</span>
-            </div>
-            <div class="flex items-center justify-between mt-6">
-                <div>
-                    <svg class="w-12 2xl:w-16 h-12 2xl:h-16 p-1 2xl:p-3 bg-blue-400 bg-opacity-20 rounded-full text-blue-600 border border-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                </div>
-                <div class="flex flex-col">
-                    <div class="flex items-end">
-                        <span class="text-2xl 2xl:text-4xl font-bold">54</span>
-                        <div class="flex items-center ml-2 mb-1">
-                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                            <span class="font-bold text-sm text-gray-500 ml-0.5">7%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="px-6 py-6 bg-white rounded-lg shadow-xl">
-            <div class="flex items-center justify-between">
-                <span class="font-bold text-sm text-yellow-600">Visits</span>
-                <span class="text-xs bg-gray-200 hover:bg-gray-500 text-gray-500 hover:text-gray-200 px-2 py-1 rounded-lg transition duration-200 cursor-default">30 days</span>
+                <span class="font-bold text-sm text-yellow-600">Total Posts</span>
             </div>
             <div class="flex items-center justify-between mt-6">
                 <div>
@@ -72,11 +56,7 @@
                 </div>
                 <div class="flex flex-col">
                     <div class="flex items-end">
-                        <span class="text-2xl 2xl:text-4xl font-bold">10,644</span>
-                        <div class="flex items-center ml-2 mb-1">
-                            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path></svg>
-                            <span class="font-bold text-sm text-gray-500 ml-0.5">-1%</span>
-                        </div>
+                        <span class="text-2xl 2xl:text-4xl font-bold">{{ \App\Models\Entry::count() }}</span>
                     </div>
                 </div>
             </div>
@@ -161,25 +141,25 @@
             <h4 class="text-xl font-semibold mb-4 capitalize">Order stats</h4>
             <div class="grid grid-cols-2 gap-4 h-40">
                 <div class="bg-green-300 bg-opacity-20 text-green-700 flex flex-col items-center justify-center rounded-lg">
-                    <span class="text-4xl font-bold">184</span>
+                    <span class="text-4xl font-bold">{{ \App\Models\Order::whereStatus(\Str::slug(config('appstore.orderstatus.completed'), '_'))->count() }}</span>
                     <span>Completed</span>
                 </div>
                 <div class="bg-indigo-300 bg-opacity-20 text-indigo-700 flex flex-col items-center justify-center rounded-lg">
-                    <span class="text-4xl font-bold">54</span>
+                    <span class="text-4xl font-bold">{{ \App\Models\Order::whereStatus(\Str::slug(config('appstore.orderstatus.shipped'), '_'))->count() }}</span>
                     <span>Shipped</span>
                 </div>
             </div>
             <div class="grid grid-cols-3 gap-2 h-32">
                 <div class="bg-yellow-300 bg-opacity-20 text-yellow-700 flex flex-col items-center justify-center rounded-lg">
-                    <span class="text-3xl font-bold">9</span>
+                    <span class="text-3xl font-bold">{{ \App\Models\Order::whereStatus(\Str::slug(config('appstore.orderstatus.order_placed'), '_'))->count() }}</span>
                     <span>Pending</span>
                 </div>
                 <div class="bg-blue-300 bg-opacity-20 text-blue-700 flex flex-col items-center justify-center rounded-lg">
-                    <span class="text-3xl font-bold">24</span>
-                    <span>Refunded</span>
+                    <span class="text-3xl font-bold">{{ \App\Models\Order::whereStatus('processing')->count() }}</span>
+                    <span>Processing</span>
                 </div>
                 <div class="bg-red-300 bg-opacity-20 text-red-700 flex flex-col items-center justify-center rounded-lg">
-                    <span class="text-3xl font-bold">37</span>
+                    <span class="text-3xl font-bold">{{ \App\Models\Order::whereStatus(\Str::slug(config('appstore.orderstatus.canceled'), '_'))->count() }}</span>
                     <span>Canceled</span>
                 </div>
             </div>
@@ -193,30 +173,38 @@
         <h4 class="text-xl font-semibold">Recent Withdraw Request</h4>
         <table class="w-full my-8 whitespace-nowrap">
             <thead class="bg-secondary text-gray-100 font-bold">
-            <td class="py-2 pl-2">Order ID</td>
-            <td class="py-2 pl-2">Price</td>
-            <td class="py-2 pl-2">Payment</td>
+            <td class="py-2 pl-2">User</td>
+            <td class="py-2 pl-2">Amount</td>
             <td class="py-2 pl-2">Status</td>
-            <td class="py-2 pl-2">Date</td>
-            <td class="py-2 pl-2">View Details</td>
+            <td class="py-2 pl-2">Request Date</td>
+            <td class="py-2 pl-2">Action</td>
             </thead>
             <tbody class="text-sm">
-            @forelse($recentOrders as $order)
+            @forelse($withdrawRequests as $order)
                 <tr class="@if($loop->odd) bg-gray-100 @else bg-gray-200 @endif hover:bg-primary hover:bg-opacity-20 transition duration-200">
                     <td class="py-3 pl-2">
-                        #{{$order->order_number}}
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <img src="{{ \Storage::url('avatar.png') }}"  class="rounded-full w-14" />
+                            </div>
+                            <div class="ml-2">
+                                <div class="text-sm font-medium leading-5 text-gray-900">
+                                    {{$order->user->name}}
+                                </div>
+                            </div>
+                        </div>
                     </td>
                     <td class="py-3 pl-2">
-                        {{$order->grand_total}}
+                        {{ app_money_format($order->amount) }}
                     </td>
                     <td class="py-3 pl-2">
-                        @if($order->payment_status === 5)
+                        @if($order->status == \WithdrawStatus::PENDING)
                             <span class="bg-warning px-1.5 py-0.5 rounded-lg text-gray-100">
                                     Pending
                                     </span>
-                        @elseif($order->payment_status === 7)
+                        @elseif($order->status == \WithdrawStatus::CANCELED)
                             <span class="bg-red-500 px-1.5 py-0.5 rounded-lg text-gray-100">
-                                    Canceled
+                                    Rejected
                                 </span>
                         @else
                             <span class="bg-green-500 px-1.5 py-0.5 rounded-lg text-gray-100">
@@ -225,21 +213,10 @@
                         @endif
                     </td>
                     <td class="py-3 pl-2">
-                        @if($order->status == 'completed' || $order->status == 'delivered')
-                            <span class="bg-green-500 px-1.5 py-0.5 rounded-lg text-gray-100">
-                                        {{ $order->status }}
-                                    </span>
-                        @else
-                            <span class="bg-secondary px-1.5 py-0.5 rounded-lg text-gray-100">
-                                        {{ $order->status }}
-                                    </span>
-                        @endif
-                    </td>
-                    <td class="py-3 pl-2">
                         {{ $order->created_at->format('F j, Y') }}
                     </td>
                     <td class="py-3 pl-2">
-                        <a href="{{ route('admin.orders.edit', $order->id) }}" class="bg-primary hover:bg-opacity-90 px-2 py-1 mr-2 text-gray-100 rounded-lg">View Details</a>
+                       @include('admin.withdraw.table-actions', ['id' => $id])
                     </td>
                 </tr>
             @empty

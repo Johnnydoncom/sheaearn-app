@@ -60,10 +60,10 @@ class UsersTable extends LivewireDatatable
         return Role::where('name', '!=', UserRole::SUPERADMIN)->get();
     }
 
+
     public function buildActions()
     {
         return [
-
             Action::groupBy('Export Options', function () {
                 return [
                     Action::value('pdf')->label('Export PDF')->export('Products.pdf'),

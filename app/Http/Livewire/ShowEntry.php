@@ -103,6 +103,7 @@ class ShowEntry extends Component
             'social_id' => $method
         ]);
 
+        if(setting('share_commission'))
         auth()->user()->deposit(setting('share_commission'), ['type' => 'share_commission', 'description' => 'Commission for sharing post', 'entry_id' => $this->entry->id]);
     }
 }

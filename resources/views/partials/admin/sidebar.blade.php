@@ -118,27 +118,6 @@ id="aside"
                     </div>
                     <!-- end::Menu link -->
 
-                    <p class="text-xs text-gray-600 mt-6 mb-2 px-6 uppercase">User Management</p>
-                    <!-- start::Menu link -->
-                    <a
-                        x-data="{ linkHover: false }"
-                        @mouseover = "linkHover = true"
-                        @mouseleave = "linkHover = false"
-                        href="{{ route('admin.users.index') }}"
-                        class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition duration-200" :class=" linkHover ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        <span
-                            class="ml-3 transition duration-200"
-                            :class="linkHover ? 'text-gray-100' : ''"
-                        >
-                            All Users
-                        </span>
-                    </a>
-                    <!-- end::Menu link -->
-
                     <!-- start::Menu link -->
                     <a
                         x-data="{ linkHover: false }"
@@ -177,6 +156,43 @@ id="aside"
                             Withdrawal
                         </span>
                     </a>
+
+                    <p class="text-xs text-gray-600 mt-6 mb-2 px-6 uppercase">User Management</p>
+                    <!-- start::Menu link -->
+                    <a
+                        x-data="{ linkHover: false }"
+                        @mouseover = "linkHover = true"
+                        @mouseleave = "linkHover = false"
+                        href="{{ route('admin.users.index') }}"
+                        class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition duration-200" :class=" linkHover ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <span
+                            class="ml-3 transition duration-200"
+                            :class="linkHover ? 'text-gray-100' : ''"
+                        >
+                            All Users
+                        </span>
+                    </a>
+                    <!-- end::Menu link -->
+                    <!-- start::Menu link -->
+                    <a
+                        x-data="{ linkHover: false }"
+                        @mouseover = "linkHover = true"
+                        @mouseleave = "linkHover = false"
+                        href="{{ route('admin.users.create') }}"
+                        class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200"
+                    >
+                        <svg class="w-5 h-5 transition duration-200" :class=" linkHover ? 'text-gray-100' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                        <span
+                            class="ml-3 transition duration-200"
+                            :class="linkHover ? 'text-gray-100' : ''">
+                            Add User
+                        </span>
+                    </a>
+                    <!-- end::Menu link -->
 
 
                     <p class="text-xs text-gray-600 mt-6 mb-2 px-6 uppercase">Settings</p>
