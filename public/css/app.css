@@ -7360,6 +7360,9 @@ body[dir="rtl"] .checkbox:checked,
 .flex-none {
   flex: none;
 }
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
 .shrink-0 {
   flex-shrink: 0;
 }
@@ -10016,6 +10019,11 @@ body {
   .\32xl\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+
+  .\32xl\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 
   .\32xl\:font-semibold {

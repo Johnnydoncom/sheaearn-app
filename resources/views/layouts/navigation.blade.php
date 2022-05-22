@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <h2 class="font-bold text-lg mb-0">{{ Auth::user()->name }}</h2>
-                <p class="font-semibold text-sm text-gray-200 mb-2">{{ Auth::user()->email }}</p>
+{{--                <p class="font-semibold text-sm text-gray-200 mb-2">{{ Auth::user()->email }}</p>--}}
             </div>
 
             <div class="pt-2 pb-3 space-y-1">
