@@ -17,7 +17,6 @@ if (!function_exists('pluck')) {
                 }
             }
         }
-
         return $returnArray;
     }
 }
