@@ -56,7 +56,6 @@ function generateUniqueOrderNumber() {
     do {
         $code = random_int(100000, 999999);
     } while (\App\Models\Order::where('order_number', "=", $code)->exists());
-
     return $code;
 }
 
