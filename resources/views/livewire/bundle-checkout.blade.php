@@ -4,6 +4,25 @@
         <div class="divider mt-0"></div>
 
         <div class="card bg-white mb-4 rounded-none">
+            <div class="relative flex flex-row space-y-0 space-x-2 gap-4 sm:gap-6 p-0 w-full">
+                <div class="bg-white grid place-items-center">
+                    <img src="{{$product->featured_img_thumb}}" class="rounded-xl h-20 sm:h-24" alt="{{$product->title}}"  />
+                </div>
+                <div class="bg-white flex flex-col p-0 items-start">
+
+                    <h3 class="text-md pt-1"><a href="{{$product->product_url}}">{{ $product->title }}</a></h3>
+
+                    <div class='price my-2 flex items-center space-x-2'>
+                        @if($product->sales_price > 0)
+                            <p class="text-md font-bold text-primary">{{ $product->formatted_sales_price }}</p>
+                        @endif
+
+                        <p class="{{ $product->sales_price > 0 ? 'text-gray-500 text-sm line-through' : 'text-gray-900 text-md font-bold' }}">{{ $product->formatted_regular_price }}</p>
+                        <span class="text-gray-400">x 1</span>
+                    </div>
+                </div>
+            </div>
+            <div class="divider my-2"></div>
             <div class="flex justify-between mb-2 items-center">
                 <span class="font-normal text-md">Items Total</span>
                 <span class="font-semibold text-md">{{ $subtotal }}</span>

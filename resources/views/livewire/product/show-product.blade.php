@@ -42,15 +42,12 @@
 
                 <div class="promotion">
                     <div class="card rounded-none">
-                        <h3 class="uppercase px-4 py-2 text-sm">Promotions</h3>
-                        <div class="card-body p-4 bg-white">
+                        <h3 class="uppercase px-4 py-2 text-sm font-semibold">Promotions</h3>
+                        <div class="card-body px-4 py-0 bg-white">
                             <p class="text-xs lg:text-base font-normal text-red-600">Get ₦ 500.00 commission when you refer this product to a friend. NB. T&C apply <a href="#" class="text-xs text-blue-600 py-2 font-normal underline hover:text-primary">How it works</a></p>
                         </div>
                     </div>
                 </div>
-
-
-
 
                 <div id="sticky-cart" class="card sticky bottom-0 bg-white rounded-none z-20 mt-5">
                     <div class="card-body p-2">
@@ -109,7 +106,12 @@
                     </div>
                 </div>
 
-
+                <div class="share card card-body p-4 flex-row items-center gap-4">
+                    <span class="font-semibold">Share:</span>
+                    <button @auth @click.prevent="fbShare()" wire:target="shared('{{ config("appstore.social_shares.facebook_id")}}')" wire:loading.class="loading" @else @click.prevent="showLoginModal=true" @endauth class="btn btn-ghost btn-circle">
+                        <x-cui-cib-facebook class="w-6 h-6 text-[#4267B2] flex-nonee"/>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -207,11 +209,28 @@
 
 
 
-        document.addEventListener('livewire:load', function () {
-            // alert(1)
-            // initSlider();
-
-        })
+        function fbShare(){
+            FB.ui({
+                    method: 'share',
+                    name: '{{$product->title}}',
+                    href: '{{url()->current()}}',
+                    picture: '{{ $product->featured_img_url }}',
+                    caption: '{{$product->title}}',
+                    description: '{{ $product->excerpt }}'
+                },
+                function(response) {
+                    if (response && !response.error_code) {
+                        if (typeof response != 'undefined'){
+                            //shered
+                        @this.shared('{{ config("appstore.social_shares.facebook_id")}}');
+                        }
+                    }else if (response && response.post_id) {
+                    @this.shared('{{ config("appstore.social_shares.facebook_id")}}');
+                    } else {
+                        // alert('Post was not published.');
+                    }
+                });
+        }
     </script>
 
 @endpush

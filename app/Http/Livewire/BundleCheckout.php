@@ -64,7 +64,7 @@ class BundleCheckout extends Component
 
         // Signup Commission
         if(setting('signup_bonus') >0) {
-            auth()->user()->deposit(setting('signup_bonus'), ['type' => 'signup_bonus', 'description' => 'Signup bonus for buying product', 'product_id' => $this->product->id]);
+            auth()->user()->socialWallet()->deposit(setting('signup_bonus'), ['type' => 'signup_bonus', 'description' => 'Signup bonus for buying product', 'product_id' => $this->product->id]);
         }
 
         auth()->user()->assignRole(UserRole::AFFILIATE);

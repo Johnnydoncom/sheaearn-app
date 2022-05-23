@@ -155,4 +155,8 @@ class Product extends Model implements HasMedia
     public function getAverageRatingAttribute(){
         return $this->reviews->count() ? ($this->reviews()->sum('rating')/$this->reviews()->count()) : 0;
     }
+
+    public function shares(){
+        return $this->morphMany(Share::class, 'shareable');
+    }
 }

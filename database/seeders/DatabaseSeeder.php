@@ -68,6 +68,7 @@ class DatabaseSeeder extends Seeder
 //
 //        Entry::factory()->count(10)->create();
 
+
 //
 
 

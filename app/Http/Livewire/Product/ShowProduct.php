@@ -3,8 +3,13 @@
 namespace App\Http\Livewire\Product;
 
 use App\Enums\ProductStatus;
+use App\Enums\UserRole;
+use App\Models\Entry;
 use App\Models\Product;
+use App\Models\Share;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
@@ -58,6 +63,15 @@ class ShowProduct extends Component
         if(count($c)>0) {
             $this->getTotalCartItem = $this->cart->sum('quantity');
         }
+
+        SEOTools::setTitle($this->product->title);
+        SEOTools::setDescription($this->product->excerpt);
+        // SEOTools::opengraph()->setUrl('http://current.url.com');
+        // SEOTools::setCanonical('https://codecasts.com.br/lesson');
+        SEOTools::opengraph()->addProperty('type', 'product');
+        SEOTools::twitter()->setSite('@Sheaearn');
+        SEOTools::jsonLd()->addImage($this->product->featured_img_url);
+        SEOTools::opengraph()->addProperty('article:published_time', $this->product->created_at->toW3cString(), 'property');
 
         return view('livewire.product.show-product');
     }
@@ -167,4 +181,48 @@ class ShowProduct extends Component
 
     }
 
+
+    public function shared($method)
+    {
+        if(Share::whereShareableType(Product::class)->whereUserId(auth()->user()->id)->whereDate('created_at', Carbon::today())->count() < 10) {
+            if ($record = $this->product->shares()->whereUserId(auth()->user()->id)->first()) {
+                if ($record->created_at->isToday()) {
+                    $this->dispatchBrowserEvent('alert', [
+                        'type' => 'error',
+                        'message' => "Product already shared"
+                    ]);
+                } else {
+                    $this->processShare($method);
+
+                    // Set Flash Message
+                    $this->dispatchBrowserEvent('alert', [
+                        'type' => 'success',
+                        'message' => "Product shared."
+                    ]);
+                }
+
+            } else {
+                $this->processShare($method);
+
+                // Set Flash Message
+                $this->dispatchBrowserEvent('alert', [
+                    'type' => 'success',
+                    'message' => "Product shared."
+                ]);
+            }
+        }
+    }
+
+    private function processShare($method)
+    {
+        if(auth()->user()->hasRole(UserRole::AFFILIATE)) {
+            $this->product->shares()->create([
+                'user_id' => auth()->user()->id,
+                'social_id' => $method
+            ]);
+
+            if (setting('share_commission'))
+                auth()->user()->socialWallet()->deposit(setting('share_commission'), ['type' => 'share_commission', 'description' => 'Commission for sharing post', 'entry_id' => $this->entry->id]);
+        }
+    }
 }

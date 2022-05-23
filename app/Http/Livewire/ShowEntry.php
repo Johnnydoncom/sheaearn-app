@@ -2,6 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\UserRole;
+use App\Models\Entry;
+use App\Models\Share;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -69,41 +73,46 @@ class ShowEntry extends Component
 
     public function shared($method)
     {
-        if($record = $this->entry->shares()->whereUserId(auth()->user()->id)->first()){
-            if($record->created_at->isToday()){
-                $this->dispatchBrowserEvent('alert',[
-                    'type'=>'error',
-                    'message'=>"Post already shared"
-                ]);
-            }else{
+        if(Share::whereShareableType(Entry::class)->whereUserId(auth()->user()->id)->whereDate('created_at', Carbon::today())->count() < 10) {
+            if ($record = $this->entry->shares()->whereUserId(auth()->user()->id)->first()) {
+                if ($record->created_at->isToday()) {
+                    $this->dispatchBrowserEvent('alert', [
+                        'type' => 'error',
+                        'message' => "Post already shared"
+                    ]);
+                } else {
+                    $this->processShare($method);
+
+                    // Set Flash Message
+                    $this->dispatchBrowserEvent('alert', [
+                        'type' => 'success',
+                        'message' => "Post shared."
+                    ]);
+                }
+
+            } else {
                 $this->processShare($method);
 
                 // Set Flash Message
-                $this->dispatchBrowserEvent('alert',[
-                    'type'=>'success',
-                    'message'=>"Post shared."
+                $this->dispatchBrowserEvent('alert', [
+                    'type' => 'success',
+                    'message' => "Post shared."
                 ]);
             }
-
-        }else{
-            $this->processShare($method);
-
-            // Set Flash Message
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'success',
-                'message'=>"Post shared."
-            ]);
         }
     }
 
     private function processShare($method)
     {
-        $this->entry->shares()->create([
-            'user_id' => auth()->user()->id,
-            'social_id' => $method
-        ]);
+        if(auth()->user()->hasRole(UserRole::AFFILIATE)) {
+            $this->entry->shares()->create([
+                'user_id' => auth()->user()->id,
+                'social_id' => $method
+            ]);
 
-        if(setting('share_commission'))
-        auth()->user()->deposit(setting('share_commission'), ['type' => 'share_commission', 'description' => 'Commission for sharing post', 'entry_id' => $this->entry->id]);
+            if (setting('share_commission'))
+                auth()->user()->socialWallet()->deposit(setting('share_commission'), ['type' => 'share_commission', 'description' => 'Commission for sharing post', 'entry_id' => $this->entry->id]);
+        }
     }
+
 }
