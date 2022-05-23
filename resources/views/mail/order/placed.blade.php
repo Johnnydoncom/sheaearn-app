@@ -8,11 +8,13 @@
         |:------------- |:------------- |
         | Within 4 days | Delivery to your home or office |
     @endcomponent
+    @if($order->delivery_address)
     @component('mail::table')
         | Recipient details | Delivery Address |
         |:------------- |:------------- |
         | {{$order->delivery_address->name}} {{$order->delivery_address->phone}} | {{$order->delivery_address->full_address}} |
     @endcomponent
+    @endif
 
 @component('mail::button', ['url' => route('account.order.show', $order->order_number)])
 View Order

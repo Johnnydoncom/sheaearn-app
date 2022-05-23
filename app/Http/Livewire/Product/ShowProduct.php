@@ -36,7 +36,7 @@ class ShowProduct extends Component
         $this->affiliateUrl = auth()->user() ? route('product.show', ['slug'=>$slug, 'via' => auth()->user()->account_id]) : null;
 
         // Related products
-        $this->related = Product::with('categories')->whereStatus(ProductStatus::PUBLISHED)->whereHas('categories', function ($q) {
+        $this->related = Product::with('categories')->whereSpecial(false)->whereStatus(ProductStatus::PUBLISHED)->whereHas('categories', function ($q) {
             $q->whereIn('category_id', $this->product->categories->pluck('id'))->orWhereIn('category_id', $this->product->categories->pluck('parent_id'));
         })->where('id', '!=', $this->product->id)->inRandomOrder()->limit(4)->get();
 
@@ -44,6 +44,7 @@ class ShowProduct extends Component
 
     public function render()
     {
+//        \Cart::clear();
         $c = collect(\Cart::getContent())->filter(function($item){
             return $item->associatedModel->id == $this->product->id;
         });
@@ -78,9 +79,6 @@ class ShowProduct extends Component
     public function addToCart($qty=1)
     {
 
-        $product = $this->product;
-        $suffix = '';
-
         $options = array(
             'product_id' => $this->product->id,
             'image' => $this->product->featured_img_thumb,
@@ -106,11 +104,11 @@ class ShowProduct extends Component
         \Cart::add([
             'id' => uniqid(),
             'product_id' => $this->product->id,
-            'name' => $this->product->title . $suffix,
-            'price' => (float)$price,
+            'name' => $this->product->title,
+            'price' => $price,
             'quantity' => $qty,
             'attributes' => $options,
-            'associatedModel' => $this->product
+            'associatedModel' => Product::find($this->product->id)
         ]);
 
         // Check if in wishlist then delete

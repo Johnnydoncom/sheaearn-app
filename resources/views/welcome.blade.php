@@ -161,6 +161,7 @@
                     <div class="absolute left-0 top-20 w-10/12 container flex-grow border-t-4 border-gray-200"></div>
                 </div>
             </section>
+            @if(1>2)
             <section class="container mt-20 sm:mt-12">
                 <div class="flex justify-center bg-secondary dark:bg-brand rounded-3xl py-10 px-4 sm:px-20 sm:py-20 shadow-lg">
                     <div class="text-center">
@@ -182,6 +183,35 @@
                     </div>
                 </div>
             </section>
+            @else
+                @if($upgradeBundle)
+                <section class="container mt-20 sm:mt-12">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center bg-accent dark:bg-brand rounded-3xl py-10 px-4 sm:px-20 sm:py-20 shadow-lg">
+                        <div class="order-2 sm:order-1">
+                            <h2 class="text-white text-3xl sm:text-5xl font-extrabold mb-4 text-white">{{ $upgradeBundle->title }}</h2>
+                            <p class="text-md sm:text-3xl mb-4 leading-normal text-white">
+                                {{ $upgradeBundle->description }}
+                            </p>
+                            <div class="text-md sm:text-md mb-6 leading-normal text-white">
+                                <ul style="list-style-type: disc" class="list-disc list-inside mb-4">
+                                    <li>Learn how to run paid , free and cheap effective ads to sell and make good affiliate commissions.</li>
+                                    <li>Learn how to run effective Facebook adverts</li>
+                                    <li>Learn how to run free face ads without spending a dime and getting results.</li>
+                                    <li>Learn how to run free WhatsApp marketing ads.</li>
+                                    <li>Learn how to run free Twitter ads</li>
+                                    <li>Learn how to run free Instagram ads.</li>
+                                </ul>
+                                Many more benefits for purchasing share and earn bundle.
+                            </div>
+                            <a href="{{ route('bundle.checkout') }}" class="btn btn-primary btn-xl btn-block rounded-full">Get Now</a>
+                        </div>
+                        <div class="text-center order-1 sm:order-2">
+                            <img src="{{ Storage::url('special-product.png') }}" alt="Upgrade Image" class="object-cover mx-auto">
+                        </div>
+                    </div>
+                </section>
+                @endif
+            @endif
 
             <section class="relative text-center container py-10">
 

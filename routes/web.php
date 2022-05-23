@@ -53,6 +53,10 @@ Route::middleware(['auth', 'verified', 'has_cart'])->group(function () {
     Route::get('checkout/finish', FinalizeCheckout::class)->name('checkout.finish');
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('special/checkout', \App\Http\Livewire\BundleCheckout::class)->name('bundle.checkout');
+});
+
 Route::get('checkout/success/{order}', function (\Illuminate\Http\Request $request, App\Models\Order $order){
     if (! $request->hasValidSignature()) {
         return redirect()->route('index');

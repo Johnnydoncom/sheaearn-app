@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProductStatus;
 use App\Models\Entry;
 use App\Models\Product;
 use App\Models\Topic;
@@ -78,7 +79,7 @@ class EntryController extends Controller
             // SEOMeta::addKeyword(['key1', 'key2', 'key3']);
 
 
-            $products = Product::inRandomOrder()->limit(6)->get();
+            $products = Product::whereStatus(ProductStatus::PUBLISHED)->whereSpecial(false)->inRandomOrder()->limit(6)->get();
 
         return view('blog.show', [
             'entry' => $entry,

@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::whereStatus(ProductStatus::PUBLISHED);
+        $products = Product::whereStatus(ProductStatus::PUBLISHED)->whereSpecial(false);
 
         if($request->has('q')){
             $products = $products->where('title', 'LIKE', '%' . $request->get('q') . '%');

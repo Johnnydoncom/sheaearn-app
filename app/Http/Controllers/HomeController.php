@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entry;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -20,9 +21,12 @@ class HomeController extends Controller
             return Entry::latest()->whereSticky(true)->first();
         });
 
+        $upgradeBundle = Product::whereSpecial(true)->first();
+
         return view('welcome', [
            'entries' => $entries,
-            'sticky_entry' => $sticky_entry
+            'sticky_entry' => $sticky_entry,
+            'upgradeBundle' => $upgradeBundle
         ]);
     }
 
