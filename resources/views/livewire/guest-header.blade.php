@@ -79,6 +79,21 @@
                         <li class="">
                             <a class="" href="#">{{ __('Community') }}</a>
                         </li>
+                        @auth
+                            <li><a href="{{ route('account.index') }}" class="">My Account</a></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}" class="w-full">
+                                    @csrf
+
+                                    <a class="" href="{{route('logout')}}" onclick="event.preventDefault(); this.closest('form').submit();">
+                                        Logout
+                                    </a>
+                                </form>
+                            </li>
+                            @else
+                            <li><a href="{{route('login')}}">Sign In</a></li>
+                            <li><a href="{{route('register')}}">Register</a></li>
+                        @endauth
                     </ul>
                 </div>
             </div>

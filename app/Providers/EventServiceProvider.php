@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\CommissionEarned;
 use App\Events\OrderPlaced;
 use App\Events\UserReferred;
 use App\Listeners\AssignReferralBonus;
+use App\Listeners\SendEarningNotification;
 use App\Listeners\SendNewOrderNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
@@ -31,7 +33,10 @@ class EventServiceProvider extends ServiceProvider
 //        ],
         OrderPlaced::class => [
             SendNewOrderNotification::class
-        ]
+        ],
+        CommissionEarned::class => [
+            SendEarningNotification::class
+        ],
     ];
 
     /**

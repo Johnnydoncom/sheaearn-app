@@ -67,6 +67,23 @@
         </div>
     </div>
 
+    @role(\App\Enums\UserRole::AFFILIATE)
+    <div class="container flex justify-center items-center my-6">
+        <div class="relative w-full">
+            <input type="text" class="w-full sm:pl-10 sm:pr-60 pl-10 pr-10 h-16 rounded-full text-xl z-0 focus:shadow focus:outline-none border-primary" value="{{Auth::user()->referral_link}}" readonly>
+            <div class="absolute top-0 bottom-2 right-1 msy-2 sdm:mt-auto flex flex-col h-full items-center">
+                <button class="w-full h-full sm:w-auto my-1 px-12 py-2 text-white bg-primary text-lg hover:bg-primary rounded-full">Copy</button>
+            </div>
+        </div>
+    </div>
+
+{{--            <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">--}}
+{{--                <input type="text" class="form-control w-full relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none" value="{{Auth::user()->referral_link}}" aria-describedby="button-addon3">--}}
+{{--                <button class="btn inline-block px-6 py-2 border-2 border-primary text-primary font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" type="button" id="button-addon3">Copy</button>--}}
+{{--            </div>--}}
+    @endrole
+
+    @if(!Auth::user()->hasRole(\App\Enums\UserRole::AFFILIATE))
     <a class="block sm:flex items-center sm:justify-between p-4 mb-8 text-sm font-semibold text-white bg-primary glass shadow-md focus:outline-none focus:shadow-outline-purple my-6" href="{{ route('bundle.checkout') }}" target="_blank" >
         <div class="block sm:flex items-center text-center">
             <svg class="w-5 h-5 mx-auto sm:mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -76,6 +93,7 @@
         </div>
         <span class="glass mt-4 sm:mt-auto block text-center link sm:link-none">Buy Now &RightArrow;</span>
     </a>
+    @endif
 
 
     <div class="card rounded-none mt-10 min-h-[25rem] sm:min-h-[30rem] h-80" id="user_transaction_chart"></div>

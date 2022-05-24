@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Enums\UserRole;
+use App\Events\CommissionEarned;
 use App\Models\Entry;
 use App\Models\Share;
 use Illuminate\Support\Carbon;
@@ -110,8 +111,11 @@ class ShowEntry extends Component
                 'social_id' => $method
             ]);
 
-            if (setting('share_commission'))
-                auth()->user()->socialWallet()->deposit(setting('share_commission'), ['type' => 'share_commission', 'description' => 'Commission for sharing post', 'entry_id' => $this->entry->id]);
+            if (setting('share_commission')) {
+                $tx = auth()->user()->socialWallet()->deposit(setting('share_commission'), ['type' => 'share_commission', 'description' => 'Commission for sharing post', 'entry_id' => $this->entry->id]);
+
+                CommissionEarned::dispatch($tx);
+            }
         }
     }
 

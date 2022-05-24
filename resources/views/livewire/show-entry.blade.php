@@ -52,10 +52,11 @@
                             </a>
                             @endauth
 
-
+                                @if(1>2)
                             <button class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center" id="share-twitter" @auth @click.prevent="fbShare()" @else @click.prevent="showLoginModal=true" @endauth>
                                 <x-cui-cib-twitter class="w-6 h-6 text-[#1DA1F2] flex-nonee"/>
                             </button>
+                                @endif
 
                             <button @auth @click.prevent="fbShare()" wire:target="shared('{{ config("appstore.social_shares.facebook_id")}}')" wire:loading.class="loading" @else @click.prevent="showLoginModal=true" @endauth class="flex gap-2 items-center justify-center dark:bg-transparent dark:hover:bg-gray-600/20 rounded-full hover:bg-gray-200 px-4 py-2 text-lg text-center">
                                 <x-cui-cib-facebook class="w-6 h-6 text-[#4267B2] flex-nonee"/>
@@ -79,11 +80,13 @@
                                 </label>
                                 <div tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-96">
                                     <ul class="menu grid grid-cols-2 gap-4">
+                                        @if(1>2)
                                         <li>
                                             <a class="nav-item social-buttonn" id="share-twitter" href="#">
                                                 <x-cui-cib-twitter class="w-6 h-6 text-[#1DA1F2]"/> Tweet this
                                             </a>
                                         </li>
+                                        @endif
                                         <li>
                                             <a @click.prevent="fbShare()" href="#" class="ssocial-button">
                                                 <x-cui-cib-facebook class="w-6 h-6 text-[#4267B2]"/> Facebook
@@ -139,36 +142,14 @@
 
 
 @push('scripts')
-
 <script>
-    {{--var app = app || {};--}}
-    {{--app.twitter = {--}}
-    {{--    share : function() {--}}
-    {{--        // alert('clicked');--}}
-    {{--        twttr.ready(function (twttr) {--}}
-    {{--            twttr.events.bind('tweet', function (event) {--}}
-    {{--                console.log(event);--}}
-
-    {{--                alert('published');--}}
-    {{--            });--}}
-    {{--        });--}}
-
-    {{--        var popup = window.open('{{$shareUrls["twitter"]}}', 'popupwindow', 'scrollbars=yes,width=800,height=400');--}}
-
-    {{--        popup.focus();--}}
-    {{--    }--}}
-    {{--};--}}
-</script>
-
-<script>
-
-        function fbShare(){
+    function fbShare(){
             FB.ui({
                 method: 'share',
                 name: '{{$entry->title}}',
                 href: '{{url()->current()}}',
                 picture: '{{ $entry->getFirstMediaUrl('featured_image', 'standard') }}',
-                caption: 'Reference Documentation',
+                caption: '{{ $entry->excerpt }}',
                 description: '{{ $entry->excerpt }}'
             },
             function(response) {

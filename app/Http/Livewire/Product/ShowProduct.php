@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Product;
 
 use App\Enums\ProductStatus;
 use App\Enums\UserRole;
+use App\Events\CommissionEarned;
 use App\Models\Entry;
 use App\Models\Product;
 use App\Models\Share;
+use Artesaos\SEOTools\Facades\OpenGraph;
+use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
@@ -72,6 +75,8 @@ class ShowProduct extends Component
         SEOTools::twitter()->setSite('@Sheaearn');
         SEOTools::jsonLd()->addImage($this->product->featured_img_url);
         SEOTools::opengraph()->addProperty('article:published_time', $this->product->created_at->toW3cString(), 'property');
+        SEOMeta::addMeta('fb:app_id', env('FB_APP_ID'), 'property');
+        OpenGraph::addImage($this->product->featured_img_url);
 
         return view('livewire.product.show-product');
     }
@@ -221,8 +226,11 @@ class ShowProduct extends Component
                 'social_id' => $method
             ]);
 
-            if (setting('share_commission'))
-                auth()->user()->socialWallet()->deposit(setting('share_commission'), ['type' => 'share_commission', 'description' => 'Commission for sharing post', 'entry_id' => $this->entry->id]);
+            if (setting('share_commission')) {
+                $tx = auth()->user()->socialWallet()->deposit(setting('share_commission'), ['type' => 'share_commission', 'description' => 'Commission for sharing product', 'product_id' => $this->product->id]);
+
+                CommissionEarned::dispatch($tx);
+            }
         }
     }
 }

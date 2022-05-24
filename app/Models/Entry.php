@@ -66,6 +66,7 @@ class Entry extends Model implements HasMedia
             });
     }
 
+
     public function getFeaturedImgUrlAttribute(){
         return $this->getFirstMediaUrl('featured_image');
     }

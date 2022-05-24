@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Entry;
 use App\Models\Product;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -32,6 +33,8 @@ class HomeController extends Controller
 
     public function privacy()
     {
-        return 1;
+        SEOTools::setTitle('Privacy Policy');
+//        SEOTools::setDescription($entry->excerpt);
+        return view('privacy-policy');
     }
 }

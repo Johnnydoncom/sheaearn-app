@@ -6,6 +6,8 @@ use App\Enums\ProductStatus;
 use App\Models\Entry;
 use App\Models\Product;
 use App\Models\Topic;
+use Artesaos\SEOTools\Facades\OpenGraph;
+use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -66,20 +68,16 @@ class EntryController extends Controller
 
         SEOTools::setTitle($entry->title);
         SEOTools::setDescription($entry->excerpt);
-        // SEOTools::opengraph()->setUrl('http://current.url.com');
-        // SEOTools::setCanonical('https://codecasts.com.br/lesson');
+        SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'article');
         SEOTools::twitter()->setSite('@Sheaearn');
         SEOTools::jsonLd()->addImage($entry->getFirstMediaUrl('featured_image', 'standard'));
-
-            // SEOMeta::setTitle($entry->title);
-            // SEOMeta::setDescription($entry->excerpt);
+        OpenGraph::addImage($entry->getFirstMediaUrl('featured_image', 'standard'));
         SEOTools::opengraph()->addProperty('article:published_time', $entry->created_at->toW3cString(), 'property');
-            // SEOMeta::addMeta('article:section', $entry->topic->name, 'property');
-            // SEOMeta::addKeyword(['key1', 'key2', 'key3']);
 
+        SEOMeta::addMeta('fb:app_id', env('FB_APP_ID'), 'property');
 
-            $products = Product::whereStatus(ProductStatus::PUBLISHED)->whereSpecial(false)->inRandomOrder()->limit(6)->get();
+        $products = Product::whereStatus(ProductStatus::PUBLISHED)->whereSpecial(false)->inRandomOrder()->limit(6)->get();
 
         return view('blog.show', [
             'entry' => $entry,
