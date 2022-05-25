@@ -1,6 +1,6 @@
 <div class="flexx justify-center">
-    <div class="flex flex-col md:flex-row bg-white shadow-lg">
-        <div class="w-full">
+    <div class="flex flex-col sm:flex-row bg-white shadow-lg">
+        <div class="w-fulll">
             <img class="w-full h-60 min-h-max sm:min-h-max sm:h-full object-cover sm:w-80 rounded-none" src="{{ $ad->featured_img_thumb }}" alt="{{$ad->title}}" />
 
         </div>

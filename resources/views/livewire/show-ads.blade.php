@@ -25,7 +25,7 @@
     </div>
 
     <div class="entry-content max-w-4xl mx-auto relative px-4 mb-10">
-        <div class="flex flex-col justify-center">
+        <div class="flex flex-col justify-center items-center">
             <div class="w-full sm:w-10/12 leading-loose text-md dark:text-gray-200">
                 {!! $ads->description !!}
 
