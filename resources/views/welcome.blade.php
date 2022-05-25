@@ -107,7 +107,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 sm:gap-4 gap-4 sm:gap-0 container sm:mt-10">
+                <div class="grid grid-cols-1 sm:grid-cols-3 sm:gap-4 gap-4 container sm:mt-10">
                     <div class="flex justify-center px-10 sm:p-0">
                         <div class="rounded-3xl sm:shadow-lg bg-white max-w-xs sm:max-w-sm">
                             <div class="rounded-3xl bg-primary">

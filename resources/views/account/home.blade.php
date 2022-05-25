@@ -68,19 +68,15 @@
     </div>
 
     @role(\App\Enums\UserRole::AFFILIATE)
-    <div class="container flex justify-center items-center my-6">
+    <div class="container flex flex-col justify-center items-center my-6">
         <div class="relative w-full">
-            <input type="text" class="w-full sm:pl-10 sm:pr-60 pl-10 pr-10 h-16 rounded-full text-xl z-0 focus:shadow focus:outline-none border-primary" value="{{Auth::user()->referral_link}}" readonly>
+            <input type="text" id="affiliateUrl" class="w-full sm:pl-10 sm:pr-60 pl-10 pr-10 h-16 rounded-full text-xl z-0 focus:shadow focus:outline-none border-primary" value="{{Auth::user()->referral_link}}" readonly>
             <div class="absolute top-0 bottom-2 right-1 msy-2 sdm:mt-auto flex flex-col h-full items-center">
-                <button class="w-full h-full sm:w-auto my-1 px-12 py-2 text-white bg-primary text-lg hover:bg-primary rounded-full">Copy</button>
+                <button data-clipboard-target="#affiliateUrl" class="w-full h-full sm:w-auto my-1 px-12 py-2 text-white bg-primary text-lg hover:bg-primary rounded-full" id="copy">Copy</button>
             </div>
         </div>
+        <span id="copyMessage" class="text-center w-full text-success"></span>
     </div>
-
-{{--            <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">--}}
-{{--                <input type="text" class="form-control w-full relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none" value="{{Auth::user()->referral_link}}" aria-describedby="button-addon3">--}}
-{{--                <button class="btn inline-block px-6 py-2 border-2 border-primary text-primary font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" type="button" id="button-addon3">Copy</button>--}}
-{{--            </div>--}}
     @endrole
 
     @if(!Auth::user()->hasRole(\App\Enums\UserRole::AFFILIATE))
@@ -117,6 +113,7 @@
 <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
 <!-- Chartisan -->
 <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
+    <script src="{{ asset('vendor/clipboard.js/dist/clipboard.min.js') }}"></script>
 <!-- Your application script -->
 
 <script>
@@ -128,6 +125,17 @@
     .colors()
     // .datasets(['line', 'bar'])
     .tooltip(),
+    });
+
+    var clipboard = new ClipboardJS('#copy');
+
+    clipboard.on('success', function(e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+
+        e.clearSelection();
+        document.getElementById('copyMessage').innerText = 'Copied'
     });
   </script>
 @endpush

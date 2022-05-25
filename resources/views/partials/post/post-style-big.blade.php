@@ -4,7 +4,7 @@
             <img class="rounded-t-lg" src="{{ isset($sticky) && $sticky ? $post->featured_img_url : $post->featured_img_thumb }}" alt="{{$post->title}}"/>
         </a>
         <div class="p-6">
-            <h2 class="text-gray-900 text-4xl font-bold mb-2"><a href="{{$post->entry_url}}" title="{{$post->title}}">{{$post->title}}</a></h2>
+            <h2 class="text-gray-900 text-2xl sm:text-4xl font-bold mb-2"><a href="{{$post->entry_url}}" title="{{$post->title}}">{{$post->title}}</a></h2>
             <p class="text-gray-700 text-base mb-4">
                 {{$post->excerpt}}
             </p>

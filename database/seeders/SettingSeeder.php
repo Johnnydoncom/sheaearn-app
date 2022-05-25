@@ -43,6 +43,7 @@ class SettingSeeder extends Seeder
         $settingArray['affiliate_fee'] = 1000;
         $settingArray['order_commission'] = 0.5;
         $settingArray['share_commission'] = 5;
+        $settingArray['sponsored_ads_commission'] = 100;
         $settingArray['intra_state_shipping_fee'] = 1000;
         $settingArray['inter_state_shipping_fee'] = 2000;
         $settingArray['order_method'] = 'cart';

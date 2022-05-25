@@ -32,18 +32,6 @@ module.exports = {
         require('@tailwindcss/forms'),
         require('tw-elements/dist/plugin'),
         require("daisyui"),
-        // plugin(function({ addUtilities, theme }) {
-        //     const newUtilities = {
-        //         '.custom-scrollbar': {
-        //             '.custom-scrollbar::-webkit-scrollbar': { width: '6px' },
-        //             '.custom-scrollbar::-webkit-scrollbar-track': { background: theme('bg-secondary')},
-        //             '.custom-scrollbar::-webkit-scrollbar-thumb': { background: '#888' },
-        //             '.custom-scrollbar::-webkit-scrollbar-thumb:hover': {background: '#555'},
-        //         }
-        //     }
-
-        //     addUtilities(newUtilities, ['responsive', 'hover'])
-        // }),
         require('@tailwindcss/line-clamp')
     ],
     daisyui: {

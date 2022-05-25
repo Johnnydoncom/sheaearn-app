@@ -12,7 +12,7 @@
                     @endif
                 @endforeach
 
-                    <div class="grid grid-cols-1 gap-4">
+                    <div class="col-span-2 sm:col-span-1 grid grid-cols-1 gap-4">
                 @foreach($sticky_entries as $sticky)
                     @if(!$loop->first)
                         <div class="">
@@ -23,7 +23,7 @@
                     </div>
 
                 @foreach($entries as $entry)
-                    <div class="">
+                    <div class="col-span-2 sm:col-span-1">
                         @include('partials.post.post-style1', ['post'=>$entry])
                     </div>
                 @endforeach

@@ -24,11 +24,9 @@ Route::get('blog', [\App\Http\Controllers\EntryController::class, 'index'])->nam
 Route::get('topic/{slug}', [\App\Http\Controllers\EntryController::class, 'category'])->name('blog.category');
 Route::get('privacy-policy', [\App\Http\Controllers\HomeController::class, 'privacy'])->name('privacy-policy');
 
-
-//Route::get('/dashboard', function () {
-//    return view('dashboard');
-//})->middleware(['auth'])->name('dashboard');
-
+// Sponsored Ads
+Route::get('sponsored-ads', [\App\Http\Controllers\AdsController::class, 'index'])->name('ads.index');
+Route::get('sponsored-ads/{slug}', \App\Http\Livewire\ShowAds::class)->name('ads.show');
 
 // Shop
 Route::get('catalog', [ProductController::class, 'index'])->name('product.index');
@@ -103,6 +101,9 @@ Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified', 'admin_
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('index');
     Route::resource('entries', \App\Http\Controllers\Admin\EntryController::class);
     Route::resource('topics', \App\Http\Controllers\Admin\TopicsController::class);
+
+    Route::resource('ads', \App\Http\Controllers\Admin\AdsController::class);
+
 
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);

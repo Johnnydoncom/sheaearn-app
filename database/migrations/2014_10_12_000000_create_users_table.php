@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('zipcode')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('account_id')->unique();
+            $table->string('facebook_url')->nullable()->unique();
             $table->boolean('newsletter')->default(false);
             $table->string('affiliate_tag')->nullable()->unique();
             $table->unsignedBigInteger('referrer_id')->nullable();

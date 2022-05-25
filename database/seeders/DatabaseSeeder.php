@@ -30,43 +30,43 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//        $this->call(CountriesTableSeeder::class);
-//        $this->call(StatesTableSeeder::class);
-////
-//        $this->call(CitiesTableChunkOneSeeder::class);
-//        $this->call(CitiesTableChunkOneTwoSeeder::class);
+        $this->call(CountriesTableSeeder::class);
+        $this->call(StatesTableSeeder::class);
 //
-//        $this->call(CitiesTableChunkTwoSeeder::class);
-//        $this->call(CitiesTableChunkTwoTwoSeeder::class);
-//
-//        $this->call(CitiesTableChunkThreeSeeder::class);
-//        $this->call(CitiesTableChunkThreeThreeSeeder::class);
-//
-//        $this->call(CitiesTableChunkFourSeeder::class);
-//        $this->call(CitiesTableChunkFourFourSeeder::class);
-//
-//        $this->call(CitiesTableChunkFiveSeeder::class);
-//        $this->call(CitiesTableChunkFiveFiveSeeder::class);
+        $this->call(CitiesTableChunkOneSeeder::class);
+        $this->call(CitiesTableChunkOneTwoSeeder::class);
+
+        $this->call(CitiesTableChunkTwoSeeder::class);
+        $this->call(CitiesTableChunkTwoTwoSeeder::class);
+
+        $this->call(CitiesTableChunkThreeSeeder::class);
+        $this->call(CitiesTableChunkThreeThreeSeeder::class);
+
+        $this->call(CitiesTableChunkFourSeeder::class);
+        $this->call(CitiesTableChunkFourFourSeeder::class);
+
+        $this->call(CitiesTableChunkFiveSeeder::class);
+        $this->call(CitiesTableChunkFiveFiveSeeder::class);
 
         $this->call([
-//            SettingSeeder::class,
-//            UserTableSeeder::class,
-//            RolePermissionSeeder::class,
-//            CategoriesTableSeeder::class,
-//            BrandsTableSeeder::class,
-//            TopicsTableSeeder::class,
-//            PaymentGatewayTableSeeder::class,
+            SettingSeeder::class,
+            UserTableSeeder::class,
+            RolePermissionSeeder::class,
+            CategoriesTableSeeder::class,
+            BrandsTableSeeder::class,
+            TopicsTableSeeder::class,
+            PaymentGatewayTableSeeder::class,
             SpecialProductSeeder::class
         ]);
 //
-//        Product::factory()->count(20)->create()->each(function ($product) {
-//            $product->reviews()->createMany(Review::factory()->count(5)->make()->toArray());
-//
-//            $cat = Category::whereNotNull('parent_id')->get()->random()->id;
-//            $product->categories()->sync($cat);
-//        });
-//
-//        Entry::factory()->count(10)->create();
+        Product::factory()->count(20)->create()->each(function ($product) {
+            $product->reviews()->createMany(Review::factory()->count(5)->make()->toArray());
+
+            $cat = Category::whereNotNull('parent_id')->get()->random()->id;
+            $product->categories()->sync($cat);
+        });
+
+        Entry::factory()->count(10)->create();
 
 
 //

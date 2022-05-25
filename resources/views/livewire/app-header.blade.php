@@ -233,6 +233,9 @@
                       <a class="nav-link text-white hover:text-gray-100 focus:text-gray-100 p-2 pt-2 pb-2 hover:border-b-4 hover:border-white" href="{{ route('blog.category', $mtopic->slug) }}">{{ __($mtopic->name) }}</a>
                     </li>
                     @endforeach
+                    <li class="nav-item p-1.5">
+                        <a class="nav-link text-white hover:text-gray-100 focus:text-gray-100 p-2 pt-2 pb-2 hover:border-b-4 hover:border-white" href="{{ route('ads.index') }}">{{ __('Sponsored Ads') }}</a>
+                    </li>
                 </ul>
 
                 <div class="social-icons flex gap-2 items-center">
