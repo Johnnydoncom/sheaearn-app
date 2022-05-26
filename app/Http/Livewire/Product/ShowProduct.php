@@ -25,6 +25,8 @@ class ShowProduct extends Component
     public $related = [];
     public $cart;
     public $getTotalCartItem=null;
+    public $variations;
+    public $available_variations;
 
     protected $listeners = ['refreshProduct'=>'$refresh'];
 
@@ -42,6 +44,10 @@ class ShowProduct extends Component
         $this->wishlist = auth()->user() ? auth()->user()->wishlist()->where('product_id', $this->product->id)->first() : null;
 
         $this->affiliateUrl = auth()->user() ? route('product.show', ['slug'=>$slug, 'via' => auth()->user()->account_id]) : null;
+
+//        $this->variations = $this->product->hasAttributes() && $this->product->hasVariation() ?
+//            VariationRe
+
 
         // Related products
         $this->related = Product::with('categories')->whereSpecial(false)->whereStatus(ProductStatus::PUBLISHED)->whereHas('categories', function ($q) {

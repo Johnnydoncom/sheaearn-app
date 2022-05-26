@@ -42,8 +42,13 @@ class ProductsTable extends LivewireDatatable
                 return $title;
             })->searchable()->label('Title'),
 
-            Column::callback(['regular_price','sales_price'], function ($regular_price, $sales_price) {
-                return $sales_price > 0 ? '<span class="line-through">'.app_money_format($regular_price).'</span><span>'.app_money_format($sales_price).'</span>' : app_money_format($regular_price);
+            Column::callback(['stock.regular_price','stock.sales_price', 'id'], function ($regular_price, $sales_price, $id) {
+                $row = app()->make($this->model)->find($id);
+                if($row->product_type=='variable'){
+                    return $row->variation_price;
+                }else {
+                    return $sales_price > 0 ? '<span class="line-through">' . app_money_format($regular_price) . '</span><span>' . app_money_format($sales_price) . '</span>' : app_money_format($regular_price);
+                }
             })->filterable()->searchable()->label('Price'),
 
             Column::name('categories.name')

@@ -10,6 +10,7 @@
                 </a>
             </h3>
 
+            @if($product->product_type=='simple')
             <div class="mt-2 font-thin flex items-center space-x-2">
                 @if($product->sales_price > 0)
                 <p class="text-xs font-medium text-gray-900">{{ $product->formatted_sales_price }}</p>
@@ -19,5 +20,12 @@
                     {{ $product->formatted_regular_price }}
                 </p>
             </div>
+            @else
+                <div class="mt-2 font-thin flex items-center space-x-2">
+                    <p class="text-gray-900 text-xs font-semibold">
+                        {{ $product->variation_price }}
+                    </p>
+                </div>
+            @endif
         </div>
     </div>

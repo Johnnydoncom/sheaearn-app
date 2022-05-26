@@ -22,6 +22,7 @@ trait HasAttributes
         DB::beginTransaction();
 
         try {
+            if(!$this->attributes()->where('attribute_id',$attribute)->exists())
             $this->attributes()->create(['attribute_id' => $attribute]);
 
             DB::commit();

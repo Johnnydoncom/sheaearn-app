@@ -45,6 +45,13 @@
     display: none;
 }
 
+.slide-image{
+    /*min-height: 400px;*/
+    /*width: 100%;*/
+}
+.swiper-slide {
+    /*max-height: 500px;*/
+}
 /* :root {
     --color-default: #fff;
 }

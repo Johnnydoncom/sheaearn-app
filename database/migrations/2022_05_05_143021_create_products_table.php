@@ -34,7 +34,7 @@ class CreateProductsTable extends Migration
             $table->foreign('product_stock_id')->references('id')->on('product_stocks')->onDelete('cascade');
             $table->bigInteger('views_count')->default(0);
             $table->boolean('manage_stock')->default(false);
-            $table->bigInteger('stock_quantity')->default(0);
+            $table->bigInteger('stock_quantity')->nullable()->default(0);
             $table->json('product_attributes')->nullable();
             $table->boolean('sold_individually')->default(false);
             $table->tinyInteger('status')->default(1);

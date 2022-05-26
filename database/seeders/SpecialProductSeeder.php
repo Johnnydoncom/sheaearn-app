@@ -20,6 +20,13 @@ class SpecialProductSeeder extends Seeder
      */
     public function run()
     {
+        $stock = ProductStock::create([
+            'regular_price' =>2000,
+            'sales_price' => 0,
+            'stock_quantity' => 0,
+            'manage_stock' => false
+        ]);
+
         $product = Product::create( [
             'title' => 'Share and Earn Bundle',
             'description' => 'The ultimate 101 guide to make N200,000 monthly on share and earn',
@@ -30,12 +37,7 @@ class SpecialProductSeeder extends Seeder
             'manage_stock' => false,
             'type' => 'digital',
             'product_type' => 'simple',
-            'product_stock_id' => ProductStock::create([
-                    'regular_price' =>2000,
-                    'sales_price' => 0,
-                    'stock_quantity' => 0,
-                    'manage_stock' => false
-                ])->id
+            'product_stock_id' => $stock->id
         ]);
 
 

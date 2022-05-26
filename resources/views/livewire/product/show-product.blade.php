@@ -9,20 +9,19 @@
                         <!-- Slides -->
                         @foreach($gallery as $key => $slide)
                             <div class="swiper-slide bg-white">
-                                <img src="{{ $slide }}" class="rounded-none w-full">
+                                <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="">
+                                    <a href="{{ $slide }}" itemprop="contentUrl" data-size="2136x1424">
+                                        <img src='{{ $slide }}' class="object object-cover slide-image h-[18rem] sm:h-[25rem] w-full"/>
+                                    </a>
+                                </figure>
+
+{{--                                <img src="{{ $slide }}" class="rounded-none w-full slide-image">--}}
                             </div>
                         @endforeach
                     </div>
 
                     <!-- If we need pagination -->
                     <div class="swiper-scrollbar"></div>
-
-                    <!-- If we need pagination -->
-{{--                    <div class="swiper-pagination"></div>--}}
-
-                    <!-- If we need navigation buttons -->
-{{--                    <div class="swiper-button-prev"></div>--}}
-{{--                    <div class="swiper-button-next"></div>--}}
                 </div>
             </div>
 
@@ -32,10 +31,12 @@
                     <div class="price">
                         <div class="mt-2 flex items-end space-x-2">
                             <div class="font-medium block">
+                                @if($product->product_type=='variable')
+                                    <span class="text-red-600 font-bold text-2xl">{{ $product->variation_price }} </span>
+                                @else
                                 <span class="text-red-600 font-bold text-2xl">{{ $product->sales_price > 0 ? $product->formatted_sales_price : $product->formatted_regular_price }} </span>
+                                @endif
                             </div>
-                            {{--                                <span class="text-gray-400 text-sm">{{  $product->stock->unit->name }}</span>--}}
-                            {{--                                <span class="text-success text-sm">Price excl. VAT</span>--}}
                         </div>
                     </div>
                 </div>
@@ -105,6 +106,24 @@
                         @endif
                     </div>
                 </div>
+
+                @if($product->product_type=='variable' && $product->variations->count())
+                <div class="variations border-t border-gray-200 my-3">
+
+                    <h3 class="uppercase py-2">Variations</h3>
+                    @foreach($product->variations as $variation)
+
+                        {{var_dump($variation)}}
+                        <div class="flex space-x-2">
+                            @foreach($variation as $variationValue)
+{{--                            <button class="btn btn-sm btn-outline btn-primary">{{$variationValue->data->attribute->value}}</button>--}}
+
+
+                            @endforeach
+                        </div>
+                    @endforeach
+                </div>
+                @endif
 
                 <div class="share card card-body p-4 flex-row items-center gap-4">
                     <span class="font-semibold">Share:</span>
@@ -196,8 +215,7 @@
                     breakpoints: {
                         991: {
                             slidesPerView: 1,
-                            spaceBetween: 10,
-                            height: 350
+                            spaceBetween: 10
                         }
                     }
                 })

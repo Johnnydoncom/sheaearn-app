@@ -81,6 +81,7 @@ class Product extends Model implements HasMedia
                     ->height(300)
                     ->sharpen(10)
                     ->format('webp')
+                    ->withResponsiveImages()
                     ->fit(Manipulations::FIT_CROP, 300,300)
                     ->nonQueued();
             });
@@ -97,6 +98,7 @@ class Product extends Model implements HasMedia
                     ->height(232)
                     ->sharpen(10)
                     ->format('webp')
+                    ->withResponsiveImages()
                     ->fit(Manipulations::FIT_CROP, 368,232);
             });
     }
