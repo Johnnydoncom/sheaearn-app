@@ -47,7 +47,7 @@
 </div>
 
 
-@include('partials.loader')
+{{--@include('partials.loader')--}}
 
 <!-- Scripts -->
 @livewireScripts

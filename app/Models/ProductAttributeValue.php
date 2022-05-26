@@ -44,4 +44,14 @@ class ProductAttributeValue extends Model
     {
         return $this->belongsToMany(ProductAttribute::class);
     }
+
+    /**
+     * Relation of the attribute option to the variant
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany $this
+     */
+    public function variations(): HasMany
+    {
+        return $this->hasMany(ProductVariation::class);
+    }
 }

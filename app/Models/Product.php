@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use App\Exceptions\InvalidAttributeException;
+use App\Exceptions\InvalidVariantException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Observers\ProductObserver;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
@@ -29,7 +34,9 @@ class Product extends Model implements HasMedia
         'stock_quantity',
         'featured',
         'product_attributes',
+        'product_stock_id',
         'product_type',
+        'type',
         'features',
         'status'
     ];
@@ -113,6 +120,11 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
+    public function stock()
+    {
+        return $this->belongsTo(ProductStock::class, 'product_stock_id');
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id');
@@ -136,8 +148,24 @@ class Product extends Model implements HasMedia
         return app_money_format($this->sales_price);
     }
 
+//    public function getDiscountPercentAttribute(){
+//        return round((($this->regular_price - $this->sales_price) / $this->regular_price) * 100);
+//    }
+
     public function getDiscountPercentAttribute(){
-        return round((($this->regular_price - $this->sales_price) / $this->regular_price) * 100);
+        if($this->product_type == 'variable'){
+            return 0;
+        }else {
+            return round((($this->regular_price - $this->sales_price) / $this->regular_price) * 100);
+        }
+    }
+
+    public function getVariationPriceAttribute(){
+        if($this->product_type == 'variable' && $this->stock()){
+            return app_money_format($this->variations()->first()->stock->regular_price);
+        }else {
+            return 0;
+        }
     }
 
     public function wishlist(){
@@ -158,5 +186,154 @@ class Product extends Model implements HasMedia
 
     public function shares(){
         return $this->morphMany(Share::class, 'shareable');
+    }
+
+    /**
+     * Add Variant to the product
+     *
+     * @param array $variant
+     */
+    public function addVariant($variant)
+    {
+        DB::beginTransaction();
+
+        try {
+            if (in_array($this->sortAttributes($variant['variation']), $this->getVariants())) {
+                throw new InvalidVariantException("Duplicate variation attributes!", 400);
+            }
+
+            foreach ($variant['variation'] as $item) {
+                $attribute = $this->attributes()->whereHas('attribute', function ($q) use ($item){
+                    $q->where('code', $item['option']);
+                })->firstOrFail();
+                $value = $attribute->values()->where('value', $item['value'])->firstOrFail();
+
+                $dataArray = [
+                    'product_attribute_id' => $attribute->id,
+                    'sku' => $variant['sku'],
+                    'price' => $variant['price'] ?? 0,
+                    'cost' => $variant['cost'],
+                    'quantity' => $variant['quantity']
+                ];
+
+                if(isset($variant['product_stock_id'])){
+                    $dataArray['product_stock_id'] = $variant['product_stock_id'];
+                }
+
+                $this->variations()->updateOrCreate(
+                    ['product_attribute_value_id' => $value->id],
+                    $dataArray
+                );
+            }
+
+            DB::commit();
+        } catch (ModelNotFoundException $err) {
+            DB::rollBack();
+
+            throw new InvalidAttributeException($err->getMessage(), 404);
+
+        } catch (\Throwable $err) {
+            DB::rollBack();
+
+            throw new InvalidVariantException($err->getMessage(), 400);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get the variations
+     *
+     */
+    public function getVariations()
+    {
+        return $this->variations;
+    }
+
+    /**
+     * Get the variations
+     *
+     */
+    public function loadVariations()
+    {
+        return $this->variations()->get()->load(['attribute.attribute', 'option']);
+    }
+
+
+    protected function getVariants(): array
+    {
+        $variants = ProductVariation::where('product_id' , $this->id)->get();
+
+        return $this->transformVariant($variants);
+    }
+
+    protected function sortAttributes($variant): array
+    {
+        return collect($variant)
+            ->sortBy('option')
+            ->map(function ($item) {
+                return [
+                    'option' => strtolower($item['option']),
+                    'value' => strtolower($item['value'])
+                ];
+            })
+            ->values()
+            ->toArray();
+    }
+
+
+    protected function transformVariant($variants): array
+    {
+        return collect($variants)
+            ->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'sku' => $item->sku,
+                    'attribute' => $item->attribute->attribute->name,
+                    'option' => $item->option->value
+                ];
+            })
+            ->keyBy('id')
+            ->groupBy('attribute')
+            ->map(function ($item) {
+                return collect($item)
+                    ->map(function ($var) {
+                        return [
+                            'option' => strtolower($var['attribute']),
+                            'value' => strtolower($var['option'])
+                        ];
+                    })
+                    ->sortBy('option')
+                    ->values()
+                    ->toArray();
+            })
+            ->all();
+    }
+
+    public function hasVariation(): bool
+    {
+        return !! $this->variations()->count();
+    }
+
+    public static function findBySku(string $sku)
+    {
+        return ProductVariation::where('sku', $sku)->firstOrFail();
+    }
+
+    public function scopeWhereSku(Builder $query, string $sku)
+    {
+        return $query->whereHas('variations', function ($q) use ($sku) {
+            $q->where('sku', $sku);
+        });
+    }
+
+    public function variant()
+    {
+        return $this->hasMany(ProductVariation::class, 'product_id');
+    }
+
+    public function variations()
+    {
+        return $this->hasMany(ProductVariation::class);
     }
 }

@@ -18,7 +18,7 @@ class ProductForm extends Component
     public $tags = [];
     public $sticky = false;
     public $categories;
-    public $attributes;
+    public $pattributes=[];
     public $brands = [];
     public $allTags;
     public $allAttributes;
@@ -26,8 +26,9 @@ class ProductForm extends Component
     public $image;
     public $digital_file;
     public $category_ids = [];
+    public $selAttribute;
 
-    public $product_id, $title, $description, $price, $stock_quantity, $featured, $category_id, $brand_id, $regular_price, $sales_price=0, $product_type, $stock_status, $commission, $status, $sku, $manage_stock;
+    public $product_id, $title, $description, $price, $stock_quantity, $featured, $category_id, $brand_id, $regular_price, $sales_price=0, $product_type, $type, $stock_status, $commission, $status, $sku, $manage_stock;
 
     protected $rules = [
         'title' => 'required|min:6',
@@ -35,6 +36,7 @@ class ProductForm extends Component
         'category_ids' => 'required',
         'regular_price' => 'required_unless:product_type,variable',
         'product_type' => 'required',
+        'type' => 'required',
         'stock_status' => 'required',
         'image' => 'image|max:1024|nullable'
     ];
@@ -44,6 +46,8 @@ class ProductForm extends Component
         $this->allTags = Tag::get();
         $this->allAttributes = Attribute::all();
         $this->brands = Brand::get(['name','id']);
+
+        $this->selAttribute = 'custom';
 
 
         if($this->product){
@@ -59,12 +63,14 @@ class ProductForm extends Component
             $this->sales_price = $this->product->sales_price;
             $this->commission = $this->product->commission;
             $this->sku = $this->product->sku;
-            $this->product_type = $this->product->type;
+            $this->product_type = $this->product->product_type;
+            $this->type = $this->product->type;
             $this->brand_id = $this->product->brand_id;
             $this->status = $this->product->status ? 1 : 0;
         }else{
             $this->manage_stock = 0;
-            $this->product_type = 'physical';
+            $this->product_type = 'simple';
+            $this->type = 'physical';
             $this->stock_status = 'instock';
             $this->status = 0;
             $this->featured = false;
@@ -89,7 +95,9 @@ class ProductForm extends Component
         if(!$this->product)
             $product->user_id = auth()->user()->id;
 
-        $product->type = $this->product_type;
+        $product->type = $this->type;
+        $product->product_type = $this->product_type;
+
         $product->description = $this->description;
 
         $product->featured = $this->featured ? true : false;
@@ -155,4 +163,32 @@ class ProductForm extends Component
         $this->product = Product::find($this->product->id);
 //        unset($this->images[$id]);
     }
+
+
+    public function addAttribute(){
+        if($this->selAttribute == 'custom'){
+            $this->pattributes[] = array(
+                'name'=> null,
+                'value'=> null,
+                'type'=> 'custom',
+                'code'=>null,
+                'id'=>null
+            );
+        }else {
+            $att = $this->allAttributes->where('code', $this->selAttribute)->first();
+            $this->pattributes[] = array(
+                'name'=> $att->name,
+                'value'=> null,
+                'type'=> null,
+                'code'=>$att->code,
+                'id'=>$att->id
+            );
+        }
+
+        $this->emitSelf('attributeSelected');
+        $this->dispatchBrowserEvent('attribute-selected');
+
+    }
+
+
 }

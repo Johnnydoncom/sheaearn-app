@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductStock;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -27,8 +28,17 @@ class SpecialProductSeeder extends Seeder
             'regular_price' => 2000,
             'sales_price' => 0,
             'manage_stock' => false,
-            'type' => 'digital'
+            'type' => 'digital',
+            'product_type' => 'simple',
+            'product_stock_id' => ProductStock::create([
+                    'regular_price' =>2000,
+                    'sales_price' => 0,
+                    'stock_quantity' => 0,
+                    'manage_stock' => false
+                ])->id
         ]);
+
+
 
         $product
             ->addMediaFromUrl(Storage::url('special-product.png'))

@@ -41,6 +41,10 @@
     @apply normal-case;
 }
 
+.tab-pane.fade:not(.show) {
+    display: none;
+}
+
 /* :root {
     --color-default: #fff;
 }

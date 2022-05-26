@@ -56,6 +56,7 @@ class DatabaseSeeder extends Seeder
             BrandsTableSeeder::class,
             TopicsTableSeeder::class,
             PaymentGatewayTableSeeder::class,
+            AttributesTableSeeder::class,
             SpecialProductSeeder::class
         ]);
 //

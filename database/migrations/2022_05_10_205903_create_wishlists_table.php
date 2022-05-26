@@ -17,7 +17,8 @@ class CreateWishlistsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('user_id');
-
+            $table->unsignedBigInteger('product_variation_id')->nullable();
+            $table->foreign('product_variation_id')->references('id')->on('product_variations')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();

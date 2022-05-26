@@ -17,6 +17,9 @@ class CreateAttributesTable extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('name');
+            $table->enum('frontend_type', ['select', 'radio', 'text', 'textarea'])->default('select');
+            $table->boolean('is_filterable')->default(false);
+            $table->boolean('is_required')->default(false);
             $table->timestamps();
         });
     }

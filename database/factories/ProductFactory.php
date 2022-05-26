@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ProductStock;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,10 +27,18 @@ class ProductFactory extends Factory
             'user_id' => function(){
                 return User::all()->random()->id;
             },
-            'regular_price' =>$this->faker->numberBetween(2000, 50000),
-            'sales_price' => 0,
             'manage_stock' => true,
             'stock_quantity' => $this->faker->numberBetween(5, 100),
+            'regular_price' =>$this->faker->numberBetween(2000, 50000),
+            'sales_price' => 0,
+            'product_stock_id' => function() {
+                return ProductStock::create([
+                    'regular_price' =>$this->faker->numberBetween(2000, 50000),
+                    'sales_price' => 0,
+                    'stock_quantity' => $this->faker->numberBetween(10, 100),
+                    'manage_stock' => true
+                ]);
+            },
             'type' => $this->faker->randomElement(['physical', 'digital']),
             'brand_id' => function(){
                 return Brand::all()->random()->id;
