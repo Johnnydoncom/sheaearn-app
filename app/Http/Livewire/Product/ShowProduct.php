@@ -5,8 +5,10 @@ namespace App\Http\Livewire\Product;
 use App\Enums\ProductStatus;
 use App\Enums\UserRole;
 use App\Events\CommissionEarned;
+use App\Http\Resources\VariationResource;
 use App\Models\Entry;
 use App\Models\Product;
+use App\Models\ProductVariation;
 use App\Models\Share;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
@@ -46,7 +48,31 @@ class ShowProduct extends Component
         $this->affiliateUrl = auth()->user() ? route('product.show', ['slug'=>$slug, 'via' => auth()->user()->account_id]) : null;
 
 //        $this->variations = $this->product->hasAttributes() && $this->product->hasVariation() ?
-//            VariationRe
+//        VariationResource::collection($this->product->variations)->groupBy('attribute.attribute.name')->toArray(app('request')) : null;
+
+//        if($this->product->hasAttributes() && $this->product->hasVariation()){
+//            $this->variations = collect($this->product->variations)->map(function ($item) {
+//                $item->attribute_name = $item->attribute->attribute->name;
+//                $item->attribute_value = $item->option->value;
+//                return $item;
+////                return [
+////                    'name' => $item->attribute->attribute->name,
+////                    'option' => $item->option->value
+////                ];
+//            })->groupBy('attribute_name')->all();
+//
+//            $this->available_variations = collect($this->product->variations->where('quantity', '>', 0))->map(function ($item) {
+//                $item->attribute_name = $item->attribute->attribute->name;
+//                $item->attribute_value = $item->option->value;
+//                return $item;
+//            })->all();
+//        }
+
+//        echo json_encode($this->variations);
+//        exit();
+
+//        $this->available_variations = $this->product->hasAttributes() && $this->product->hasVariation() ?
+//        VariationResource::collection($this->product->variations->where('quantity', '>', 0))->toArray(app('request')) : null;
 
 
         // Related products
@@ -71,6 +97,25 @@ class ShowProduct extends Component
 
         if(count($c)>0) {
             $this->getTotalCartItem = $this->cart->sum('quantity');
+        }
+
+
+        if($this->product->hasAttributes() && $this->product->hasVariation()){
+            $this->variations = collect($this->product->variations)->map(function ($item) {
+                $item->attribute_name = $item->attribute->attribute->name;
+                $item->attribute_value = $item->option->value;
+                return $item;
+//                return [
+//                    'name' => $item->attribute->attribute->name,
+//                    'option' => $item->option->value
+//                ];
+            })->groupBy('attribute_name')->all();
+
+            $this->available_variations = collect($this->product->variations->where('quantity', '>', 0))->map(function ($item) {
+                $item->attribute_name = $item->attribute->attribute->name;
+                $item->attribute_value = $item->option->value;
+                return $item;
+            })->all();
         }
 
         SEOTools::setTitle($this->product->title);
@@ -101,7 +146,7 @@ class ShowProduct extends Component
     }
 
 
-    public function addToCart($qty=1)
+    public function addToCart($qty=1,$variation_id=null)
     {
 
         $options = array(
@@ -114,22 +159,47 @@ class ShowProduct extends Component
             'product_url' => route('product.show', $this->product->slug),
             'attributes' => array()
         );
-        $price = $this->product->sales_price > 0 ? $this->product->sales_price : $this->product->regular_price;
 
+        if($this->product->product_type == 'variable'){
+            $variation = ProductVariation::findOrFail($variation_id);
+            $price = $variation->stock->sales_price > 0 ? $variation->stock->sales_price : $variation->stock->regular_price;
+            $suffix = ' - ' . $variation->attribute->attribute->name. ': ' . $variation->option->value;
 
+            $options[$variation->attribute->attribute->name] = $variation->option->value;
+            $options['variation_id'] = $variation_id;
+
+            $options['sales_price'] = $variation->stock->sales_price;
+            $options['regular_price'] = $variation->stock->regular_price;
+            $options['formatted_sales_price'] = app_money_format($variation->stock->sales_price);
+            $options['formatted_regular_price'] = app_money_format($variation->stock->regular_price);
+
+        }else {
+
+            $price = $this->product->sales_price > 0 ? $this->product->sales_price : $this->product->regular_price;
+
+        }
 
         // Check stock quantity
-        if($this->product->manage_stock && (!$this->product->stock_quantity || $qty > $this->product->stock_quantity)){
-            throw ValidationException::withMessages([
-                'quantity' => __('Out of stock'),
-            ]);
+        if ($this->product->product_type == 'variable') {
+            $var = ProductVariation::find($variation_id);
+            if($var->stock->manage_stock && $qty > $var->stock->quantity){
+                throw ValidationException::withMessages([
+                    'quantity' => __('Out of stock'),
+                ]);
+            }
+        }else{
+            if ($this->product->manage_stock && (!$this->product->stock_quantity || $qty > $this->product->stock_quantity)) {
+                throw ValidationException::withMessages([
+                    'quantity' => __('Out of stock'),
+                ]);
+            }
         }
 
 
         \Cart::add([
             'id' => uniqid(),
             'product_id' => $this->product->id,
-            'name' => $this->product->title,
+            'name' => $this->product->title . $suffix,
             'price' => $price,
             'quantity' => $qty,
             'attributes' => $options,
@@ -163,11 +233,21 @@ class ShowProduct extends Component
             // $product = Product::find($cart->associatedModel->id);
 
             // Check stock quantity
-            if($this->product->manage_stock && (!$this->product->stock_quantity || $qty > $this->product->stock_quantity)){
-                throw ValidationException::withMessages([
-                    'quantity' => __('Out of stock'),
-                ]);
+            if ($this->product->product_type == 'variable') {
+                $var = ProductVariation::find($cart->attributes->variation_id);
+                if($var->stock->manage_stock && $qty > $var->stock->quantity){
+                    throw ValidationException::withMessages([
+                        'quantity' => __('Out of stock'),
+                    ]);
+                }
+            }else{
+                if($this->product->manage_stock && (!$this->product->stock_quantity || $qty > $this->product->stock_quantity)){
+                    throw ValidationException::withMessages([
+                        'quantity' => __('Out of stock'),
+                    ]);
+                }
             }
+
 
             \Cart::update($id, array(
                 'quantity' => array(

@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PaymentGateway;
 use App\Models\PaymentHistory;
+use App\Models\ProductVariation;
 use App\Models\User;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Cookie;
@@ -86,17 +87,28 @@ class FinalizeCheckout extends Component
                 $orderItem->quantity = $cart->quantity;
                 $orderItem->current_price = $cart->price;
                 $orderItem->amount = $cart->getPriceSum();
-                // $orderItem->product_variation_id = $cart->attributes->variation_id;
+                 $orderItem->product_variation_id = $cart->attributes->variation_id;
                 $orderItem->status = 'processing';
                 $orderItem->save();
 
                 $productIds[$cart->associatedModel->id] = $cart->associatedModel->id;
 
                 // Update stock quantity
+                // Update stock quantity
                 if($cart->associatedModel->manage_stock) {
-                    if(!is_null($cart->associatedModel->stock_quantity))
-                    $cart->associatedModel->decrement('stock_quantity', $cart->quantity);
+                    if ($cart->associatedModel->product_type == 'variable') {
+                        $updateStock = ProductVariation::find($cart->attributes->variation_id)->stock->decrement('stock_quantity', (int)$cart->quantity);
+                    }
+                    else {
+                        if(!is_null($cart->associatedModel->stock->stock_quantity))
+                            $cart->associatedModel->stock->decrement('quantity', $cart->quantity);
+                    }
                 }
+
+//                if($cart->associatedModel->manage_stock) {
+//                    if(!is_null($cart->associatedModel->stock_quantity))
+//                    $cart->associatedModel->decrement('stock_quantity', $cart->quantity);
+//                }
 
                 // Affiliate Commission
                 if(Cookie::get('affiliate')){

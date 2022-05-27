@@ -22,6 +22,12 @@ class ProductController extends Controller
      */
     public function index()
     {
+        if(auth()->user()->hasRole(UserRole::VENDOR)){
+            $products = Product::with(['categories'])->where('user_id', auth()->user()->id)->latest();
+        }else{
+            $products = Product::with(['categories'])->latest();
+        }
+
         return view('admin.product.home');
     }
 

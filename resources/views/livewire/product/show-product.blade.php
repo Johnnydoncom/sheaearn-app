@@ -1,5 +1,5 @@
 <x-slot name="title">{{$product->title}}</x-slot>
-<div class="py-1 relative mx-0 product bg-gray-100 lg:bg-white" id="single-product">
+<div x-data="{variationSheetOpened:false}" class="py-1 relative mx-0 product bg-gray-100 lg:bg-white" id="single-product">
 
     <div class="lg:p-4 container z-0 relative product-summary px-0 pl-0" style="">
         <div class="grid grid-cols-1 lg:grid-cols-4 lg:gap-8 ">
@@ -63,21 +63,34 @@
                             @if($cart && count($cart) > 0)
                                 {{-- {{ dd($cart['627fc2ce2b39e'])}} --}}
                                 <div class="flex items-center justify-between w-full">
+                                    @if($product->product_type=='variable')
+                                        <button @click.prevent="variationSheetOpened=true" class="btn btn-primary rounded-lg border-none shadow-md rounded-md"><x-cui-cil-minus class="w-6 h-6"/></button>
+                                    @else
                                     <button wire:click="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem-1}})" wire:loading.class="loading" class="btn btn-primary rounded-lg border-none shadow-md rounded-md" @if($getTotalCartItem < 2) disabled="disabled" @endif><x-cui-cil-minus class="w-6 h-6"/></button>
+                                    @endif
 
                                     <span>{{$getTotalCartItem}}</span>
 
-                                    <button wire:click="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem+1}})" wire:loading.class="loading" @if($product->manage_stock && $getTotalCartItem >= $product->stock_quantity) disabled="disabled" @endif class="btn btn-primary rounded-lg border-none shadow-md rounded-md">
-{{--                                        <div wire:loading class="spinner-border animate-spin inline-block w-4 h-4 border-1 rounded-full flex-none" role="status">--}}
-{{--                                            <span class="visually-hidden">Loading...</span>--}}
-{{--                                        </div>--}}
+                                    @if($product->product_type=='variable')
+                                    <button @click.prevent="variationSheetOpened=true" class="btn btn-primary rounded-lg border-none shadow-md rounded-md">
                                         <x-cui-cil-plus class="w-6 h-6"/>
                                     </button>
+                                    @else
+                                    <button wire:click="updateCart('{{array_key_first($cart->toArray())}}', {{$getTotalCartItem+1}})" wire:loading.class="loading" @if($product->manage_stock && $getTotalCartItem >= $product->stock_quantity) disabled="disabled" @endif class="btn btn-primary rounded-lg border-none shadow-md rounded-md">
+                                        <x-cui-cil-plus class="w-6 h-6"/>
+                                    </button>
+                                    @endif
                                 </div>
                             @else
                             <div class="flex flex-grow">
-
-
+                                @if($product->product_type=='variable')
+                                    <button @click.prevent="variationSheetOpened=true" class='btn btn-primary justify-between btn-primary btn-block'>
+                                        <x-cui-cil-cart class="w-6 h-6 flex-none"/>
+                                        <span class='flex-1 uppercase flex items-center justify-center'>
+                                                <span>Add to Cart</span>
+                                        </span>
+                                    </button>
+                                @else
                                     <button @if($product->manage_stock && $product->stock_quantity < 1) disabled="disabled" @endif class='btn btn-primary justify-between btn-primary btn-block' wire:click="addToCart" wire:loading.class="loading">
                                         <x-cui-cil-cart class="w-6 h-6 flex-none"/>
                                         <span class='flex-1 uppercase flex items-center justify-center'>
@@ -88,8 +101,7 @@
                                             @endif
                                         </span>
                                     </button>
-
-
+                                @endif
                             </div>
                             @endif
                         </div>
@@ -111,14 +123,11 @@
                 <div class="variations border-t border-gray-200 my-3">
 
                     <h3 class="uppercase py-2">Variations</h3>
-                    @foreach($product->variations as $variation)
-
-                        {{var_dump($variation)}}
+                    @foreach($variations as $attr => $variation)
+                        <h4>{{$attr}}</h4>
                         <div class="flex space-x-2">
                             @foreach($variation as $variationValue)
-{{--                            <button class="btn btn-sm btn-outline btn-primary">{{$variationValue->data->attribute->value}}</button>--}}
-
-
+                            <button class="btn btn-sm btn-outline btn-primary" @click="variationSheetOpened=true">{{ $variationValue->attribute_value }}</button>
                             @endforeach
                         </div>
                     @endforeach
@@ -180,6 +189,27 @@
             </div>
         </div>
        @endif
+
+
+
+
+        @if($product->product_type=='variable')
+        <div class="modal modal-bottom sm:modal-middle" :class="{'modal-open': variationSheetOpened}">
+            <div class="modal-box relative">
+                <label for="variationSheetModal" @click.prevent="variationSheetOpened=false" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                <h4 class="font-semibold text-lg">Please select a variation</h4>
+
+                <div class="py-4">
+                    @foreach($available_variations as $variation)
+                    <div class="grid grid-cols-2 mb-2 items-center">
+                        <x-product.variation-item :variation="$variation" />
+                    </div>
+                    @endforeach
+                </div>
+
+            </div>
+        </div>
+        @endif
 
     </div>
 

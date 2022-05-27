@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Enums\ProductStatus;
+use App\Enums\UserRole;
 use App\Models\Attribute;
 use App\Models\Brand;
 use App\Models\Media;
@@ -148,6 +150,10 @@ class ProductForm extends Component
             if($this->product_type != 'variable'){
                 $product->product_stock_id = $productStock->id;
             }
+        }
+
+        if(auth()->user()->hasRole(UserRole::VENDOR)) {
+            $product->status = ProductStatus::DRAFT;
         }
 
         $product->type = $this->type;

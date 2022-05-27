@@ -20,7 +20,7 @@ class AdminMiddleware
     {
         if (!Auth::check()) {
             return redirect(route('admin.login.show'));
-        }elseif ($request->user()->hasRole([UserRole::SUPERADMIN, UserRole::ADMIN, UserRole::SHOPMANAGER])){
+        }elseif ($request->user()->hasRole([UserRole::SUPERADMIN, UserRole::ADMIN, UserRole::SHOPMANAGER, UserRole::VENDOR])){
             return $next($request);
         } else {
             return redirect('/');

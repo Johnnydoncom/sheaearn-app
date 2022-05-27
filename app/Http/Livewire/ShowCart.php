@@ -3,6 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Models\Product;
+use App\Models\ProductVariation;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class ShowCart extends Component
@@ -35,15 +37,6 @@ class ShowCart extends Component
         $this->emitTo('cart-action', 'updateCart', $cartId, $qty);
     }
 
-    public function increase($cartId,$qty){
-        $this->emitTo('cart-action', 'updateCart', $cartId, $qty);
-    }
-
-    public function decrease($cartId,$qty){
-        if($qty > 1)
-            $this->emitTo('cart-action', 'updateCart', $cartId, $qty);
-    }
-
 
     public function updateCart($id, $qty){
 //        \Cart::clear();
@@ -53,10 +46,19 @@ class ShowCart extends Component
             $product = Product::find($cart->associatedModel->id);
 
             // Check stock quantity
-            if($product->manage_stock && (!$product->stock_quantity || $qty > $product->stock_quantity)){
-                throw ValidationException::withMessages([
-                    'quantity' => __('Out of stock'),
-                ]);
+            if ($product->product_type == 'variable') {
+                $var = ProductVariation::find($cart->attributes->variation_id);
+                if($var->stock->manage_stock && $qty > $var->stock->quantity){
+                    throw ValidationException::withMessages([
+                        'quantity' => __('Out of stock'),
+                    ]);
+                }
+            }else{
+                if($product->manage_stock && (!$product->stock_quantity || $qty > $product->stock_quantity)){
+                    throw ValidationException::withMessages([
+                        'quantity' => __('Out of stock'),
+                    ]);
+                }
             }
 
             \Cart::update($id, array(
