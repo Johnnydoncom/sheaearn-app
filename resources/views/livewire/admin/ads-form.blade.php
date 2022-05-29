@@ -48,6 +48,14 @@
                     </div>
 
                     <div class="form-control mb-2">
+                        <x-label for="status" :value="__('Publish Date')" />
+                        <div class="flex justify-center">
+                            <x-checkbox id="publish-now" label="Publish Now" />
+                        </div>
+                        <x-input wire:model="published" />
+                    </div>
+
+                    <div class="form-control mb-2">
                         <x-label for="status" :value="__('Status')" />
                         <x-select id="status" class="mt-1 w-full" wire:model.defer="status"  name="status" required>
                             <option value="0">Draft</option>

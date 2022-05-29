@@ -12,7 +12,7 @@ class AdsForm extends Component
 {
     use WithFileUploads;
 
-    public $title, $category, $description, $ads, $status;
+    public $title, $category, $description, $ads, $publish_date, $status;
     public $categories;
     public $images = [];
     public $image;

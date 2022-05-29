@@ -15,7 +15,7 @@ class Ads extends Model implements HasMedia
 {
     use HasFactory, Sluggable, InteractsWithMedia;
 
-    protected $fillable = ['title','slug','description','topic_id','user_id'];
+    protected $fillable = ['title','slug','description','topic_id','user_id','created_at'];
 
     /**
      * Return the sluggable configuration array for this model.

@@ -30,6 +30,7 @@ id="aside"
                     </a>
                     <!-- end::Menu link -->
 
+                    @hasanyrole(\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)
                     <!-- start::Menu link -->
                     <div x-data="{ linkHover: false, linkActive: false }">
                         <div @mouseover = "linkHover = true" @mouseleave = "linkHover = false" @click = "linkActive = !linkActive" class="flex items-center justify-between text-gray-400 hover:text-gray-100 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200" :class=" linkActive ? 'bg-black bg-opacity-30 text-gray-100' : ''">
@@ -73,7 +74,9 @@ id="aside"
                         <!-- end::Submenu -->
                     </div>
                     <!-- end::Menu link -->
+                    @endhasanyrole
 
+                    @hasanyrole(\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)
                     <!-- start::Menu link -->
                     <div x-data="{ linkHover: false, linkActive: false }">
                         <div @mouseover = "linkHover = true" @mouseleave = "linkHover = false" @click = "linkActive = !linkActive" class="flex items-center justify-between text-gray-400 hover:text-gray-100 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200" :class=" linkActive ? 'bg-black bg-opacity-30 text-gray-100' : ''">
@@ -103,8 +106,9 @@ id="aside"
                         <!-- end::Submenu -->
                     </div>
                     <!-- end::Menu link -->
+                    @endhasanyrole
 
-                    <!-- start::Menu link -->
+                    <!-- start::product link -->
                     <div x-data="{ linkHover: false, linkActive: false }">
                         <div @mouseover = "linkHover = true" @mouseleave = "linkHover = false" @click = "linkActive = !linkActive" class="flex items-center justify-between text-gray-400 hover:text-gray-100 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200" :class=" linkActive ? 'bg-black bg-opacity-30 text-gray-100' : ''">
                             <div class="flex items-center">
@@ -148,7 +152,7 @@ id="aside"
                     </div>
                     <!-- end::Menu link -->
 
-                    <!-- start::Menu link -->
+                    <!-- start::product link -->
                     <a
                         x-data="{ linkHover: false }"
                         @mouseover = "linkHover = true"
@@ -168,7 +172,8 @@ id="aside"
                     </a>
                     <!-- end::Menu link -->
 
-                    <!-- start::Menu link -->
+                    <!-- start::withdraw link -->
+                    @hasanyrole(\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)
                     <a
                         x-data="{ linkHover: false }"
                         @mouseover = "linkHover = true"
@@ -186,7 +191,9 @@ id="aside"
                             Withdrawal
                         </span>
                     </a>
+                    @endhasanyrole
 
+                    @hasanyrole(\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)
                     <p class="text-xs text-gray-600 mt-6 mb-2 px-6 uppercase">User Management</p>
                     <!-- start::Menu link -->
                     <a
@@ -207,6 +214,7 @@ id="aside"
                         </span>
                     </a>
                     <!-- end::Menu link -->
+
                     <!-- start::Menu link -->
                     <a
                         x-data="{ linkHover: false }"
@@ -223,8 +231,9 @@ id="aside"
                         </span>
                     </a>
                     <!-- end::Menu link -->
+                    @endhasanyrole
 
-
+                    @hasanyrole(\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)
                     <p class="text-xs text-gray-600 mt-6 mb-2 px-6 uppercase">Settings</p>
                     <!-- start::Menu link -->
                     <a
@@ -282,7 +291,8 @@ id="aside"
                             Blog Settings
                         </span>
                     </a>
-
+                    @endhasanyrole
                 </nav>
                 <!-- end::Navigation -->
             </aside>
+

@@ -99,25 +99,25 @@ Route::prefix('account')->as('account.')->middleware(['auth','verified'])->group
 
 Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified', 'admin_auth'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('index');
-    Route::resource('entries', \App\Http\Controllers\Admin\EntryController::class);
-    Route::resource('topics', \App\Http\Controllers\Admin\TopicsController::class);
+    Route::resource('entries', \App\Http\Controllers\Admin\EntryController::class)->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN);
+    Route::resource('topics', \App\Http\Controllers\Admin\TopicsController::class)->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN);
 
-    Route::resource('ads', \App\Http\Controllers\Admin\AdsController::class);
+    Route::resource('ads', \App\Http\Controllers\Admin\AdsController::class)->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN);
 
 
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
-    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN);
 
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
-    Route::get('categories', [\App\Http\Controllers\Admin\ProductController::class, 'categories'])->name('categories.index');
+    Route::get('categories', [\App\Http\Controllers\Admin\ProductController::class, 'categories'])->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('categories.index');
 
     Route::post('/file-upload', [\App\Http\Controllers\Admin\DashboardController::class, 'fileUpload'])->name('file-upload');
 
     // Settings
-    Route::get('settings', [\App\Http\Controllers\Admin\SettingsController::class, 'index'])->name('settings.index');
-    Route::get('settings/blog', [\App\Http\Controllers\Admin\SettingsController::class, 'blog'])->name('settings.blog');
+    Route::get('settings', [\App\Http\Controllers\Admin\SettingsController::class, 'index'])->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('settings.index');
+    Route::get('settings/blog', [\App\Http\Controllers\Admin\SettingsController::class, 'blog'])->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('settings.blog');
     Route::get('settings/product', [\App\Http\Controllers\Admin\SettingsController::class, 'product'])->name('settings.shop');
-    Route::post('settings', [\App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('settings.store');
+    Route::post('settings', [\App\Http\Controllers\Admin\SettingsController::class, 'update'])->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('settings.store');
 
     // Coupons
 //    Route::resource('coupons', 'CouponController');
