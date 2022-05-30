@@ -74,7 +74,7 @@ class ShowEntry extends Component
 
     public function shared($method)
     {
-        if(Share::whereShareableType(Entry::class)->whereUserId(auth()->user()->id)->whereDate('created_at', Carbon::today())->count() < 10) {
+        if(Share::whereUserId(auth()->user()->id)->whereDate('created_at', Carbon::now())->count() < setting('shares_per_day',0)){
             if ($record = $this->entry->shares()->whereUserId(auth()->user()->id)->first()) {
                 if ($record->created_at->isToday()) {
                     $this->dispatchBrowserEvent('alert', [
@@ -100,6 +100,11 @@ class ShowEntry extends Component
                     'message' => "Post shared."
                 ]);
             }
+        }else{
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => "You have exceeded the number of shares per day."
+            ]);
         }
     }
 

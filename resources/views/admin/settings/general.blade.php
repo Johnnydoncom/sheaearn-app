@@ -13,18 +13,11 @@
                         @csrf
                         <div class="shadow sm:rounded-md sm:overflow-hidden">
                             <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                                <div class="grid grid-cols-2 gap-6">
-                                    <div class="form-control">
-                                        <x-label for="site_name" value="Site Name" class="" />
-                                        <div class="mt-1 rounded-md shadow-sm">
-                                            <x-input type="text" name="site_name" id="site_name" value="{{setting('site_name')}}" placeholder="Site Name" />
-                                        </div>
-                                    </div>
-                                    <div class="form-control">
-                                        <x-label for="signup_bonus" value="Signup Bonus" class="" />
-                                        <div class="mt-1 rounded-md shadow-sm">
-                                            <x-input type="text" name="signup_bonus" id="signup_bonus" value="{{setting('signup_bonus')}}"/>
-                                        </div>
+
+                                <div class="form-control">
+                                    <x-label for="site_name" value="Site Name" class="" />
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <x-input type="text" name="site_name" id="site_name" value="{{setting('site_name')}}" placeholder="Site Name" />
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-6">

@@ -39,13 +39,13 @@ class ProductForm extends Component
     protected $rules = [
         'title' => 'required|min:6',
         'description' => 'required|min:5',
-        'category_ids' => 'required',
+        'category_ids' => 'required_if:special,0',
         'regular_price' => 'required_unless:product_type,variable',
         'stock_status' => 'required_unless:product_type,variable',
-        'product_type' => 'required',
-        'digital_file' => 'required_if:type,digital',
+        'product_type' => 'required_if:special,0',
+//        'digital_file' => 'required_if:type,digital',
         'variations' => 'required_if:product_type,variable',
-        'type' => 'required',
+        'type' => 'required_if:special,0',
         'image' => 'image|max:1024|nullable'
     ];
 
@@ -165,13 +165,14 @@ class ProductForm extends Component
         $product->featured = $this->featured ? true : false;
         $product->brand_id = $this->brand_id;
         $product->sku = $this->sku;
-        $product->stock_quantity = $this->stock_quantity ?? null;
+        $product->stock_quantity = $this->stock_quantity ?? 0;
         $product->stock_status = $this->stock_status;
         $product->commission = $this->commission ?? 0;
         $product->manage_stock = $this->manage_stock;
         $product->save();
 
         // Categories
+        if($this->category_ids)
         $product->categories()->sync($this->category_ids);
 
         // digital file
@@ -228,7 +229,7 @@ class ProductForm extends Component
                         'manage_stock' => $this->manage_stock ? true : false,
                         'regular_price' => $variation['regular_price'],
                         'sales_price' => $variation['sales_price'],
-                        'stock_quantity' => $variation['stock_quantity'],
+                        'stock_quantity' => $variation['stock_quantity'] ?? 0,
                         'sold_individually' => $this->sold_individually ? true : false
                     ]);
                 }else{
@@ -237,7 +238,7 @@ class ProductForm extends Component
                             'manage_stock' => $this->manage_stock ? true : false,
                             'regular_price' => $variation['regular_price'],
                             'sales_price' => $variation['sales_price'],
-                            'stock_quantity' => $variation['stock_quantity'],
+                            'stock_quantity' => $variation['stock_quantity'] ?? 0,
                             'sold_individually' => $this->sold_individually ? true : false
                         ]);
 

@@ -12,5 +12,7 @@
         </svg>
     </a>
 
+    @role(\App\Enums\UserRole::SUPERADMIN)
     @include('datatables::delete', ['value' => $id])
+    @endif
 </div>

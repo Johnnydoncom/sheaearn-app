@@ -22,19 +22,13 @@
                                             <option value="call" @if(setting('order_method')=='call') selected @endif>Call to Order</option>
                                         </x-select>
                                     </div>
-                                    <div class="form-control">
-                                        <x-label value="Affiliate Signup Fee (₦)" class="mt-1" />
-                                        <x-input type="text" name="affiliate_fee" id="affiliate_fee" value="{{setting('affiliate_fee')}}" />
-                                    </div>
-                                </div>
 
-                                <div class="grid grid-cols-6 gap-6">
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="">
                                         <x-label value="Minimum Withdrawal (₦)" class="mt-1" />
                                         <x-input type="text" name="minimum_withdrawal" id="minimum_withdrawal" value="{{setting('minimum_withdrawal')}}" />
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <div class="">
                                         <x-label value="Maximum Withdrawal (₦)" class="mt-1" />
                                         <x-input type="text" name="maximum_withdrawal" id="maximum_withdrawal" value="{{setting('maximum_withdrawal')}}" />
                                     </div>

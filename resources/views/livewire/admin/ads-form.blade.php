@@ -15,7 +15,7 @@
             </div>
         @endif
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2" x-data="{status: '0'}">
 
             <div class="md:col-span-2">
                 <x-card class="card shadow-xl">
@@ -48,19 +48,13 @@
                     </div>
 
                     <div class="form-control mb-2">
-                        <x-label for="status" :value="__('Publish Date')" />
-                        <div class="flex justify-center">
-                            <x-checkbox id="publish-now" label="Publish Now" />
-                        </div>
-                        <x-input wire:model="published" />
-                    </div>
-
-                    <div class="form-control mb-2">
                         <x-label for="status" :value="__('Status')" />
-                        <x-select id="status" class="mt-1 w-full" wire:model.defer="status"  name="status" required>
+                        <x-select id="status" class="mt-1 w-full" x-model="status" wire:model.defer="status"  name="status" required>
                             <option value="0">Draft</option>
                             <option value="1">Published</option>
+                            <option value="2">Publish Later</option>
                         </x-select>
+                        <x-input x-show="status==2" wrapperClass="mt-2" class="mt-2" type="date" wire:model="publish_date" />
                     </div>
 
                     <div class="form-control mb-2">

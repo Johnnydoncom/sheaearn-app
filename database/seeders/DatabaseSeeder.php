@@ -59,15 +59,16 @@ class DatabaseSeeder extends Seeder
             AttributesTableSeeder::class,
             SpecialProductSeeder::class
         ]);
+
 //
-        Product::factory()->count(20)->create()->each(function ($product) {
-            $product->reviews()->createMany(Review::factory()->count(5)->make()->toArray());
-
-            $cat = Category::whereNotNull('parent_id')->get()->random()->id;
-            $product->categories()->sync($cat);
-        });
-
-        Entry::factory()->count(10)->create();
+//        Product::factory()->count(20)->create()->each(function ($product) {
+//            $product->reviews()->createMany(Review::factory()->count(5)->make()->toArray());
+//
+//            $cat = Category::whereNotNull('parent_id')->get()->random()->id;
+//            $product->categories()->sync($cat);
+//        });
+//
+//        Entry::factory()->count(10)->create();
 
 
 //

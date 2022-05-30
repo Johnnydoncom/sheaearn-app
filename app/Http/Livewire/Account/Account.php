@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Account;
 
+use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Asantibanez\LivewireCharts\Facades\LivewireCharts;
 use Asantibanez\LivewireCharts\Models\RadarChartModel;
@@ -21,8 +22,9 @@ class Account extends Component
     ];
 
     public $firstRun = true;
-
     public $showDataLabels = true;
+
+    public $canWithDrawSalesEarning = false;
 
     public function mount()
     {
@@ -36,6 +38,11 @@ class Account extends Component
         $this->socialEarning = auth()->user()->socialWallet()->balance;
 
         $this->allTimeEarning = auth()->user()->transactions()->where('type', '=', 'deposit')->get()->sum('amount');
+
+        $today = new Carbon();
+        if($today->dayOfWeek == Carbon::MONDAY){
+            $this->canWithDrawSalesEarning = true;
+        }
     }
 
     public function render()

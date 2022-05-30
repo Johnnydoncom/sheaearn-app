@@ -86,6 +86,7 @@ Route::prefix('account')->as('account.')->middleware(['auth','verified'])->group
     Route::get('wishlist', [\App\Http\Controllers\Account\AccountController::class, 'wishlist'])->name('wishlist.index');
     Route::delete('wishlist/{wishlist}', [\App\Http\Controllers\Account\AccountController::class, 'destroyWishlist'])->name('wishlist.destroy');
 
+
     Route::get('transactions', [\App\Http\Controllers\Account\TransactionsController::class, 'index'])->name('transactions.index');
 
     Route::get('settings', [\App\Http\Controllers\Account\AccountController::class, 'edit'])->name('settings.index');
@@ -94,7 +95,9 @@ Route::prefix('account')->as('account.')->middleware(['auth','verified'])->group
     Route::post('bank-info', [\App\Http\Controllers\Account\AccountController::class, 'storeBank'])->name('bank.store');
 
     Route::get('withdraw-request', [\App\Http\Controllers\Account\AccountController::class, 'withdrawRequest'])->name('withdraw.index');
-    Route::post('withdraw-request', [\App\Http\Controllers\Account\AccountController::class, 'submitWithdrawRequest'])->name('withdraw.store');
+
+    Route::get('withdraw-request/{type}', [\App\Http\Controllers\Account\AccountController::class, 'withdrawRequest'])->whereIn('type', ['sales','social'])->name('withdraw.show');
+    Route::post('withdraw-request/{type}', [\App\Http\Controllers\Account\AccountController::class, 'submitWithdrawRequest'])->whereIn('type', ['sales','social'])->name('withdraw.store');
 });
 
 Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified', 'admin_auth'])->group(function () {
@@ -115,7 +118,7 @@ Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified', 'admin_
 
     // Settings
     Route::get('settings', [\App\Http\Controllers\Admin\SettingsController::class, 'index'])->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('settings.index');
-    Route::get('settings/blog', [\App\Http\Controllers\Admin\SettingsController::class, 'blog'])->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('settings.blog');
+    Route::get('settings/earnings', [\App\Http\Controllers\Admin\SettingsController::class, 'earnings'])->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('settings.earnings');
     Route::get('settings/product', [\App\Http\Controllers\Admin\SettingsController::class, 'product'])->name('settings.shop');
     Route::post('settings', [\App\Http\Controllers\Admin\SettingsController::class, 'update'])->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('settings.store');
 

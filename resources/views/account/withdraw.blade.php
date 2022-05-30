@@ -3,7 +3,7 @@
 
     <div class="">
     <!-- start::Stats -->
-        <h3 class="font-bold text-lg sm:text-xl">Request Withdraw</h3>
+        <h3 class="font-bold text-lg sm:text-xl">Request Withdraw ({{ $type=='sales' ? 'Sales Commission' : 'Social Commission' }})</h3>
         <div class="divider mt-0"></div>
 
         <div class="flex flex-col justify-center items-center py-10">
@@ -13,7 +13,7 @@
 
        <div class="max-w-xl mx-auto">
            @if($canWithdraw)
-           <form method="POST" action="{{ route('account.withdraw.store') }}" class="">
+           <form method="POST" action="{{ route('account.withdraw.store', $type) }}" class="">
                @csrf
                <x-floating-input id="amount" :label="__('Amount *')" name="amount" wrapperClass="mb-8" type="text" placeholder="__('Amount')" required autofocus />
 
@@ -29,7 +29,6 @@
                    @endif
                </div>
            </div>
-
 
            <div class="card card-body p-2">
                <div class="card bg-white rounded-sm">

@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Enums\PaymentStatus;
 use App\Enums\UserRole;
+use App\Events\CommissionEarned;
 use App\Events\OrderPlaced;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -55,13 +56,10 @@ class FinalizeCheckout extends Component
 
     public function finalize($paystackRef=null)
     {
-//        try {
             $total = \Cart::getTotal();
-//            $shipping = $this->shippingCost;
             $cartCollection = \Cart::getContent();
 
             $grandTotal = $total + $this->shippingCost;
-
 
             $order = new Order();
             $order->grand_total = $grandTotal;
@@ -94,7 +92,6 @@ class FinalizeCheckout extends Component
                 $productIds[$cart->associatedModel->id] = $cart->associatedModel->id;
 
                 // Update stock quantity
-                // Update stock quantity
                 if($cart->associatedModel->manage_stock) {
                     if ($cart->associatedModel->product_type == 'variable') {
                         $updateStock = ProductVariation::find($cart->attributes->variation_id)->stock->decrement('stock_quantity', (int)$cart->quantity);
@@ -105,17 +102,14 @@ class FinalizeCheckout extends Component
                     }
                 }
 
-//                if($cart->associatedModel->manage_stock) {
-//                    if(!is_null($cart->associatedModel->stock_quantity))
-//                    $cart->associatedModel->decrement('stock_quantity', $cart->quantity);
-//                }
-
                 // Affiliate Commission
                 if(Cookie::get('affiliate')){
                     $ref = User::where('account_id', Cookie::get('affiliate'))->first();
                     if($ref && $ref->hasRole(UserRole::AFFILIATE)) {
-                        if ($cart->associatedModel->commission > 0)
-                            $ref->deposit($cart->associatedModel->commission, ['type' => 'order_commission', 'description' => 'Commission for buying product', 'product_id' => $cart->associatedModel->id]);
+                        if ($cart->associatedModel->commission > 0) {
+                            $tx = $ref->deposit($cart->associatedModel->commission, ['type' => 'order_commission', 'description' => 'Commission for buying product', 'product_id' => $cart->associatedModel->id]);
+                            CommissionEarned::dispatch($tx);
+                        }
                     }
 
                     Cookie::forget('affiliate');
@@ -123,10 +117,8 @@ class FinalizeCheckout extends Component
                 }
             }
 
-
             //Store Payment Record
             // $paymentMethod = PaymentGateway::find($request->session()->get('payment_method'));
-
             $paymentHistory = new PaymentHistory();
             $paymentHistory->order_id = $order->id;
             $paymentHistory->user_id = auth()->user()->id;
@@ -143,9 +135,7 @@ class FinalizeCheckout extends Component
             $paymentHistory->method = $this->payment_method->id;
             $paymentHistory->payment_gateway_id = $this->payment_method->id;
             $paymentHistory->save();
-
              OrderPlaced::dispatch($order);
-
 
             // clear cart session
             \Cart::clear();
@@ -154,11 +144,5 @@ class FinalizeCheckout extends Component
             $url = URL::temporarySignedRoute('checkout.success', now()->addMinutes(1), ['order' => $order->id]);
             session()->flash('success', 'Order Placed');
             return redirect()->to($url);
-
-//        } catch (\Throwable $e) {
-//            report($e);
-//
-//            return false;
-//        }
     }
 }

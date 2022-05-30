@@ -14,7 +14,7 @@ class ShowAds extends Component
     public $ads;
 
     public function mount($slug){
-        $this->ads = Ads::whereSlug($slug)->firstOrFail();
+        $this->ads = Ads::whereDate('created_at', '<', Carbon::tomorrow())->whereSlug($slug)->firstOrFail();
     }
 
     public function render()
@@ -24,7 +24,8 @@ class ShowAds extends Component
 
     public function shared($method)
     {
-        if(Share::whereShareableType(Ads::class)->whereUserId(auth()->user()->id)->whereDate('created_at', Carbon::today())->count() < 10) {
+//        if(Share::whereShareableType(Ads::class)->whereUserId(auth()->user()->id)->whereDate('created_at', Carbon::today())->count() < 10) {
+        if(Share::whereUserId(auth()->user()->id)->whereDate('created_at', Carbon::now())->count() < setting('shares_per_day',0)){
             if ($record = $this->ads->shares()->whereUserId(auth()->user()->id)->first()) {
                 if ($record->created_at->isToday()) {
                     $this->dispatchBrowserEvent('alert', [
@@ -50,6 +51,11 @@ class ShowAds extends Component
                     'message' => "Ads shared."
                 ]);
             }
+        }else{
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => "You have exceeded the number of shares per day."
+            ]);
         }
     }
 

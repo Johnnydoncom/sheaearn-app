@@ -273,6 +273,10 @@
                         <li><a href="{{ route('index') }}" class="flex justify-between items-center @if(request()->routeIs('index')) active @endif">Home <x-fas-chevron-right class="w-4 h-4" /></a></li>
                         <li><a href="{{ route('blog.index') }}" class="flex justify-between items-center @if(request()->routeIs('blog.index')) active @endif">Blog <x-fas-chevron-right class="w-4 h-4" /></a></li>
                          <li><a href="{{ route('product.index') }}" class="flex justify-between items-center @if(request()->routeIs('product.index')) active @endif">Products <x-fas-chevron-right class="w-4 h-4" /></a></li>
+
+                         <li>
+                            <a class="flex justify-between items-center @if(request()->routeIs('ads.index')) active @endif" href="{{ route('ads.index') }}">{{ __('Sponsored Ads') }}</a>
+                         </li>
                          @auth
                          <li><a href="{{ route('account.index') }}" class="flex justify-between items-center @if(request()->routeIs('account.index')) active @endif">My Account <x-fas-chevron-right class="w-4 h-4" /></a></li>
                              <li>

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Ads;
 use App\Models\Tag;
 use App\Models\Topic;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -51,6 +52,12 @@ class AdsForm extends Component
         $ads->user_id = auth()->user()->id;
         $ads->description = $this->description;
         $ads->published = $this->status;
+
+        if($this->status == 2 && $this->publish_date){
+            $ads->created_at = Carbon::parse($this->publish_date);
+            $ads->published = 1;
+        }
+
         $ads->save();
 
 

@@ -48,7 +48,7 @@ class SettingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function blog()
+    public function earnings()
     {
         $country = Country::where('name', 'nigeria')->first();
         $states = $country->states()->get()->map(function($city){
@@ -57,7 +57,7 @@ class SettingsController extends Controller
                 'label' => ucfirst($city->name)
             ];
         });
-        return view('admin.settings.blog',[
+        return view('admin.settings.earnings',[
             'settings' => setting()->all(),
             'states' => $states
         ]);

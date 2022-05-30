@@ -15,11 +15,107 @@
             </div>
         @endif
 
-        <div x-data="{openAttrTab:false, selAttribute:'', product_type:'simple', tab:'general'}" @attribute-selected.window="openAttrTab = true" class="grid grid-cols-1 md:grid-cols-3 gap-2">
+        @if($product && $product->special)
+            <div x-data="{openAttrTab:false, selAttribute:'', product_type:'simple', tab:'general'}" @attribute-selected.window="openAttrTab = true" class="grid grid-cols-1 md:grid-cols-3 gap-2">
+
+                    <div class="md:col-span-2">
+                        <x-card class="card shadow-xl">
+                            <x-slot name="title"><h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">@if($product) Edit Product @else Add New Product @endif</h5></x-slot>
+                            <hr>
+
+                            <div class="form-control mb-4 mt-4">
+                                <x-label for="title" :value="__('Title')" />
+                                <x-input id="title" class="block mt-1 w-full" type="text" wire:model.defer="title" name="title" :value="old('title')" required autofocus />
+                                @error('title')  <label class="label"><span class="label-text-alt text-error">{{ $message }}</span></label> @enderror
+                            </div>
+                            <input type="hidden" name="special" wire:model.defer="special" value="1">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                                <div class="form-control w-full">
+                                    <x-label class="label" value="Regular Price" />
+                                    <x-input type="text" wire:model.defer="regular_price" name="regular_price" class="w-full input input-bordered input-md" :value="old('regular_price')"/>
+                                </div>
+                                <div class="form-control w-full">
+                                    <x-label class="label" value="Sales Price" />
+                                    <x-input type="text" wire:model.defer="sales_price" name="sales_price" class="w-full input input-bordered input-md" :value="old('sales_price')"/>
+                                </div>
+                                <div class="form-control w-full">
+                                    <x-label class="label" value="SKU" />
+                                    <x-input type="text" wire:model.defer="sku" name="sku" class="w-full input input-bordered input-md" :value="old('sku')"/>
+                                </div>
+                            </div>
+
+
+                            <div class="py-6 form-control" wire:ignore>
+                                <x-label for="description" :value="__('Description')" />
+                                <x-input.tinymce wire:model.defer="description" placeholder="Type anything you want..." />
+                            </div>
+                        </x-card>
+                    </div>
+
+
+
+                    {{--Sidebar--}}
+                    <x-card class="card shadow-xl space-y-4">
+                        <div class="form-control">
+                            <label class="label"><span class="label-text">Featured Image</span></label>
+                            <div class="relative rounded-md shadow-sm">
+                                <label
+                                    class="
+                                        flex flex-col
+                                        items-center
+                                        tracking-wide
+                                        uppercase
+                                        border border-blue
+                                        cursor-pointer
+                                        text-purple-600
+                                        ease-linear
+                                        transition-all
+                                        duration-150
+                                        relative
+                                      ">
+                                    @if($image)
+                                        <img class="w-auto h-40 mx-auto" src="{{ $image->temporaryUrl() }}" alt="Featured Image Placeholder">
+                                    @elseif($product)
+                                        <img class="w-auto h-40 mx-auto" src="{{ $product->featured_img_thumb }}" alt="Featured Image Placeholder">
+                                    @else
+                                        <svg class="h-40" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                                        </svg>
+                                    @endif
+
+                                    <input type="file" class="hidden" wire:model="image">
+                                </label>
+                            </div>
+                        </div>
+
+
+
+{{--                        <div class="form-control">--}}
+{{--                            <x-label for="commission" :value="__('Commission (Optional)')" />--}}
+{{--                            <x-input id="commission" class="block w-full" type="text" wire:model.defer="commission" />--}}
+{{--                        </div>--}}
+
+                        <div class="form-control mb-2">
+                            <x-label for="status" :value="__('Status')" />
+                            <x-select id="status" class="mt-1 w-full" wire:model.defer="status"  name="status" required>
+                                <option value="0" wire:key="0">Draft</option>
+                                <option value="1" wire:key="1">Published</option>
+                            </x-select>
+                        </div>
+
+                        <x-button type="submit" class="btn-primary btn-block mt-4">
+                            Publish
+                        </x-button>
+                        <div wire:loading wire:target="store">process...</div>
+                    </x-card>
+                    {{--            </div>--}}
+                </div>
+        @else
+            <div x-data="{openAttrTab:false, selAttribute:'', product_type:'simple', tab:'general'}" @attribute-selected.window="openAttrTab = true" class="grid grid-cols-1 md:grid-cols-3 gap-2">
 
             <div class="md:col-span-2">
                 <x-card class="card shadow-xl">
-                    <x-slot name="title"><h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">Add New Product</h5></x-slot>
+                    <x-slot name="title"><h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">@if($product) Edit Product @else Add New Product @endif</h5></x-slot>
                     <hr>
 
                     <div class="form-control mb-4 mt-4">
@@ -27,7 +123,7 @@
                         <x-input id="title" class="block mt-1 w-full" type="text" wire:model.defer="title" name="title" :value="old('title')" required autofocus />
                         @error('title')  <label class="label"><span class="label-text-alt text-error">{{ $message }}</span></label> @enderror
                     </div>
-
+                    <input type="hidden" name="special" wire:model.defer="special" value="0">
                     <div class="grid grid-cols-2 gap-4 mb-4">
                         <div class="form-control w-full">
                             <x-label class="label" value="Product Type" />
@@ -413,6 +509,7 @@
             </x-card>
             {{--            </div>--}}
         </div>
+        @endif
     </form>
 
 

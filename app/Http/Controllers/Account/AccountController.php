@@ -12,6 +12,7 @@ use App\Models\WithdrawRequest;
 use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
 use Bavix\Wallet\Internal\Service\DatabaseServiceInterface;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
@@ -29,7 +30,7 @@ class AccountController extends Controller
         auth()->user()->wallet->refreshBalance();
         // auth()->user()->socialWallet->refreshBalance();
 
-//        auth()->user()->socialWallet()->deposit(15);
+//        auth()->user()->socialWallet()->deposit(100);
     //    auth()->user()->withdraw(30);
 
         $salesEarning = auth()->user()->wallet->balance;
@@ -37,10 +38,18 @@ class AccountController extends Controller
 
         $allTimeEarning = Auth::user()->transactions()->where('type', '=', 'deposit')->get()->sum('amount');
 
+
+        $canWithDrawSalesEarning = false;
+        $today = new Carbon();
+        if($today->dayOfWeek == Carbon::MONDAY){
+            $canWithDrawSalesEarning = true;
+        }
+
         return view('account.home',[
             'allTimeEarning' => $allTimeEarning,
             'salesEarning' => $salesEarning,
             'socialEarning' => $socialEarning,
+            'canWithDrawSalesEarning' => $canWithDrawSalesEarning
         ]);
     }
 
@@ -138,38 +147,41 @@ class AccountController extends Controller
         ]);
     }
 
-    public function withdrawRequest(Request $request){
-//        if(!$request->user()->hasRole(UserRole::AFFILIATE)){
-//            return redirect()->route('account.index');
-//        }
-
+    public function withdrawRequest(Request $request, $type){
         $salesEarning = auth()->user()->wallet->balance;
         $socialEarning = auth()->user()->socialWallet()->balance;
-
-        $total = $salesEarning + $socialEarning;
-
         $canWithdraw = false;
 
+        if($type == 'sales'){
+            $total = $salesEarning;
 
-
-        if($total > 0 ){
-
-            if(setting('minimum_withdrawal') && $request->user()->balance <= setting('minimum_withdrawal')){
-//                'status', \App\Enums\WithdrawStatus::PENDING
-                $lastWithdraw = $request->user()->withdraws()->latest()->first();
-                if($lastWithdraw){
-                    if($lastWithdraw->created_at->diffInMonths() > 1){
-                        $canWithdraw = true;
-                    }else{
-                        $canWithdraw = false;
-                    }
-                }else {
-                    $canWithdraw = true;
-                }
+            if(setting('min_withdrawable_sales_commission') && $request->user()->wallet->balance >= setting('min_withdrawable_sales_commission')){
+                $canWithdraw = true;
             }
+        }else{
+            $total = $socialEarning;
         }
 
+
+//        if($total > 0 ){
+//
+//            if(setting('minimum_withdrawal') && $request->user()->balance <= setting('minimum_withdrawal')){
+////                'status', \App\Enums\WithdrawStatus::PENDING
+//                $lastWithdraw = $request->user()->withdraws()->latest()->first();
+//                if($lastWithdraw){
+//                    if($lastWithdraw->created_at->diffInMonths() > 1){
+//                        $canWithdraw = true;
+//                    }else{
+//                        $canWithdraw = false;
+//                    }
+//                }else {
+//                    $canWithdraw = true;
+//                }
+//            }
+//        }
+
         return view('account.withdraw', [
+            'type' => $type,
             'withdrawable' => $total,
             'canWithdraw' => $canWithdraw,
             'user'=>$request->user(),
@@ -177,10 +189,14 @@ class AccountController extends Controller
         ]);
     }
 
-    public function submitWithdrawRequest(Request $request, MessageBag $message_bag){
+    public function submitWithdrawRequest(Request $request, MessageBag $message_bag, $type){
+
         $balance = $request->user()->balance;
         $maxWithdrawPercent = setting('maximum_withdrawal');
-        $minWithdraw = setting('minimum_withdrawal');
+
+        if($type == 'sales') {
+            $minWithdraw = setting('min_withdrawable_sales_commission');
+        }
 
         $request->validate([
             'amount' => 'required',
@@ -205,8 +221,13 @@ class AccountController extends Controller
             ]);
         }
 
-        $tx = $request->user()->withdraw((float)$request->amount, ['type' => 'order_commission', 'description' => 'Commission withdrawal']);
-        $request->user()->wallet->refreshBalance();
+        if($type=='sales') {
+            $tx = $request->user()->withdraw((float)$request->amount, ['type' => 'sales_commission', 'description' => 'Sales Commission withdrawal']);
+            $request->user()->wallet->refreshBalance();
+        }else{
+            $tx = $request->user()->socialWallet()->withdraw((float)$request->amount, ['type' => 'social_commission', 'description' => 'Social Commission withdrawal']);
+            $request->user()->socialWallet()->refreshBalance();
+        }
 
         $withdrawRequest = new WithdrawRequest();
         $withdrawRequest->user_id = $request->user()->id;

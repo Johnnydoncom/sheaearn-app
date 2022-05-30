@@ -38,44 +38,44 @@ class UserTableSeeder extends Seeder
             'remember_token'    => Str::random(60)
         ]);
 
-        User::create([
-            'first_name'        => 'Shop',
-            'last_name'         => 'Manager',
-            'email'             => 'moriouly@gmail.com',
-            'status'            => UserStatus::ACTIVE,
-            'email_verified_at' => Carbon::now(),
-            'password'          => bcrypt('@NewP@55'),
-            'remember_token'    => Str::random(60)
-        ]);
-
-        User::create([
-            'first_name'        => 'Account',
-            'last_name'         => 'Affiliate',
-            'email'             => 'johnnydoncom@yahoo.com',
-            'status'            => UserStatus::ACTIVE,
-            'email_verified_at' => Carbon::now(),
-            'password'          => bcrypt('@NewP@55'),
-            'remember_token'    => Str::random(60)
-        ]);
-
-        User::create([
-            'first_name'        => 'Account',
-            'last_name'         => 'Customer',
-            'email'             => 'customer@example.com',
-            'status'            => UserStatus::ACTIVE,
-            'email_verified_at' => Carbon::now(),
-            'password'          => bcrypt('password'),
-            'remember_token'    => Str::random(60)
-        ]);
-
-        User::create([
-            'first_name'        => 'Account',
-            'last_name'         => 'Vendor',
-            'email'             => 'vendor@example.com',
-            'status'            => UserStatus::ACTIVE,
-            'email_verified_at' => Carbon::now(),
-            'password'          => bcrypt('password'),
-            'remember_token'    => Str::random(60)
-        ]);
+//        User::create([
+//            'first_name'        => 'Shop',
+//            'last_name'         => 'Manager',
+//            'email'             => 'moriouly@gmail.com',
+//            'status'            => UserStatus::ACTIVE,
+//            'email_verified_at' => Carbon::now(),
+//            'password'          => bcrypt('@NewP@55'),
+//            'remember_token'    => Str::random(60)
+//        ]);
+//
+//        User::create([
+//            'first_name'        => 'Account',
+//            'last_name'         => 'Affiliate',
+//            'email'             => 'johnnydoncom@yahoo.com',
+//            'status'            => UserStatus::ACTIVE,
+//            'email_verified_at' => Carbon::now(),
+//            'password'          => bcrypt('@NewP@55'),
+//            'remember_token'    => Str::random(60)
+//        ]);
+//
+//        User::create([
+//            'first_name'        => 'Account',
+//            'last_name'         => 'Customer',
+//            'email'             => 'customer@example.com',
+//            'status'            => UserStatus::ACTIVE,
+//            'email_verified_at' => Carbon::now(),
+//            'password'          => bcrypt('password'),
+//            'remember_token'    => Str::random(60)
+//        ]);
+//
+//        User::create([
+//            'first_name'        => 'Account',
+//            'last_name'         => 'Vendor',
+//            'email'             => 'vendor@example.com',
+//            'status'            => UserStatus::ACTIVE,
+//            'email_verified_at' => Carbon::now(),
+//            'password'          => bcrypt('password'),
+//            'remember_token'    => Str::random(60)
+//        ]);
     }
 }

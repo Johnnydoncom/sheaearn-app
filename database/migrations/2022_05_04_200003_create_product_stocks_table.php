@@ -19,7 +19,7 @@ class CreateProductStocksTable extends Migration
             $table->decimal('regular_price', 9,2)->nullable(); // normal Price
             $table->decimal('sales_price', 9,2)->nullable()->default(0); // promo price
             $table->boolean('manage_stock')->default(false);
-            $table->bigInteger('stock_quantity')->default(0);
+            $table->bigInteger('stock_quantity')->nullable()->default(0);
             $table->boolean('sold_individually')->default(false);
             $table->timestamps();
         });

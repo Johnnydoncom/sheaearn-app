@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\UserRole;
+use App\Events\CommissionEarned;
 use App\Events\OrderPlaced;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -63,9 +64,22 @@ class BundleCheckout extends Component
         $orderItem->save();
 
         // Signup Commission
-        if(setting('signup_bonus') >0) {
-            auth()->user()->socialWallet()->deposit(setting('signup_bonus'), ['type' => 'signup_bonus', 'description' => 'Signup bonus for buying product', 'product_id' => $this->product->id]);
+        if(setting('signup_bonus') > 0) {
+            $tx =auth()->user()->deposit(setting('signup_bonus'), ['type' => 'signup_bonus', 'description' => 'Signup bonus for buying special bundle', 'product_id' => $this->product->id]);
+            CommissionEarned::dispatch($tx);
         }
+
+        // Referral Commission
+        if(setting('referral_bonus') > 0) {
+            if(Cookie::has('referral')){
+                $ref = User::where('account_id', Cookie::get('referral'))->first();
+                if($ref && $ref->hasRole(UserRole::AFFILIATE)) {
+                    $tx2 = $ref->deposit(setting('referral_bonus'), ['type' => 'referral_bonus', 'description' => 'Commission for referring '. auth()->user()->name, 'product_id' => $this->product->id]);
+                    CommissionEarned::dispatch($tx2);
+                }
+            }
+        }
+
 
         auth()->user()->assignRole(UserRole::AFFILIATE);
 

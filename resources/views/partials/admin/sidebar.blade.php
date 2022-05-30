@@ -278,7 +278,7 @@ id="aside"
                         x-data="{ linkHover: false }"
                         @mouseover = "linkHover = true"
                         @mouseleave = "linkHover = false"
-                        href="{{ route('admin.settings.blog') }}"
+                        href="{{ route('admin.settings.earnings') }}"
                         class="flex items-center text-gray-400 px-6 py-3 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition duration-200" :class=" linkHover ? 'text-gray-100' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -288,7 +288,7 @@ id="aside"
                             class="ml-3 transition duration-200"
                             :class="linkHover ? 'text-gray-100' : ''"
                         >
-                            Blog Settings
+                            Earnings Settings
                         </span>
                     </a>
                     @endhasanyrole
