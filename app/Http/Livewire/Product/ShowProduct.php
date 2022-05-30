@@ -160,6 +160,8 @@ class ShowProduct extends Component
             'attributes' => array()
         );
 
+        $suffix = '';
+
         if($this->product->product_type == 'variable'){
             $variation = ProductVariation::findOrFail($variation_id);
             $price = $variation->stock->sales_price > 0 ? $variation->stock->sales_price : $variation->stock->regular_price;

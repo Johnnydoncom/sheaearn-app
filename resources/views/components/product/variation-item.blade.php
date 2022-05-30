@@ -9,16 +9,16 @@ if($cartItem){
     $quantity = $cartItem['quantity'];
     $cartId = $cartItem['id'];
 }
-
 @endphp
+
 <div>
-    <h4 class="block mb-1 text-sm font-semibold text-gray-900">{{ $variation->attribute_value }}</h4>
+    <h4 class="block mb-1 text-sm font-semibold text-gray-900">{{ $variation->attribute_name }}: {{ $variation->attribute_value }}</h4>
     <div class="flex space-x-2 items-center">
         @if($variation->stock->sales_price > 0)
-        <p class="text-sm font-normal text-gray-900">{{$variation->stock->sales_price}}</p>
+        <p class="text-sm font-normal text-gray-900">{{app_money_format($variation->stock->sales_price)}}</p>
         @endif
         <p class="@if($variation->stock->sales_price > 0)  text-gray-500 text-xs line-through @else text-gray-900 text-sm font-normal @endif">
-            {{ $variation->stock->regular_price }}
+            {{ app_money_format($variation->stock->regular_price) }}
         </p>
     </div>
 </div>

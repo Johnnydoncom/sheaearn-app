@@ -400,21 +400,21 @@
                                     <div class="grid grid-cols-2 gap-4">
                                         <div class="form-control w-full">
                                             <x-label class="label" value="SKU" />
-                                            <x-input type="text" wire:model="variations.{{$index}}.sku" class="w-full input-md"/>
+                                            <x-input type="text" wire:model.defer="variations.{{$index}}.sku" class="w-full input-md"/>
                                         </div>
                                         <div class="form-control w-full">
                                             <x-label class="label" value="Quantity In Stock" />
-                                            <x-input type="text" wire:model="variations.{{$index}}.stock_quantity" class="w-full input input-bordered input-md"/>
+                                            <x-input type="text" wire:model.defer="variations.{{$index}}.stock_quantity" class="w-full input input-bordered input-md"/>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2 gap-4">
                                         <div class="form-control w-full">
                                             <x-label value="Regular Price" class="label" />
-                                            <x-input type="text" wire:model="variations.{{$index}}.regular_price" class="w-full input input-bordered input-md"/>
+                                            <x-input type="text" wire:model.defer="variations.{{$index}}.regular_price" class="w-full input input-bordered input-md"/>
                                         </div>
                                         <div class="form-control w-full">
                                             <x-label class="label" value="Sales Price" />
-                                            <x-input type="text" wire:model="variations.{{$index}}.sales_price" class="w-full input input-bordered input-md"/>
+                                            <x-input type="text" wire:model.defer="variations.{{$index}}.sales_price" class="w-full input input-bordered input-md"/>
                                         </div>
                                     </div>
                                 </div>

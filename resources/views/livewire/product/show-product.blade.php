@@ -41,14 +41,16 @@
                     </div>
                 </div>
 
+                @if($product->commission > 0)
                 <div class="promotion">
                     <div class="card rounded-none">
                         <h3 class="uppercase px-4 py-2 text-sm font-semibold">Promotions</h3>
                         <div class="card-body px-4 py-0 bg-white">
-                            <p class="text-xs lg:text-base font-normal text-red-600">Get ₦ 500.00 commission when you refer this product to a friend. NB. T&C apply <a href="#" class="text-xs text-blue-600 py-2 font-normal underline hover:text-primary">How it works</a></p>
+                            <p class="text-xs lg:text-base font-normal text-red-600">Get {{ app_money_format($product->commission) }} commission when you refer this product to a friend. NB. T&C apply <a href="#" class="text-xs text-blue-600 py-2 font-normal underline hover:text-primary">How it works</a></p>
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <div id="sticky-cart" class="card sticky bottom-0 bg-white rounded-none z-20 mt-5">
                     <div class="card-body p-2">
