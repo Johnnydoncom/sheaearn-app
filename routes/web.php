@@ -65,7 +65,11 @@ Route::get('checkout/success/{order}', function (\Illuminate\Http\Request $reque
     ]);
 })->middleware(['signed','verified', 'auth'])->name('checkout.success');
 
-
+Route::get('clear-cache', function (){
+    \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+    return 'Cache clear';
+})->name('clear-cache');
 
 Route::get('dashboard/login', [\App\Http\Controllers\Admin\DashboardController::class, 'showLogin'])->middleware('guest')->name( 'admin.login.show');
 Route::post('dashboard/login', [\App\Http\Controllers\Admin\DashboardController::class, 'login'])->middleware('guest')->name( 'admin.login');
@@ -107,12 +111,16 @@ Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified', 'admin_
 
     Route::resource('ads', \App\Http\Controllers\Admin\AdsController::class)->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN);
 
-
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN);
 
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
-    Route::get('categories', [\App\Http\Controllers\Admin\ProductController::class, 'categories'])->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('categories.index');
+
+    Route::get('categories', \App\Http\Livewire\Admin\CategoryController::class)->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('categories.index');
+
+
+    Route::get('brands', \App\Http\Livewire\Admin\BrandsController::class)->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('brands.index');
+
 
     Route::post('/file-upload', [\App\Http\Controllers\Admin\DashboardController::class, 'fileUpload'])->name('file-upload');
 

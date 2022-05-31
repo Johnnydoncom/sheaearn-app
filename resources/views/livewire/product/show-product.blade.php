@@ -154,6 +154,7 @@
             </div>
         </div>
 
+        @if(1>2)
         <div class="reviews lg:mt-4">
             <div class="card rounded-none">
                 <h3 class="uppercase px-4 sm:px-0 py-2 sm:text-xl lg:text-xl 2xl:text-xl text-sm 2xl:font-semibold">Verified Customer Feedback</h3>
@@ -168,18 +169,18 @@
                 </a>
 
                 <div class="card-body p-4 bg-white text-blue-600">
-                                @if($product->reviews->count())
-                                @foreach($product->reviews as $review)
-                                    <x-product.review :review="$review" />
-                                @endforeach
+                    @if($product->reviews->count())
+                    @foreach($product->reviews as $review)
+                        <x-product.review :review="$review" />
+                    @endforeach
 {{--                                <Review v-if="reviews.length" v-for="(review,index) in reviews.slice(0, 4)" :key="review.id" :review="review" />--}}
-                                @else
-                                <p class="pb-3-safe">No review</p>
-                                @endif
-                            </div>
-
+                    @else
+                    <p class="pb-3-safe">No review</p>
+                    @endif
+                </div>
             </div>
         </div>
+        @endif
 
         @if($related->count())
         <div class="mb-0 mt-4">

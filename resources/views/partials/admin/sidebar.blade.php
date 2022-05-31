@@ -139,14 +139,19 @@ id="aside"
                             </li>
                             <!-- end::Submenu link -->
 
-                            <!-- start::Submenu link -->
                             <li class="pl-10 pr-6 py-2 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200 hover:text-gray-100">
                                 <a href="{{ route('admin.categories.index') }}" class="flex items-center">
                                     <span class="mr-2 text-sm">&bull;</span>
                                     <span class="overflow-ellipsis">Categories</span>
                                 </a>
                             </li>
-                            <!-- end::Submenu link -->
+
+                            <li class="pl-10 pr-6 py-2 cursor-pointer hover:bg-black hover:bg-opacity-30 transition duration-200 hover:text-gray-100">
+                                <a href="{{ route('admin.brands.index') }}" class="flex items-center">
+                                    <span class="mr-2 text-sm">&bull;</span>
+                                    <span class="overflow-ellipsis">Brands</span>
+                                </a>
+                            </li>
                         </ul>
                         <!-- end::Submenu -->
                     </div>
