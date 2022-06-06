@@ -31,7 +31,7 @@
                         <x-select class="w-full mb-2" name="role">
                             <option disabled="disabled" selected="selected">Choose Role</option>
                             @foreach($roles as $role)
-                                <option value="{{ $role->name }}" @if(in_array($role->name, $user->roles()->pluck('name')->toArray())) selected @endif>{{ $role->name }}</option>
+                                <option value="{{ $role->id }}" {{ $user->getRoleNames()->contains($role->name) ? 'selected' : '' }}>{{ $role->name }}</option>
                             @endforeach
                         </x-select>
                     </div>
@@ -41,6 +41,38 @@
                     </div>
 
                 </form>
+
+                @if($user->hasRole(\App\Enums\UserRole::CUSTOMER) && \App\Models\PaymentHistory::whereUserId($user->id)->exists())
+
+                    <form action="{{ route('admin.users.upgrade', $user->id) }}" method="post">
+                        @csrf
+                        <x-button class="btn-primary btn-block">Activate Affiliate Pro</x-button>
+                    </form>
+                @endif
+                @if($user->hasRole(\App\Enums\UserRole::AFFILIATE))
+                <div class="divider"></div>
+                <h3 class="font-semibold text-xl">Credit Wallet</h3>
+                <form action="{{ route('admin.users.credit', $user->id) }}" method="post">
+                    @csrf
+                    <div class="flex gap-2 flex-grow items-end">
+                        <div class="form-control w-full">
+                            <x-label>Wallet</x-label>
+                            <x-select name="wallet" class="w-full" required>
+                                <option value="sales">Sales</option>
+                                <option value="social">Social</option>
+                            </x-select>
+                        </div>
+                        <div class="form-control w-full">
+                            <x-label>Amount</x-label>
+                            <x-input name="amount" required />
+                        </div>
+                        <div class="form-control">
+                            <x-button class="btn-primary btn-block">Add</x-button>
+                        </div>
+                    </div>
+
+                </form>
+                @endif
             </div>
         </div>
     </div>

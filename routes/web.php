@@ -5,6 +5,8 @@ use App\Http\Livewire\FinalizeCheckout;
 use App\Http\Livewire\PaymentMethod;
 use App\Http\Livewire\ShowCart;
 use App\Http\Livewire\ShowCheckout;
+use App\Notifications\Admin\AdminOrderPlaced;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,6 +73,15 @@ Route::get('clear-cache', function (){
     return 'Cache clear';
 })->name('clear-cache');
 
+Route::get('/notification', function () {
+    $order = \App\Models\Order::first();
+    $user = \App\Models\User::find(1);
+
+//    return $user->sendEmailVerificationNotification();
+    Notification::route('mail', 'moriouly@gmail.com')
+        ->notify(new AdminOrderPlaced($order));
+});
+
 Route::get('dashboard/login', [\App\Http\Controllers\Admin\DashboardController::class, 'showLogin'])->middleware('guest')->name( 'admin.login.show');
 Route::post('dashboard/login', [\App\Http\Controllers\Admin\DashboardController::class, 'login'])->middleware('guest')->name( 'admin.login');
 
@@ -112,6 +123,10 @@ Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified', 'admin_
     Route::resource('ads', \App\Http\Controllers\Admin\AdsController::class)->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN);
 
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
+
+    Route::post('users/{user}/upgrade', [\App\Http\Controllers\Admin\UserController::class, 'upgrade'])->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('users.upgrade');
+    Route::post('users/{user}/credit', [\App\Http\Controllers\Admin\UserController::class, 'credit'])->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('users.credit');
+
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN);
 
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
@@ -131,7 +146,7 @@ Route::prefix('dashboard')->as('admin.')->middleware(['auth','verified', 'admin_
     Route::post('settings', [\App\Http\Controllers\Admin\SettingsController::class, 'update'])->middleware('role:'.\App\Enums\UserRole::ADMIN.'|'.\App\Enums\UserRole::SUPERADMIN)->name('settings.store');
 
     // Coupons
-//    Route::resource('coupons', 'CouponController');
+    Route::get('coupons', \App\Http\Livewire\Admin\CouponCodes::class)->name('coupons.index');
 
     // Withdrawal
     Route::get('withdraw-requests', [\App\Http\Controllers\Admin\WithdrawController::class, 'index'])->name('withdraw.index');

@@ -22,4 +22,8 @@ class PaymentHistory extends Model
     public function payment_gateway(){
         return $this->belongsTo(PaymentGateway::class, 'payment_gateway_id');
     }
+
+    public function order(){
+        return $this->belongsTo(Order::class);
+    }
 }

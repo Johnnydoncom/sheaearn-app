@@ -21,7 +21,6 @@ class ReferralCheck
             Cookie::queue(Cookie::make('referral', $request->get('ref'), 2880));
             Cookie::queue(Cookie::make('affiliate', $request->get('ref'), 2880));
         }
-
         return $next($request);
     }
 }

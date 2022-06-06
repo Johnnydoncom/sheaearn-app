@@ -1,5 +1,7 @@
 <div class="container" x-data="{paystackPayment: false}">
-    <div class="py-0 my-0 mt-0 relative">
+    <form method="post" wire:submit.prevent="finalize">
+        @csrf
+        <div class="py-0 my-0 mt-0 relative">
         <h3 class="uppercase text-xs sm:text-lg md:text-2xl mt-0 pt-3">Order Summary</h3>
         <div class="divider mt-0"></div>
 
@@ -56,11 +58,35 @@
             </div>
         </div>
 
+
+        <div class="uppercase text-xs mt-0 sm:mt-10">
+            <div class="flex justify-between items-center w-full">
+                <h2 class="uppercase sm:text-lg">Payment Method</h2>
+            </div>
+            <div class="divider my-0"></div>
+        </div>
+
+        <div class="card bg-white mb-4 rounded-none">
+            <div class="card bg-white rounded-sm">
+                <div class="form-control max-w-xs">
+                    <x-label value="Coupon Code" class="mb-2" />
+                    <x-input wire:model.defer="coupon_code" placeholder="Enter coupon code" class="w-full" required />
+
+                    @error('coupon_code') <span class="text-red-600 error">{{ $message }}</span> @enderror
+                </div>
+
+            </div>
+        </div>
+
         <div class="card bg-white mt-0 sm:mt-10 rounded-none">
-            <button id="paystackBtn" class="btn btn-primary btn-block mb-2" wire:loading.class="loading" wire:loading.attr="disabled">Confirm</button>
+            <button class="btn btn-primary btn-block mb-2" wire:loading.class="loading" wire:loading.attr="disabled">Confirm</button>
         </div>
     </div>
+    </form>
 
+    <div class="flex justify-center">
+        <a href="https://api.whatsapp.com/send?phone=2349134087579" class="btn btn-secondary">Buy Coupon Now</a>
+    </div>
     {{-- @push('scripts') --}}
     <script src="https://js.paystack.co/v2/inline.js"></script>
     {{-- @if($payingWithPaystack) --}}

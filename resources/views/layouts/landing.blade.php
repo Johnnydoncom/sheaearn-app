@@ -22,11 +22,11 @@
         @livewire('guest-header', ['pageTitle' => isset($title) ? (string)$title : '', 'searchIcon' => isset($searchIcon) ? true : false ])
 
     </div>
-
     <!-- Page Content -->
     <main>
         {{ $slot }}
     </main>
+    @include('partials.whatsapp')
 </div>
 
 <!-- Scripts -->

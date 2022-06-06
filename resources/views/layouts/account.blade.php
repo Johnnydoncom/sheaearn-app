@@ -32,6 +32,21 @@
                                 <li class="hover-bordered"><a href="{{ route('account.settings.index') }}" class="flex justify-between @if(request()->routeIs('account.settings.index')) active @endif">Settings <x-fas-chevron-right class="w-4 h-4" /></a></li>
                                 <li class="hover-bordered"><a class="flex justify-between">Logout <x-fas-chevron-right class="w-4 h-4" /></a></li>
                             </ul>
+
+                            <div class="hidden sm:flex flex-col gap-4 px-4">
+                                <a href="https://play.google.com/store/apps/details?id=com.loan.cash.credit.okash.nigeria&hl=en&gl=NG" target="_blank" rel="nofollow" class="">
+                                    <img src="{{Storage::url('opay.jpeg')}}" class="object-cover rounded-lg" alt="OPay Load">
+                                </a>
+
+                                <a href="https://play.google.com/store/apps/details?id=com.transsnetfinancial.palmcredit" target="_blank" rel="nofollow" class="">
+                                    <img src="{{Storage::url('palmcredit.jpeg')}}" class="object-cover rounded-lg" alt="Palmcredit Load">
+                                </a>
+
+                                <a href="https://fairmoney.app.link/referral?referral_code=47XFM" target="_blank" rel="nofollow" class="">
+                                    <img src="{{Storage::url('fairmoney.jpeg')}}" class="object-cover rounded-lg" alt="Fairmoney Load">
+                                </a>
+
+                            </div>
                         </div>
                         <div class="content col-span-3 p-4 min-h-full">
                         {{ $slot }}
@@ -46,6 +61,8 @@
                   <a class="text-gray-800" href="{{ url('/')}}">{{ setting('site_name')}}</a>
                 </div>
             </footer>
+
+                @include('partials.whatsapp')
         </div>
 
         <!-- Scripts -->

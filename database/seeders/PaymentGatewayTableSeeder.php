@@ -33,6 +33,11 @@ class PaymentGatewayTableSeeder extends Seeder
             'subtitle' => 'Pay with coupon',
             'title' => 'Coupon Payment',
         ]);
-
+        PaymentGateway::create([
+            'name' => 'Bank Transfer',
+            'code' => 'bank',
+            'subtitle' => 'Pay via Bank Transfer',
+            'title' => 'Bank Payment',
+        ]);
     }
 }

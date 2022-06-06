@@ -34,7 +34,6 @@
                 <span class="font-semibold text-lg">Total</span>
                 <span class="text-primary font-bold text-lg">{{ $total }}</span>
             </div>
-
         </div>
 
         <div class="uppercase text-xs mt-0 sm:mt-10">
@@ -67,7 +66,20 @@
             </div>
             <div class="divider my-0"></div>
         </div>
+        @if($payment_method->code == 'bank')
+            <div strong class="card mb-0 rounded-none">
+                <div class="card-body p-0 bg-white rounded-none">
+                    <div class="p-0">
+                        <p class="text-sm"><span class="font-semibold">Bank:</span> Sterling Bank</p>
+                        <p class="text-sm"><span class="font-semibold">Account No:</span> 0077909328</p>
+                        <p class="text-sm"><span class="font-semibold">Account Name:</span> Esbol Global Resources Limited</div>
+                    <p class="text-sm mt-4"><strong>NB.</strong> Kindly send a proof of payment to us with the order number as reference for order confirmation.</p>
+                    </div>
+                </div>
+            </div>
+        @endif
 
+        @if(1>3)
         <div strong class="card mb-0 rounded-none">
             <div class="card-body p-0 bg-white rounded-none">
                 <div class="p-0">
@@ -76,12 +88,15 @@
                 </div>
             </div>
         </div>
+        @endif
+
 
         <div strong class="card bg-white mt-0 sm:mt-10 rounded-none">
+
             @if(Str::contains($payment_method->name, 'paystack') || Str::contains($payment_method->name, 'Paystack'))
                 <button id="paystackBtn" class="btn btn-primary btn-block mb-2" wire:loading.class="loading" wire:loading.attr="disabled">Confirm</button>
             @else
-                <button class="btn btn-primary btn-block mb-2" wire:click.prevent="payOnDelivery" >Confirm</button>
+                <button class="btn btn-primary btn-block mb-2" wire:click.prevent="finalize" wire:loading.class="loading" wire:loading.attr="disabled">Confirm</button>
             @endif
             <a class="btn btn-link btn-block shadow-sm" href="{{ route('cart.index') }}">
                 Modify Cart

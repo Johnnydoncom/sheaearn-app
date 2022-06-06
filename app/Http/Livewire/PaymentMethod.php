@@ -37,7 +37,7 @@ class PaymentMethod extends Component
             return redirect()->route('checkout.index');
         }
 
-        $payment_methods = PaymentGateway::get();
+        $payment_methods = PaymentGateway::whereCode('bank')->get();
 
         $this->default_payment_method = PaymentGateway::where('name', 'like', '%paystack%')->first() ?? $payment_methods[0];
 
@@ -47,7 +47,7 @@ class PaymentMethod extends Component
             'subtotal'=> app_money_format((float)\Cart::getSubTotal()),
             'total' => app_money_format((float)\Cart::getTotal() + $this->shippingCost),
             'shippingCost' => app_money_format($this->shippingCost),
-            'payment_methods' => PaymentGateway::get()
+            'payment_methods' => PaymentGateway::whereCode('bank')->get()
         ]);
     }
 

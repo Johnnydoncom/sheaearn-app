@@ -28,6 +28,7 @@ class BrandsController extends Component
         $this->name = $this->brand->name;
     }
 
+
     public function store(){
         $this->validate();
 

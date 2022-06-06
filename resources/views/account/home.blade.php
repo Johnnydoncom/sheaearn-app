@@ -99,8 +99,25 @@
     @endif
 
 
+    @if($transactions->count())
     <div class="card rounded-none mt-10 min-h-[25rem] sm:min-h-[30rem] h-80" id="user_transaction_chart"></div>
+    @endif
 
+    <div class="flex sm:hidden flex-col gap-4 px-0">
+        <h2 class="font-semibold text-xl">Need Quick Loan?</h2>
+        <a href="https://fairmoney.app.link/referral?referral_code=47XFM" target="_blank" rel="nofollow" class="">
+            <img src="{{Storage::url('fairmoney.jpeg')}}" class="object-fill rounded-lg h-32 w-full" alt="Fairmoney Load">
+        </a>
+
+        <a href="https://play.google.com/store/apps/details?id=com.loan.cash.credit.okash.nigeria&hl=en&gl=NG" target="_blank" rel="nofollow" class="w-full">
+            <img src="{{Storage::url('opay.jpeg')}}" class="object-fill rounded-lg h-32 w-full" alt="OPay Load">
+        </a>
+
+        <a href="https://play.google.com/store/apps/details?id=com.transsnetfinancial.palmcredit" target="_blank" rel="nofollow" class="">
+            <img src="{{Storage::url('palmcredit.jpeg')}}" class="object-fill rounded-lg h-32 w-full" alt="Palmcredit Load">
+        </a>
+
+    </div>
 </div>
 
 @push('styles')

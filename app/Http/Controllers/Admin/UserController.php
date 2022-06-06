@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\UserRole;
+use App\Events\CommissionEarned;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -126,7 +128,8 @@ class UserController extends Controller
         }
         $user->save();
         // Role
-        $user->assignRole($request->role);
+//        $user->assignRole($request->role);
+        $user->syncRoles([$request->role]);
 
         return redirect()->route('admin.users.index')->withSuccess('User Account Updated');
     }
@@ -141,4 +144,43 @@ class UserController extends Controller
     {
         //
     }
+
+    public function upgrade(User $user){
+
+        $paymentHistory = \App\Models\PaymentHistory::whereUserId($user->id)->whereTransactionType('account_upgrade')->first();
+
+        if($paymentHistory) {
+            $user->syncRoles([UserRole::AFFILIATE]);
+
+            // Referral Commission
+            if ($user->referrer_id) {
+                $ref = User::find($user->referrer_id);
+                if ($ref && $ref->hasRole(UserRole::AFFILIATE)) {
+                    $tx2 = $ref->deposit(setting('referral_bonus'), ['type' => 'referral_bonus', 'description' => 'Commission for referring ' . $user->name, 'product_id' => $paymentHistory->order->items[0]->product->id]);
+                    CommissionEarned::dispatch($tx2);
+                }
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    public function credit(Request $request, User $user)
+    {
+        $request->validate([
+            'wallet' => 'required',
+            'amount' => 'required'
+        ]);
+
+        if($request->wallet == 'sales'){
+            $tx2 = $user->deposit($request->amount, ['type' => 'admin_bonus', 'description' => 'Commission from admin']);
+        }else{
+            $tx2 = $user->socialWallet()->deposit($request->amount, ['type' => 'admin_bonus', 'description' => 'Commission from admin']);
+        }
+
+        CommissionEarned::dispatch($tx2);
+
+        return redirect()->back()->withSuccess('Account Credited');
+    }
+
 }

@@ -49,7 +49,8 @@ class AccountController extends Controller
             'allTimeEarning' => $allTimeEarning,
             'salesEarning' => $salesEarning,
             'socialEarning' => $socialEarning,
-            'canWithDrawSalesEarning' => $canWithDrawSalesEarning
+            'canWithDrawSalesEarning' => $canWithDrawSalesEarning,
+            'transactions' => auth()->user()->transactions()->latest()->limit(3)->get()
         ]);
     }
 

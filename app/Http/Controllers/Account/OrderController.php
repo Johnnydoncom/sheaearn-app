@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     public function index(){
-        $orders = Order::whereUserId(auth()->user()->id)->paginate();
+        $orders = Order::whereUserId(auth()->user()->id)->latest()->paginate();
 
         return view('account.order.list',[
             'orders' => $orders

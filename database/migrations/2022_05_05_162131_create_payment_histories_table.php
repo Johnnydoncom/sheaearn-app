@@ -21,7 +21,7 @@ class CreatePaymentHistoriesTable extends Migration
             $table->unsignedBigInteger('payment_gateway_id')->nullable();
 
             $table->decimal('amount');
-            $table->enum('transaction_type', ['orders', 'signup'])->default('orders');
+            $table->enum('transaction_type', ['orders', 'signup', 'account_upgrade'])->default('orders');
             $table->enum('method', ['paystack', 'coupon', 'cash'])->default('paystack');
             $table->tinyInteger('status')->default(\App\Enums\PaymentStatus::PENDING);
 

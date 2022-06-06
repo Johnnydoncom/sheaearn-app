@@ -58,17 +58,17 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // Referral
-//        if(Cookie::get('referral')){
-//            $referral = Cookie::get('referral');
-//            if ($ref = User::where('account_id', $referral)->first()) {
-//                if($ref->hasRole(UserRole::AFFILIATE)) {
-//                    $user->update([
-//                        'referrer_id' => $ref->id
-//                    ]);
-//                }
-//            }
-//            Cookie::queue(Cookie::forget('referral'));
-//        }
+        if(Cookie::get('referral')){
+            $referral = Cookie::get('referral');
+            if ($ref = User::where('account_id', $referral)->first()) {
+                if($ref->hasRole(UserRole::AFFILIATE)) {
+                    $user->update([
+                        'referrer_id' => $ref->id
+                    ]);
+                }
+            }
+            Cookie::queue(Cookie::forget('referral'));
+        }
 
         return redirect(RouteServiceProvider::HOME);
     }

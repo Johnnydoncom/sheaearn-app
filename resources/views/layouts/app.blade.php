@@ -84,12 +84,14 @@
             <div>
                 @include('partials.footer')
             </div>
+
+            @include('partials.whatsapp')
         </div>
 
         <!-- Scripts -->
         @livewireScripts
         <script src="{{ asset('js/app.js') }}"></script>
-
+        @stack('scripts')
         <script src="{{ asset('vendor/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
         <script>
             const Toast = Swal.mixin({
@@ -173,6 +175,6 @@
             });
         </script>
 
-            @stack('scripts')
+
     </body>
 </html>

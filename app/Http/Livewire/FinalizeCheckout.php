@@ -31,7 +31,7 @@ class FinalizeCheckout extends Component
     public function mount(SessionManager $session)
     {
         $this->delivery_address = auth()->user()->delivery_address;
-        $this->payment_method = PaymentGateway::find($session->get('payment_method'));
+        $this->payment_method = PaymentGateway::whereCode('bank')->first(); //PaymentGateway::find($session->get('payment_method'));
 
         $this->subtotal = app_money_format((float)\Cart::getSubTotal());
         $this->payTotal = \Cart::getTotal() + $session->get('shipping_cost');
@@ -98,43 +98,48 @@ class FinalizeCheckout extends Component
                     }
                     else {
                         if(!is_null($cart->associatedModel->stock->stock_quantity))
-                            $cart->associatedModel->stock->decrement('quantity', $cart->quantity);
+                            $cart->associatedModel->stock->decrement('stock_quantity', $cart->quantity);
                     }
                 }
 
                 // Affiliate Commission
-                if(Cookie::get('affiliate')){
-                    $ref = User::where('account_id', Cookie::get('affiliate'))->first();
-                    if($ref && $ref->hasRole(UserRole::AFFILIATE)) {
-                        if ($cart->associatedModel->commission > 0) {
-                            $tx = $ref->deposit($cart->associatedModel->commission, ['type' => 'order_commission', 'description' => 'Commission for buying product', 'product_id' => $cart->associatedModel->id]);
-                            CommissionEarned::dispatch($tx);
+                if(1>4) {
+                    if (Cookie::get('affiliate')) {
+                        $ref = User::where('account_id', Cookie::get('affiliate'))->first();
+                        if ($ref && $ref->hasRole(UserRole::AFFILIATE)) {
+                            if ($cart->associatedModel->commission > 0) {
+                                $tx = $ref->deposit($cart->associatedModel->commission, ['type' => 'order_commission', 'description' => 'Commission for buying product', 'product_id' => $cart->associatedModel->id]);
+                                CommissionEarned::dispatch($tx);
+                            }
                         }
-                    }
 
-                    Cookie::forget('affiliate');
-                    Cookie::forget('referral');
+                        Cookie::forget('affiliate');
+                        Cookie::forget('referral');
+                    }
                 }
             }
 
             //Store Payment Record
             // $paymentMethod = PaymentGateway::find($request->session()->get('payment_method'));
-            $paymentHistory = new PaymentHistory();
-            $paymentHistory->order_id = $order->id;
-            $paymentHistory->user_id = auth()->user()->id;
-            $paymentHistory->amount = $grandTotal;
-            if($paystackRef) {
-                $paymentHistory->transaction_reference = $paystackRef;
-            }else{
-                $paymentHistory->transaction_reference = generateUniqueReferenceNumber();
+            if($this->payment_method->code != 'bank') {
+                $paymentHistory = new PaymentHistory();
+                $paymentHistory->order_id = $order->id;
+                $paymentHistory->user_id = auth()->user()->id;
+                $paymentHistory->amount = $grandTotal;
+                if ($paystackRef) {
+                    $paymentHistory->transaction_reference = $paystackRef;
+                } else {
+                    $paymentHistory->transaction_reference = generateUniqueReferenceNumber();
+                }
+                $paymentHistory->transaction_type = 'orders';
+                if (Str::contains($this->payment_method->name, ['paystack', 'Paystack']) || Str::contains($this->payment_method->title, ['paystack', 'Paystack'])) {
+                    $paymentHistory->status = PaymentStatus::APPROVED;
+                }
+                $paymentHistory->method = $this->payment_method->code;
+                $paymentHistory->payment_gateway_id = $this->payment_method->id;
+                $paymentHistory->save();
             }
-            $paymentHistory->transaction_type = 'orders';
-            if(Str::contains($this->payment_method->name, ['paystack', 'Paystack']) || Str::contains($this->payment_method->title, ['paystack', 'Paystack'])){
-                $paymentHistory->status = PaymentStatus::APPROVED;
-            }
-            $paymentHistory->method = $this->payment_method->id;
-            $paymentHistory->payment_gateway_id = $this->payment_method->id;
-            $paymentHistory->save();
+
              OrderPlaced::dispatch($order);
 
             // clear cart session

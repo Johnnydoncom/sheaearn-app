@@ -1,5 +1,5 @@
 <x-landing-layout>
-    <div>
+    <div class="relative">
         <x-slot name="title">Home</x-slot>
         <div class="py-12">
             <section class="max-w-6xl md:max-w-7xl mx-auto hero px-1 sm:px-12 mb-20">
@@ -214,6 +214,11 @@
             @endif
 
 
+            <section class="relative text-center container py-10">
+                <h2 class="text-primary text-3xl sm:text-5xl font-bold w-full mb-4">We Only Accept Coupon for Payments</h2>
+                <a href="https://api.whatsapp.com/send?phone=2349134087579" class="inline-block px-12 py-6 bg-primary text-white font-medium text-xl leading-snug shadow-md hover:bg-secondary hover:text-white hover:border-primary hover:shadow-lg focus:bg-primary focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary active:shadow-lg transition duration-150 ease-in-out sm:rounded-full rounded-3xl">Buy Coupon Now</a>
+            </section>
+
 
             <section class="relative text-center container py-10">
 
@@ -269,5 +274,8 @@
         <footer class="text-center dark:text-gray-400">
             <p class="text-center text-lg sm:text-2xl py-10">{{ date('Y') }}. All Rights Reserved</p>
         </footer>
+
+
+
     </div>
 </x-landing-layout>
