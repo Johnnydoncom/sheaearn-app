@@ -75,7 +75,7 @@ class ShowEntry extends Component
     public function shared($method)
     {
         if(Share::whereUserId(auth()->user()->id)->whereDate('created_at', Carbon::now())->count() < setting('shares_per_day',0)){
-            if ($record = $this->entry->shares()->whereUserId(auth()->user()->id)->first()) {
+            if ($record = $this->entry->shares()->whereUserId(auth()->user()->id)->latest()->first()) {
                 if ($record->created_at->isToday()) {
                     $this->dispatchBrowserEvent('alert', [
                         'type' => 'error',

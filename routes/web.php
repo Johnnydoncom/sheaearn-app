@@ -73,6 +73,16 @@ Route::get('clear-cache', function (){
     return 'Cache clear';
 })->name('clear-cache');
 
+
+Route::get('debit-user', function (){
+    $user = App\Models\User::find(28);
+//    $user->socialWallet()->withdraw(100);
+    return \Illuminate\Support\Carbon::now(new DateTimeZone('Africa/Lagos'));
+
+
+
+})->name('debit-user');
+
 Route::get('/notification', function () {
     $order = \App\Models\Order::first();
     $user = \App\Models\User::find(1);

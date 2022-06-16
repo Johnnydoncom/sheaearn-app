@@ -32,8 +32,10 @@ class AppServiceProvider extends ServiceProvider
             return (int)max(1, $minutesToRead);
         });
 
+
         $charts->register([
             \App\Charts\UserTransactionChart::class
         ]);
+        date_default_timezone_set('Africa/Lagos');
     }
 }

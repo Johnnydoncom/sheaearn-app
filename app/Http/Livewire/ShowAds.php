@@ -26,7 +26,7 @@ class ShowAds extends Component
     {
 //        if(Share::whereShareableType(Ads::class)->whereUserId(auth()->user()->id)->whereDate('created_at', Carbon::today())->count() < 10) {
         if(Share::whereUserId(auth()->user()->id)->whereDate('created_at', Carbon::now())->count() < setting('shares_per_day',0)){
-            if ($record = $this->ads->shares()->whereUserId(auth()->user()->id)->first()) {
+            if ($record = $this->ads->shares()->whereUserId(auth()->user()->id)->latest()->first()) {
                 if ($record->created_at->isToday()) {
                     $this->dispatchBrowserEvent('alert', [
                         'type' => 'error',
@@ -41,7 +41,6 @@ class ShowAds extends Component
                         'message' => "Ads shared."
                     ]);
                 }
-
             } else {
                 $this->processShare($method);
 
